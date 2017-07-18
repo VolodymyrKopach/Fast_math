@@ -25,6 +25,8 @@ public class GameScreen implements Screen {
     MyGameClass myGameClass;
     public GameWorld gameWorld;
 
+    //TODO test
+
     public TextureAtlas textureAtlas_vg;
     public TextureRegion tr_screen, tr_fon, tr_X;
 

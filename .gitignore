@@ -28,6 +28,9 @@ android/gen/
 *.iml
 out/
 com_crashlytics_export_strings.xml
+core/core.iml
+desktop/desktop.iml
+ gradlew.bat
 
 ## Eclipse
 .classpath
