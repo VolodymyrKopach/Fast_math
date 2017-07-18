@@ -62,6 +62,10 @@ nb-configuration.xml
 .gradle
 gradle-app.setting
 build/
+gradle/wrapper/gradle-wrapper.properties
+gradlew
+gradlew.bat
+
 
 ## OS Specific
 .DS_Store
