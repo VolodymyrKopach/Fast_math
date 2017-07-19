@@ -175,8 +175,8 @@ public class GameWorld1 {
 
         setString_score(String.valueOf(int_score));
 
-        int int_pryklad_random = (int) (Math.random() * 3);  // рандомний вибір де буде пропуск
-        int int_true_value = (int) (Math.random() * 6);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
+        int int_pryklad_random = 3; //(int) (Math.random() * 3);  // рандомний вибір де буде пропуск
+        int int_true_value = 2; //(int) (Math.random() * 6);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
 
         if (getGame().equals("easy")) {  // перевірка чи рівень easy
 
@@ -193,7 +193,7 @@ public class GameWorld1 {
 
 
                 case 2:
-                    setString_to_screen(true_variant + " " + string_znak + " " + string_propusk + " = " + int_result);
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
                     string_propusk_in_pryklad = "number_2";
 
                     true_variant = int_number_2;
@@ -204,7 +204,7 @@ public class GameWorld1 {
                     break;
 
                 case 3:
-                    setString_to_screen(true_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
                     string_propusk_in_pryklad = "result";
 
                     true_variant = int_result;
@@ -232,7 +232,7 @@ public class GameWorld1 {
                     break;
 
                 case 2:
-                    setString_to_screen(true_variant + " " + string_znak + " " + string_propusk + " = " + int_result);
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
                     string_propusk_in_pryklad = "number_2";
 
                     true_variant = int_number_2;
@@ -242,7 +242,7 @@ public class GameWorld1 {
                     break;
 
                 case 3:
-                    setString_to_screen(true_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
                     string_propusk_in_pryklad = "result";
 
                     true_variant = int_result;
@@ -277,7 +277,7 @@ public class GameWorld1 {
                     break;
 
                 case 2:
-                    setString_to_screen(true_variant + " " + string_znak + " " + string_propusk + " = " + int_result);
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
                     string_propusk_in_pryklad = "number_2";
 
                     true_variant = int_number_2;
@@ -288,7 +288,7 @@ public class GameWorld1 {
                     break;
 
                 case 3:
-                    setString_to_screen(true_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
                     string_propusk_in_pryklad = "result";
 
                     true_variant = int_result;
