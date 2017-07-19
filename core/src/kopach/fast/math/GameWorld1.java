@@ -14,10 +14,10 @@ public class GameWorld1 {
     int int_min_plus, int_max_plus, int_result, true_variant, int_number_2;
 
     public int int_score = 0, int_tr_propusk_x;
-    public String string_to_screen = "0";
+    public String string_to_screen = "пусто";
     public String string_input = "";
 
-    public String string_score, string_timer, string_neprav_vidp;
+    public String string_score, string_timer;
 
     public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
 
@@ -173,32 +173,32 @@ public class GameWorld1 {
 
         setString_score(String.valueOf(int_score));
 
-        int int_pryklad_random = (int) (Math.random() * 2);  // рандомний вибір де буде не вистачати числа
-        int int_true_value = (int) (Math.random() * 5);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
+        int int_pryklad_random = (int) (Math.random() * 3);  // рандомний вибір де буде пропуск
+        int int_true_value = (int) (Math.random() * 6);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
 
         if (getGame().equals("easy")) {  // перевірка чи рівень easy
 
             switch (int_pryklad_random) {
                 case 1:  // пропуск в першого числа
-                    string_to_screen = string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result;
+                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
                     string_propusk_in_pryklad = "number_1";
 
                     setRandomValues();
-
                     setTrueValue(int_true_value);
                     break;
 
 
                 case 2:
-                    string_to_screen = true_variant + " " + string_znak + " " + string_propusk + " = " + int_result;
+                    setString_to_screen(true_variant + " " + string_znak + " " + string_propusk + " = " + int_result);
                     string_propusk_in_pryklad = "number_2";
+
                     setRandomValues();
                     setTrueValue(int_true_value);
 
                     break;
 
                 case 3:
-                    string_to_screen = true_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk;
+                    setString_to_screen(true_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
                     string_propusk_in_pryklad = "result";
 
                     setRandomValues();
@@ -213,7 +213,7 @@ public class GameWorld1 {
         } else if (getGame().equals("normal")) {
             switch (int_pryklad_random) {
                 case 1:
-                    string_to_screen = string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result;
+                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
                     string_propusk_in_pryklad = "number_1";
 
                     setRandomValues();
@@ -222,7 +222,7 @@ public class GameWorld1 {
                     break;
 
                 case 2:
-                    string_to_screen = true_variant + " " + string_znak + " " + string_propusk + " = " + int_result;
+                    setString_to_screen(true_variant + " " + string_znak + " " + string_propusk + " = " + int_result);
                     string_propusk_in_pryklad = "number_2";
 
                     setRandomValues();
@@ -230,16 +230,17 @@ public class GameWorld1 {
                     break;
 
                 case 3:
-                    string_to_screen = true_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk;
+                    setString_to_screen(true_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
                     string_propusk_in_pryklad = "result";
 
-                    setInt_btn_1(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+                   /* setInt_btn_1(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
                     setInt_btn_2(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
                     setInt_btn_3(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
                     setInt_btn_4(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
                     setInt_btn_5(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-                    setInt_btn_6(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+                    setInt_btn_6(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);  */
 
+                    setRandomValues();
                     setTrueValue(int_true_value);
 
                     break;
@@ -251,7 +252,7 @@ public class GameWorld1 {
         } else if (getGame().equals("hard")) {
             switch (int_pryklad_random) {
                 case 1:
-                    string_to_screen = string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result;
+                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
                     string_propusk_in_pryklad = "number_1";
 
                     setRandomValues();
@@ -260,7 +261,7 @@ public class GameWorld1 {
                     break;
 
                 case 2:
-                    string_to_screen = true_variant + " " + string_znak + " " + string_propusk + " = " + int_result;
+                    setString_to_screen(true_variant + " " + string_znak + " " + string_propusk + " = " + int_result);
                     string_propusk_in_pryklad = "number_2";
 
                     setRandomValues();
@@ -269,7 +270,7 @@ public class GameWorld1 {
                     break;
 
                 case 3:
-                    string_to_screen = true_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk;
+                    setString_to_screen(true_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
                     string_propusk_in_pryklad = "result";
 
                     setRandomValues();
@@ -282,9 +283,12 @@ public class GameWorld1 {
 
         }
         setInt_tr_propusk_x();
-        gameScreen1.updateBurttonText(this);
+        gameScreen1.updateButtonText(this);
+
+        Gdx.app.log("GameWorld1","updateButtonText");
 
     }
+
 
     public void setInt_tr_propusk_x() {  // налаштування, де буде з'являтись знак питання
 
@@ -435,15 +439,6 @@ public class GameWorld1 {
 
     public int getInt_btn_6() {
         return int_btn_6;
-    }
-
-
-    public void setString_neprav_vidp(String string_neprav_vidp) {
-        this.string_neprav_vidp = string_neprav_vidp;
-    }
-
-    public String getString_neprav_vidp() {
-        return string_neprav_vidp;
     }
 
 

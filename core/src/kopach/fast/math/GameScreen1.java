@@ -91,6 +91,8 @@ public class GameScreen1 implements Screen {
 
         gameWorld1.setString_timer(delta);
 
+        updateButtonText(gameWorld1);
+
         myGameClass.spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
         myGameClass.spriteBatch.begin();
@@ -144,7 +146,7 @@ public class GameScreen1 implements Screen {
 
     }
 
-    void updateBurttonText(GameWorld1 gameWorld) {
+    void updateButtonText(GameWorld1 gameWorld) {
         Gdx.app.log("tag", "update");
         Gdx.app.log("tag", "null" + gameWorld.getInt_btn_1());
         btn_1.setText(String.valueOf(gameWorld.getInt_btn_1()));
