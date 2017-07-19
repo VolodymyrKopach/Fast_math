@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -25,8 +26,6 @@ public class GameScreen implements Screen {
     MyGameClass myGameClass;
     public GameWorld gameWorld;
 
-    //TODO test
-
     public TextureAtlas textureAtlas_vg;
     public TextureRegion tr_screen, tr_fon, tr_X;
 
@@ -38,6 +37,8 @@ public class GameScreen implements Screen {
     public TextButton.TextButtonStyle btn1_style, btn2_style, btn3_style, btn4_style, btn5_style, btn6_style, btn7_style, btn8_style, btn9_style, btn_minus_style, btn0_style, btn_C_style, btn_answer_style;
     Skin skin;
     BitmapFont text_to_button;
+    BitmapFont mGC_gs_text_pryklad, mGC_gs_text_vidp, mGC_gs_text_score, mGC_gs_text_time;
+    SpriteBatch mGC_spriteBatch;
 
 
     float screen_width = 720, screen_height = 1280;
@@ -52,6 +53,8 @@ public class GameScreen implements Screen {
         gameWorld = new GameWorld();
 
         Gdx.input.setCatchBackKey(true);
+
+        variables_x_y();
         variables();
 
         orthographicCamera = new OrthographicCamera();
@@ -103,10 +106,10 @@ public class GameScreen implements Screen {
         if (gameWorld.getBoolean_X()){
             myGameClass.spriteBatch.draw(tr_X, tr_X_x, tr_X_y,width_X, height_X);
         }
-        myGameClass.text_pryklad.draw(myGameClass.spriteBatch, gameWorld.getString_to_screen(), text_pryklad_x, text_pryklad_y);
-        myGameClass.text_vidp.draw(myGameClass.spriteBatch, gameWorld.getString_input(), text_vidp_x, text_vidp_y);
-        myGameClass.text_score.draw(myGameClass.spriteBatch, gameWorld.getString_score(), text_score_x, text_score_y);
-        myGameClass.text_time.draw(myGameClass.spriteBatch, gameWorld.getString_timer(), text_time_x, text_time_y);
+        myGameClass.gs_text_pryklad.draw(myGameClass.spriteBatch, gameWorld.getString_to_screen(), text_pryklad_x, text_pryklad_y);
+        myGameClass.gs_text_vidp.draw(myGameClass.spriteBatch, gameWorld.getString_input(), text_vidp_x, text_vidp_y);
+        myGameClass.gs_text_score.draw(myGameClass.spriteBatch, gameWorld.getString_score(), text_score_x, text_score_y);
+        myGameClass.gs_text_time.draw(myGameClass.spriteBatch, gameWorld.getString_timer(), text_time_x, text_time_y);
         myGameClass.spriteBatch.end();
 
         stage_vg.act(delta);
@@ -140,7 +143,18 @@ public class GameScreen implements Screen {
 
     }
 
+
     public void variables(){
+        mGC_spriteBatch = myGameClass.spriteBatch;
+
+        mGC_gs_text_time = myGameClass.gs_text_time;
+        mGC_gs_text_score = myGameClass.gs_text_score;
+        mGC_gs_text_pryklad = myGameClass.gs_text_pryklad;
+        mGC_gs_text_vidp = myGameClass.gs_text_vidp;
+
+    }
+
+    public void variables_x_y(){
         width_btn = 185;  height_btn = 185;
         width_btn_answer = 235;  height_btn_answer = 235;
         width_btn_C = 76;  height_btn_C = 110;

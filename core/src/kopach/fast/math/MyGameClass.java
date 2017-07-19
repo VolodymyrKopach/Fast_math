@@ -10,7 +10,7 @@ public class MyGameClass extends Game {
     private AdsController adsController;
 
     public SpriteBatch spriteBatch;
-    public BitmapFont text_vidp, text_pryklad, text_score, text_time, text_restart_t_s, text_restart_t_b_s, text_restart_s, text_restart_b_s;
+    public BitmapFont gs_text_vidp, gs_text_pryklad, gs_text_score, gs_text_time, text_restart_t_s, text_restart_t_b_s, text_restart_s, text_restart_b_s;
     public BitmapFont score_textlevel, score_t_b_s, score_b_s;
     public BitmapFont gs1_text_text_score, gs1_text_score, gs1_text_time, gs1_text_text_no_prav_vidp, gs1_text_no_prav_vidp, gs1_text_pryklad, gs1_text_vidp, gs1_text_btn;
 
@@ -39,18 +39,18 @@ public class MyGameClass extends Game {
     }
 
     public void bitmapFont() {
-        text_vidp = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
-        text_pryklad = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
-        text_score = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
-        text_time = new BitmapFont(Gdx.files.internal("bitmapfont/game text time.fnt"), Gdx.files.internal("bitmapfont/game text time.png"), false);
+        gs_text_vidp = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
+        gs_text_pryklad = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
+        gs_text_score = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
+        gs_text_time = new BitmapFont(Gdx.files.internal("bitmapfont/game text time.fnt"), Gdx.files.internal("bitmapfont/game text time.png"), false);
         text_restart_s = new BitmapFont(Gdx.files.internal("bitmapfont/black plus.fnt"), Gdx.files.internal("bitmapfont/black plus.png"), false);
         text_restart_t_s = new BitmapFont(Gdx.files.internal("bitmapfont/black.fnt"), Gdx.files.internal("bitmapfont/black.png"), false);
         text_restart_t_b_s = new BitmapFont(Gdx.files.internal("bitmapfont/black.fnt"), Gdx.files.internal("bitmapfont/black.png"), false);
         text_restart_b_s = new BitmapFont(Gdx.files.internal("bitmapfont/blue normal.fnt"), Gdx.files.internal("bitmapfont/blue normal.png"), false);
-        text_vidp.getData().setScale(1.5f, 1.5f);
-        text_pryklad.getData().setScale(1.4f, 1.4f);
-        text_score.getData().setScale(0.5f, 0.5f);
-        text_time.getData().setScale(1.3f, 1.3f);
+        gs_text_vidp.getData().setScale(1.5f, 1.5f);
+        gs_text_pryklad.getData().setScale(1.4f, 1.4f);
+        gs_text_score.getData().setScale(0.5f, 0.5f);
+        gs_text_time.getData().setScale(1.3f, 1.3f);
         text_restart_s.getData().setScale(1, 1);
         text_restart_t_s.getData().setScale(1f, 1f);
         text_restart_t_b_s.getData().setScale(1f, 1f);
