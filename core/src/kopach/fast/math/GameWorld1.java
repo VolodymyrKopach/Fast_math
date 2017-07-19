@@ -11,13 +11,13 @@ import java.util.Random;
 
 public class GameWorld1 {
 
-    int int_min_plus, int_max_plus, int_result, int_number_1, int_number_2;
+    int int_min_plus, int_max_plus, int_result, tru_variant, int_number_2;
 
     public int int_neprav_vidp = 3, int_score = 0, int_tr_propusk_x;
     public String string_to_screen = "0";
     public String string_input = "";
 
-    public String  string_score, string_timer, string_neprav_vidp;
+    public String string_score, string_timer, string_neprav_vidp;
 
     public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
 
@@ -29,606 +29,471 @@ public class GameWorld1 {
     String string_znak = "", string_propusk = "     ", string_propusk_in_pryklad = "";
     public int int_btn_1 = 10, int_btn_2, int_btn_3, int_btn_4, int_btn_5, int_btn_6;
 
+    GameScreen1 gameScreen1;
 
-    public GameWorld1(){
-
+    public GameWorld1(GameScreen1 gameScreen1) { // запускаться відразу при запуску класа
+        this.gameScreen1 = gameScreen1;
         preferences_game = Gdx.app.getPreferences("My_preferences_game");
 
-        preferences_easy = Gdx.app.getPreferences("My_preferences_easy");
-        preferences_normal = Gdx.app.getPreferences("My_preferences_normal");
-        preferences_hard = Gdx.app.getPreferences("My_preferences_hard");
-
         startGame();
-
-
-        //  setString_neprav_vidp(String.valueOf(int_neprav_vidp));
     }
 
-    public void startGame(){
+    public void startGame() {
+        Gdx.app.log("GameWorld1", "запуск гри");
 
-        Gdx.app.log("GameWorld1","запуск гри");
-
-        if(getGame().equals("easy")){
+        string_input = "";
+        boolean_text_button = false;
+        // зчитує який рівен вибраний, і після запускає гру
+        if (getGame().equals("easy")) {
             game_easy();
-
-        }if(getGame().equals("normal")){
+        } else if (getGame().equals("normal")) {
             game_normal();
-
-        }if(getGame().equals("hard")){
+        } else if (getGame().equals("hard")) {
             game_hard();
-
         }
     }
 
 
+    public void game_easy() {
+        Gdx.app.log("GameWorld1", "game level");
+        int prykladrandom = new Random().nextInt(2);
 
-    public  void game_easy() {
+        // створення приклада
+        int_min_plus = 10;
+        int_max_plus = 100;
 
-        Gdx.app.log("GameWorld1","game level");
+        tru_variant = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
+        int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
+        switch (prykladrandom) {
+            case 0: // додавання
+                int_result = tru_variant + int_number_2;
+                string_znak = "+";
+                break;
+
+            case 1:  // віднімання
+                int_result = tru_variant - int_number_2;
+                string_znak = "-";
+                break;
+        }
+        make_pryklad();
+
+    }
+
+    public void game_normal() {
+        Gdx.app.log("GameWorld1", "game normal");
 
         int prykladrandom = (int) (Math.random() * 2);
 
-        switch (prykladrandom) {
-            case 0:
-                string_input = "";
-                int_min_plus = 10;
-                int_max_plus = 100;
-                int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_result = int_number_1 + int_number_2;
-                string_znak = "+";
-
-                break;
-
-            case 1:
-                string_input = "";
-                int_min_plus = 10;
-                int_max_plus = 100;
-                int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_result = int_number_1 - int_number_2;
-                string_znak = "-";
-
-                break;
-        }
-
-        boolean_text_button = false;
-
-        pryklad_render();
-
-    }
-
-    public  void game_normal() {
-        Gdx.app.log("GameWorld1","game normal");
-
-        int prykladrandom = (int) (Math.random() * 2);
+        int_min_plus = 100;
+        int_max_plus = 1000;
+        tru_variant = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
+        int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
 
         switch (prykladrandom) {
             case 0:
-                string_input = "";
-                int_min_plus = 100;
-                int_max_plus = 1000;
-                int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_result = int_number_1 + int_number_2;
+                int_result = tru_variant + int_number_2;
                 string_znak = "+";
-
                 break;
 
             case 1:
-                string_input = "";
-                int_min_plus = 100;
-                int_max_plus = 1000;
-                int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_result = int_number_1 - int_number_2;
+                int_result = tru_variant - int_number_2;
                 string_znak = "-";
-
                 break;
         }
-
-        boolean_text_button = false;
-        pryklad_render();
+        make_pryklad();
 
     }
 
-    public  void game_hard() {
+    public void game_hard() {
 
-        Gdx.app.log("GameWorld1","game hard");
+        Gdx.app.log("GameWorld1", "game hard");
 
-        int prykladrandom = (int) (Math.random() * 2);
+        int prykladrandom = new Random().nextInt(2);
 
+        int_min_plus = 1000;
+        int_max_plus = 10000;
+        tru_variant = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
+        int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
         switch (prykladrandom) {
             case 0:
-                string_input = "";
-                int_min_plus = 1000;
-                int_max_plus = 10000;
-                int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_result = int_number_1 + int_number_2;
+                int_result = tru_variant + int_number_2;
                 string_znak = "+";
-
                 break;
 
             case 1:
-                string_input = "";
-                int_min_plus = 1000;
-                int_max_plus = 10000;
-                int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-                int_result = int_number_1 - int_number_2;
+                int_result = tru_variant - int_number_2;
                 string_znak = "-";
-
                 break;
         }
-
-        boolean_text_button = false;
-        pryklad_render();
+        make_pryklad();
     }
 
-    public void pryklad_render() {
+    void setRandomValues() {
+        // присвоєння рандомних значень варіантів відповідей
+        setInt_btn_1(tru_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+        setInt_btn_2(tru_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+        setInt_btn_3(tru_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+        setInt_btn_4(tru_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+        setInt_btn_5(tru_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+        setInt_btn_6(tru_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+    }
 
-        Gdx.app.log("GameWorld1","pryklad render");
+    // призначення правильної відповіді, рандомно вибраній змінні
+    void setTrueValue(int trueValue) {
+        switch (trueValue) {  // призначення правильної відповіді, рандомно вибраній змінні
+            case 1:
+                setInt_btn_1(tru_variant);
+                break;
+            case 2:
+                setInt_btn_2(tru_variant);
+                break;
+            case 3:
+                setInt_btn_3(tru_variant);
+                break;
+            case 4:
+                setInt_btn_4(tru_variant);
+                break;
+            case 5:
+                setInt_btn_5(tru_variant);
+                break;
+            case 6:
+                setInt_btn_6(tru_variant);
+                break;
 
-        setString_neprav_vidp(String.valueOf(int_neprav_vidp));
+        }
+    }
+
+    public void make_pryklad() { // метод в якому створюється приклад
+
+        Gdx.app.log("GameWorld1", "pryklad render");
+
         setString_score(String.valueOf(int_score));
 
-        int int_pryklad_random = (int) (Math.random() * 2);
-        int int_answer_random = (int) (Math.random() * 5);
+        int int_pryklad_random = (int) (Math.random() * 2);  // рандомний вибір де буде не вистачати числа
+        int int_answer_random = (int) (Math.random() * 5);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
 
-        if(getGame().equals("easy")){
-            int int_min = 10;
-            int int_max = 100;
+        if (getGame().equals("easy")) {  // перевірка чи рівень easy
 
+            switch (int_pryklad_random) {
+                case 1:  // пропуск в першого числа
+                    string_to_screen = string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result;
+                    string_propusk_in_pryklad = "number_1";
+
+                    setRandomValues();
+
+                    setTrueValue(int_answer_random);
+                    break;
+
+
+                case 2:
+                    string_to_screen = tru_variant + " " + string_znak + " " + string_propusk + " = " + int_result;
+                    string_propusk_in_pryklad = "number_2";
+                    setRandomValues();
+                    setTrueValue(int_answer_random);
+
+                    break;
+
+                case 3:
+                    string_to_screen = tru_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk;
+                    string_propusk_in_pryklad = "result";
+
+                    setRandomValues();
+                    setTrueValue(int_answer_random);
+
+                    break;
+            }
+
+            Gdx.app.log("GameWorld1", "pryklad render/switch easy");
+
+
+        } else if (getGame().equals("normal")) {
             switch (int_pryklad_random) {
                 case 1:
                     string_to_screen = string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result;
                     string_propusk_in_pryklad = "number_1";
 
-                    setInt_btn_1(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_2(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_3(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_4(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_5(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_6(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-
-                    switch (int_answer_random){
-                        case 1: setInt_btn_1(int_number_1); break;
-                        case 2: setInt_btn_2(int_number_1); break;
-                        case 3: setInt_btn_3(int_number_1); break;
-                        case 4: setInt_btn_4(int_number_1); break;
-                        case 5: setInt_btn_5(int_number_1); break;
-                        case 6: setInt_btn_6(int_number_1); break;
-
-                    }
+                    setRandomValues();
+                    setTrueValue(int_answer_random);
 
                     break;
 
                 case 2:
-                    string_to_screen = int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result;
+                    string_to_screen = tru_variant + " " + string_znak + " " + string_propusk + " = " + int_result;
                     string_propusk_in_pryklad = "number_2";
 
-                    setInt_btn_1(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_2(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_3(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_4(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_5(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_6(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-
-                    switch (int_answer_random){
-                        case 1: setInt_btn_1(int_number_2); break;
-                        case 2: setInt_btn_2(int_number_2); break;
-                        case 3: setInt_btn_3(int_number_2); break;
-                        case 4: setInt_btn_4(int_number_2); break;
-                        case 5: setInt_btn_5(int_number_2); break;
-                        case 6: setInt_btn_6(int_number_2); break;
-                    }
-
+                    setRandomValues();
+                    setTrueValue(int_answer_random);
                     break;
 
                 case 3:
-                    string_to_screen = int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk;
+                    string_to_screen = tru_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk;
                     string_propusk_in_pryklad = "result";
 
-                    setInt_btn_1(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_2(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_3(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_4(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_5(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_6(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
+                    setInt_btn_1(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+                    setInt_btn_2(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+                    setInt_btn_3(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+                    setInt_btn_4(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+                    setInt_btn_5(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+                    setInt_btn_6(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
 
-                    switch (int_answer_random){
-                        case 1: setInt_btn_1(int_result); break;
-                        case 2: setInt_btn_2(int_result); break;
-                        case 3: setInt_btn_3(int_result); break;
-                        case 4: setInt_btn_4(int_result); break;
-                        case 5: setInt_btn_5(int_result); break;
-                        case 6: setInt_btn_6(int_result); break;
-                    }
+                    setTrueValue(int_answer_random);
 
                     break;
             }
 
-            Gdx.app.log("GameWorld1","pryklad render/switch easy");
+            Gdx.app.log("GameWorld1", "switch normal");
 
 
-        }else if(getGame().equals("normal")){
-
-            int int_min = 100;
-            int int_max = 1000;
-
+        } else if (getGame().equals("hard")) {
             switch (int_pryklad_random) {
                 case 1:
                     string_to_screen = string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result;
                     string_propusk_in_pryklad = "number_1";
 
-                    setInt_btn_1(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_2(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_3(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_4(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_5(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_6(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-
-                    switch (int_answer_random){
-                        case 1: int_btn_1 = int_number_1; break;
-                        case 2: int_btn_2 = int_number_1; break;
-                        case 3: int_btn_3 = int_number_1; break;
-                        case 4: int_btn_4 = int_number_1; break;
-                        case 5: int_btn_5 = int_number_1; break;
-                        case 6: int_btn_6 = int_number_1; break;
-                    }
+                    setRandomValues();
+                    setTrueValue(int_answer_random);
 
                     break;
 
                 case 2:
-                    string_to_screen = int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result;
+                    string_to_screen = tru_variant + " " + string_znak + " " + string_propusk + " = " + int_result;
                     string_propusk_in_pryklad = "number_2";
 
-                    setInt_btn_1(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_2(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_3(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_4(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_5(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_6(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-
-                    switch (int_answer_random){
-                        case 1: int_btn_1 = int_number_2; break;
-                        case 2: int_btn_2 = int_number_2; break;
-                        case 3: int_btn_3 = int_number_2; break;
-                        case 4: int_btn_4 = int_number_2; break;
-                        case 5: int_btn_5 = int_number_2; break;
-                        case 6: int_btn_6 = int_number_2; break;
-                    }
+                    setRandomValues();
+                    setTrueValue(int_answer_random);
 
                     break;
 
                 case 3:
-                    string_to_screen = int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk;
+                    string_to_screen = tru_variant + " " + string_znak + " " + int_number_2 + " = " + string_propusk;
                     string_propusk_in_pryklad = "result";
 
-                    setInt_btn_1(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_2(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_3(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_4(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_5(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_6(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-
-                    switch (int_answer_random){
-                        case 1: int_btn_1 = int_result; break;
-                        case 2: int_btn_2 = int_result; break;
-                        case 3: int_btn_3 = int_result; break;
-                        case 4: int_btn_4 = int_result; break;
-                        case 5: int_btn_5 = int_result; break;
-                        case 6: int_btn_6 = int_result; break;
-                    }
+                    setRandomValues();
+                    setTrueValue(int_answer_random);
 
                     break;
             }
 
-            Gdx.app.log("GameWorld1","switch normal");
-
-
-        }else if(getGame().equals("hard")){
-
-            int int_min = 1000;
-            int int_max = 10000;
-
-            switch (int_pryklad_random) {
-                case 1:
-                    string_to_screen = string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result;
-                    string_propusk_in_pryklad = "number_1";
-
-                    setInt_btn_1(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_2(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_3(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_4(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_5(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_6(int_number_1 + new Random().nextInt(int_max - int_min + 1) + int_min);
-
-                    switch (int_answer_random){
-                        case 1: int_btn_1 = int_number_1; break;
-                        case 2: int_btn_2 = int_number_1; break;
-                        case 3: int_btn_3 = int_number_1; break;
-                        case 4: int_btn_4 = int_number_1; break;
-                        case 5: int_btn_5 = int_number_1; break;
-                        case 6: int_btn_6 = int_number_1; break;
-                    }
-
-                    break;
-
-                case 2:
-                    string_to_screen = int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result;
-                    string_propusk_in_pryklad = "number_2";
-
-                    setInt_btn_1(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_2(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_3(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_4(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_5(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_6(int_number_2 + new Random().nextInt(int_max - int_min + 1) + int_min);
-
-                    switch (int_answer_random){
-                        case 1: int_btn_1 = int_number_2; break;
-                        case 2: int_btn_2 = int_number_2; break;
-                        case 3: int_btn_3 = int_number_2; break;
-                        case 4: int_btn_4 = int_number_2; break;
-                        case 5: int_btn_5 = int_number_2; break;
-                        case 6: int_btn_6 = int_number_2; break;
-                    }
-
-                    break;
-
-                case 3:
-                    string_to_screen = int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk;
-                    string_propusk_in_pryklad = "result";
-
-                    setInt_btn_1(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_2(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_3(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_4(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_5(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-                    setInt_btn_6(int_result + new Random().nextInt(int_max - int_min + 1) + int_min);
-
-                    switch (int_answer_random){
-                        case 1: int_btn_1 = int_result; break;
-                        case 2: int_btn_2 = int_result; break;
-                        case 3: int_btn_3 = int_result; break;
-                        case 4: int_btn_4 = int_result; break;
-                        case 5: int_btn_5 = int_result; break;
-                        case 6: int_btn_6 = int_result; break;
-                    }
-
-                    break;
-            }
-
-            Gdx.app.log("GameWorld1","switch hard");
+            Gdx.app.log("GameWorld1", "switch hard");
 
         }
-
         setInt_tr_propusk_x();
+        gameScreen1.updateBurttonText(this);
 
     }
 
-    public void setInt_tr_propusk_x() {
+    public void setInt_tr_propusk_x() {  // налаштування, де буде з'являтись знак питання
 
-        Gdx.app.log("GameWorld1","set propusk");
+        Gdx.app.log("GameWorld1", "set propusk");
 
-        if(getGame().equals("easy")){
-            if (string_propusk_in_pryklad.equals("number_1")){
+        if (getGame().equals("easy")) {
+            if (string_propusk_in_pryklad.equals("number_1")) {
                 int_tr_propusk_x = 75;
 
-            }else if (string_propusk_in_pryklad.equals("number_2")){
+            } else if (string_propusk_in_pryklad.equals("number_2")) {
                 int_tr_propusk_x = 300;
 
-            }else if (string_propusk_in_pryklad.equals("result")){
+            } else if (string_propusk_in_pryklad.equals("result")) {
                 int_tr_propusk_x = 600;
             }
 
 
-        }else if(getGame().equals("normal")){
-            if (string_propusk_in_pryklad.equals("number_1")){
+        } else if (getGame().equals("normal")) {
+            if (string_propusk_in_pryklad.equals("number_1")) {
                 int_tr_propusk_x = 75;
 
-            }else if (string_propusk_in_pryklad.equals("number_2")){
+            } else if (string_propusk_in_pryklad.equals("number_2")) {
                 int_tr_propusk_x = 350;
 
-            }else if (string_propusk_in_pryklad.equals("result")){
+            } else if (string_propusk_in_pryklad.equals("result")) {
                 int_tr_propusk_x = 600;
             }
 
 
-        }else if(getGame().equals("hard")){
-            if (string_propusk_in_pryklad.equals("number_1")){
+        } else if (getGame().equals("hard")) {
+            if (string_propusk_in_pryklad.equals("number_1")) {
                 int_tr_propusk_x = 75; //можна витягнути через static text_pryklad_x з GameScreen_1
 
-            }else if (string_propusk_in_pryklad.equals("number_2")){
+            } else if (string_propusk_in_pryklad.equals("number_2")) {
                 int_tr_propusk_x = 350;
 
-            }else if (string_propusk_in_pryklad.equals("result")){
+            } else if (string_propusk_in_pryklad.equals("result")) {
                 int_tr_propusk_x = 600;
             }
 
         }
-
     }
 
-    public int getInt_tr_propusk_x() {
-
-      //  Gdx.app.log("GameWorld1","get propusk");
-
+    public int getInt_tr_propusk_x() {  //зчитка, де буде з'являтись знак питання
         return int_tr_propusk_x;
     }
 
-    public void answer(){
+    private void nextGame() { //викликаєтьсчя після того, як ти вибрав правильну відповідь
+        boolean_X = false;
+        boolean_text_button = true;
+        int_score++;
+        float_timer = 15;
 
-        Gdx.app.log("GameWorld1","answer");
+        if (getGame().equals("easy")) {
+            setHighScore_easy(int_score);
+            game_easy();
 
-        if(string_propusk_in_pryklad.equals("number_1")){
-            if (string_input.equals(String.valueOf(int_number_1))) {
-                boolean_X = false;
-                boolean_text_button = true;
-                int_score++;
-                float_timer = 15;
+        } else if (getGame().equals("normal")) {
+            setHighScore_normal(int_score);
+            game_normal();
 
-                if(getGame().equals("easy")){
-                    setHighScore_easy(int_score);
-                    game_easy();
+        } else if (getGame().equals("hard")) {
+            setHighScore_hard(int_score);
+            game_hard();
+        }
+    }
 
-                }if(getGame().equals("normal")){
-                    setHighScore_normal(int_score);
-                    game_normal();
+    public void answer() {  // метод який виконується коли вибираєш якусь відповідь
 
-                }if(getGame().equals("hard")){
-                    setHighScore_hard(int_score);
-                    game_hard();
-                }
-            }else {
+        Gdx.app.log("GameWorld1", "answer");
+
+        if (string_propusk_in_pryklad.equals("number_1")) {  //  зчитка де немає числа
+            if (string_input.equals(String.valueOf(tru_variant))) {
+                nextGame();
+            } else {
                 boolean_X = true;
             }
 
 
-
-        }else if(string_propusk_in_pryklad.equals("number_2")){
+        } else if (string_propusk_in_pryklad.equals("number_2")) {
             if (string_input.equals(String.valueOf(int_number_2))) {
-                boolean_X = false;
-                boolean_text_button = true;
-                int_score++;
-                float_timer = 15;
 
-                if(getGame().equals("easy")){
-                    setHighScore_easy(int_score);
-                    game_easy();
-
-                }if(getGame().equals("normal")){
-                    setHighScore_normal(int_score);
-                    game_normal();
-
-                }if(getGame().equals("hard")){
-                    setHighScore_hard(int_score);
-                    game_hard();
-
-                }
-            }else{
+                nextGame();
+            } else {
                 boolean_X = true;
             }
 
 
-        }else if(string_propusk_in_pryklad.equals("result")){
+        } else if (string_propusk_in_pryklad.equals("result")) {
             if (string_input.equals(String.valueOf(int_result))) {
-                boolean_X = false;
-                boolean_text_button = true;
-                int_score++;
-                float_timer = 15;
-
-                if(getGame().equals("easy")){
-                    setHighScore_easy(int_score);
-                    game_easy();
-
-                }if(getGame().equals("normal")){
-                    setHighScore_normal(int_score);
-                    game_normal();
-
-                }if(getGame().equals("hard")){
-                    setHighScore_hard(int_score);
-                    game_hard();
-
-                }
-            }else {
-                    boolean_X = true;
+                nextGame();
+            } else {
+                boolean_X = true;
             }
 
         }
     }
 
 
-    public void setInt_btn_1(int int_btn_1) {this.int_btn_1 = int_btn_1;}
+    public void setInt_btn_1(int int_btn_1) {
+        this.int_btn_1 = int_btn_1;
+    }
 
-    public int getInt_btn_1() {return int_btn_1;}
-
-
-    public void setInt_btn_2(int int_btn_2) {this.int_btn_2 = int_btn_2;}
-
-    public int getInt_btn_2() {return int_btn_2;}
-
-
-    public void setInt_btn_3(int int_btn_3) {this.int_btn_3 = int_btn_3;}
-
-    public int getInt_btn_3() {return int_btn_3;}
+    public int getInt_btn_1() {
+        return int_btn_1;
+    }
 
 
-    public void setInt_btn_4(int int_btn_4) {this.int_btn_4 = int_btn_4;}
+    public void setInt_btn_2(int int_btn_2) {
+        this.int_btn_2 = int_btn_2;
+    }
 
-    public int getInt_btn_4() {return int_btn_4;}
-
-
-    public void setInt_btn_5(int int_btn_5) {this.int_btn_5 = int_btn_5;}
-
-    public int getInt_btn_5() {return int_btn_5;}
-
-
-    public void setInt_btn_6(int int_btn_6) {this.int_btn_6 = int_btn_6;}
-
-    public int getInt_btn_6() {return int_btn_6;}
+    public int getInt_btn_2() {
+        return int_btn_2;
+    }
 
 
-    public void setString_neprav_vidp(String string_neprav_vidp) {this.string_neprav_vidp = string_neprav_vidp;}
+    public void setInt_btn_3(int int_btn_3) {
+        this.int_btn_3 = int_btn_3;
+    }
 
-    public String getString_neprav_vidp() {return string_neprav_vidp;}
+    public int getInt_btn_3() {
+        return int_btn_3;
+    }
 
 
+    public void setInt_btn_4(int int_btn_4) {
+        this.int_btn_4 = int_btn_4;
+    }
+
+    public int getInt_btn_4() {
+        return int_btn_4;
+    }
 
 
+    public void setInt_btn_5(int int_btn_5) {
+        this.int_btn_5 = int_btn_5;
+    }
+
+    public int getInt_btn_5() {
+        return int_btn_5;
+    }
 
 
-    public void setGame(String string_game){
+    public void setInt_btn_6(int int_btn_6) {
+        this.int_btn_6 = int_btn_6;
+    }
+
+    public int getInt_btn_6() {
+        return int_btn_6;
+    }
+
+
+    public void setString_neprav_vidp(String string_neprav_vidp) {
+        this.string_neprav_vidp = string_neprav_vidp;
+    }
+
+    public String getString_neprav_vidp() {
+        return string_neprav_vidp;
+    }
+
+
+    public void setGame(String string_game) {  //  запам'ятовування вибраного рівня
         preferences_game.putString("save_game", string_game);
         preferences_game.flush();
 
     }
 
-    public String getGame(){
+    public String getGame() {
         return preferences_game.getString("save_game");
     }
 
 
-    public void setHighScore_easy(int int_score_easy_to_save){
+    public void setHighScore_easy(int int_score_easy_to_save) {
         if (int_score_easy_to_save > getHighScore_easy()) {
             preferences_easy.putInteger("save_int_score", int_score_easy_to_save);
             preferences_easy.flush();
         }
     }
 
-    public int getHighScore_easy(){
+    public int getHighScore_easy() {
         return preferences_easy.getInteger("save_int_score", 0);
 
     }
 
-    public void setHighScore_normal(int int_score_normal_to_save){
+    public void setHighScore_normal(int int_score_normal_to_save) {
         if (int_score_normal_to_save > getHighScore_normal()) {
             preferences_normal.putInteger("save_int_score", int_score_normal_to_save);
             preferences_normal.flush();
         }
     }
 
-    public int getHighScore_normal(){
+    public int getHighScore_normal() {
         return preferences_normal.getInteger("save_int_score", 0);
 
     }
 
-    public void setHighScore_hard(int int_score_hard_to_save){
+    public void setHighScore_hard(int int_score_hard_to_save) {
         if (int_score_hard_to_save > getHighScore_hard()) {
             preferences_hard.putInteger("save_int_score", int_score_hard_to_save);
             preferences_hard.flush();
         }
     }
 
-    public int getHighScore_hard(){
+    public int getHighScore_hard() {
         return preferences_hard.getInteger("save_int_score", 0);
 
     }
 
 
-    public void setString_to_screen(String string_to_screen) {this.string_to_screen = string_to_screen;}
+    public void setString_to_screen(String string_to_screen) {
+        this.string_to_screen = string_to_screen;
+    }
 
     public String getString_to_screen() {
         return string_to_screen;
@@ -644,7 +509,9 @@ public class GameWorld1 {
     }
 
 
-    public void setString_score(String string_score) {this.string_score = string_score;}
+    public void setString_score(String string_score) {
+        this.string_score = string_score;
+    }
 
     public String getString_score() {
         return string_score;
@@ -654,7 +521,7 @@ public class GameWorld1 {
     public void setString_timer(float dt) {
         float_timer -= dt;
 
-        int_timer = (int)float_timer;
+        int_timer = (int) float_timer;
 
         string_timer = int_timer + "";
     }
@@ -664,8 +531,7 @@ public class GameWorld1 {
     }
 
 
-
-    public boolean getBoolean_X(){
+    public boolean getBoolean_X() {
         return boolean_X;
     }
 
@@ -685,7 +551,4 @@ public class GameWorld1 {
 
         }
     }  */
-
-
-
 }
