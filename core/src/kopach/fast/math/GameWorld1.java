@@ -176,7 +176,7 @@ public class GameWorld1 {
         setString_score(String.valueOf(int_score));
 
         int int_pryklad_random = 3; //(int) (Math.random() * 3);  // рандомний вибір де буде пропуск
-        int int_true_value = 2; //(int) (Math.random() * 6);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
+        int int_true_value = 6; //(int) (Math.random() * 6);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
 
         if (getGame().equals("easy")) {  // перевірка чи рівень easy
 
