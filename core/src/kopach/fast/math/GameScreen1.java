@@ -77,7 +77,6 @@ public class GameScreen1 implements Screen {
         tr_propusk = new TextureRegion(textureAtlas_vg.findRegion("znak pytanya"));
         text_to_button = new BitmapFont();
         //  myGameClass.bannerAdShow();
-        variables_x_y();
     }
 
     @Override
@@ -106,7 +105,7 @@ public class GameScreen1 implements Screen {
             // myGameClass.spriteBatch.draw(tr_X, tr_X_x, tr_X_y,X_width, X_height);
         }
 
-        mGC_spriteBatch.draw(tr_propusk, tr_propusk_x, tr_propusk_y, tr_propusk_width, tr_propusk_height);
+        mGC_spriteBatch.draw(tr_propusk, gameWorld1.getInt_tr_propusk_x(), tr_propusk_y, tr_propusk_width, tr_propusk_height);
         mGC_gs1_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         mGC_gs1_text_score.draw(mGC_spriteBatch, gameWorld1.getString_score(), text_score_x, text_score_y);
         mGC_gs1_text_pryklad.draw(mGC_spriteBatch, gameWorld1.getString_to_screen(), text_pryklad_x, text_pryklad_y);
@@ -148,7 +147,7 @@ public class GameScreen1 implements Screen {
 
     void updateButtonText(GameWorld1 gameWorld) {
         Gdx.app.log("tag", "update");
-        Gdx.app.log("tag", "null" + gameWorld.getInt_btn_1());
+       // Gdx.app.log("tag", "null " + gameWorld.getInt_btn_1()); А для чого це?
         btn_1.setText(String.valueOf(gameWorld.getInt_btn_1()));
         btn_2.setText(String.valueOf(gameWorld.getInt_btn_2()));
         btn_3.setText(String.valueOf(gameWorld.getInt_btn_3()));
@@ -172,7 +171,7 @@ public class GameScreen1 implements Screen {
         tr_propusk_width = 90;
         tr_propusk_height = 110;
 
-        tr_propusk_x = gameWorld1.getInt_tr_propusk_x();
+     //   tr_propusk_x = gameWorld1.getInt_tr_propusk_x();
         tr_propusk_y = 900;
 
         text_pryklad_x = 75;
