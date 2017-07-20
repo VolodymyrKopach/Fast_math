@@ -13,6 +13,7 @@ public class MyGameClass extends Game {
     public BitmapFont gs_text_vidp, gs_text_pryklad, gs_text_score, gs_text_time, text_restart_t_s, text_restart_t_b_s, text_restart_s, text_restart_b_s;
     public BitmapFont score_textlevel, score_t_b_s, score_b_s;
     public BitmapFont gs1_text_text_score, gs1_text_score, gs1_text_time, gs1_text_text_no_prav_vidp, gs1_text_no_prav_vidp, gs1_text_pryklad, gs1_text_vidp, gs1_text_btn;
+    public BitmapFont gs2_text_text_score, gs2_text_score, gs2_text_time, gs2_text_pryklad, gs2_text_vidp, gs2_text_znak;
 
     public MyGameClass(AdsController adsController) {
         this.adsController = adsController;
@@ -31,7 +32,7 @@ public class MyGameClass extends Game {
 
         bitmapFont();
 
-        this.setScreen(new GameScreen1(this));
+        this.setScreen(new GameScreen2(this));
     }
 
     public void render() {
@@ -79,6 +80,19 @@ public class MyGameClass extends Game {
         gs1_text_pryklad.getData().setScale(1.4f, 1.4f);
         gs1_text_vidp.getData().setScale(1.5f, 1.5f);
         gs1_text_btn.getData().setScale(0.8f, 0.8f);
+
+        gs2_text_text_score = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        gs2_text_score = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
+        gs2_text_time = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        gs2_text_pryklad = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        gs2_text_znak = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        gs2_text_vidp = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        gs2_text_text_score.getData().setScale(0.5f, 0.5f);
+        gs2_text_score.getData().setScale(0.6f, 0.6f);
+        gs2_text_time.getData().setScale(0.7f, 0.7f);
+        gs2_text_pryklad.getData().setScale(1.6f, 1.6f);
+        gs2_text_znak.getData().setScale(1.5f, 1.5f);
+        gs2_text_vidp.getData().setScale(1.7f, 1.7f);
     }
 
     public void bannerAdShow() {

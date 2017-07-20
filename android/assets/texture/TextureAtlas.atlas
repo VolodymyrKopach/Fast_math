@@ -66,14 +66,14 @@ fon 1
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn dorivnjue
+btn menjshe press
   rotate: false
   xy: 1027, 993
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn biljshe
+btn dorivnjue
   rotate: false
   xy: 1027, 479
   size: 512, 512
@@ -414,7 +414,28 @@ TextureAtlas2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+btn dorivnjue press
+  rotate: false
+  xy: 1, 1289
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn biljshe
+  rotate: false
+  xy: 1, 775
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 btn krug
+  rotate: false
+  xy: 515, 1289
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn biljshe press
   rotate: false
   xy: 1, 261
   size: 512, 512
@@ -423,14 +444,21 @@ btn krug
   index: -1
 btn menjshe
   rotate: false
-  xy: 515, 261
+  xy: 515, 775
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 btn 1
   rotate: false
-  xy: 1029, 261
+  xy: 1029, 1289
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn krug press
+  rotate: false
+  xy: 515, 261
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
@@ -444,14 +472,14 @@ btn start
   index: -1
 btn exit
   rotate: false
-  xy: 1, 1
+  xy: 1029, 1159
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 btn exit press
   rotate: false
-  xy: 515, 131
+  xy: 1, 1
   size: 512, 128
   orig: 512, 128
   offset: 0, 0

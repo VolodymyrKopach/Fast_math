@@ -175,8 +175,8 @@ public class GameWorld1 {
 
         setString_score(String.valueOf(int_score));
 
-        int int_pryklad_random = 3; //(int) (Math.random() * 3);  // рандомний вибір де буде пропуск
-        int int_true_value = 6; //(int) (Math.random() * 6);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
+        int int_pryklad_random = new Random().nextInt(3)+1;; //(int) (Math.random() * 3);  // рандомний вибір де буде пропуск
+        int int_true_value = new Random().nextInt(6)+1;// рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
 
         if (getGame().equals("easy")) {  // перевірка чи рівень easy
 
@@ -303,7 +303,7 @@ public class GameWorld1 {
 
         }
         setInt_tr_propusk_x();
-      //  gameScreen1.updateButtonText(this);
+        gameScreen1.updateButtonText(this);
 
         Gdx.app.log("GameWorld1","updateButtonText");
 
