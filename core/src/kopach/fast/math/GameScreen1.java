@@ -41,7 +41,7 @@ public class GameScreen1 implements Screen {
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont mGC_gs1_text_text_score, mGC_gs1_text_score, mGC_gs1_text_pryklad, mGC_gs1_text_vidp, mGC_gs1_text_time;
+    BitmapFont mGC_gs1_text_text_score, mGC_gs1_text_score, mGC_gs1_text_pryklad, mGC_gs1_text_vidp_right, mGC_gs1_text_vidp_wrong, mGC_gs1_text_time;
     SpriteBatch mGC_spriteBatch;
 
 
@@ -88,31 +88,34 @@ public class GameScreen1 implements Screen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        gameWorld1.setString_timer(delta);
+        gameWorld1.timer_game(delta);
 
-     //   updateButtonText(gameWorld1);
+        if (gameWorld1.bool_timer_wait_start){
+            gameWorld1.timer_wait(delta);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {    //  спрацьовує коли нажато Back
+            myGameClass.setScreen(new MenuScreen(myGameClass));
+        }
 
         myGameClass.spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
         myGameClass.spriteBatch.begin();
         myGameClass.spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {    //  спрацьовує коли нажато Back
-            myGameClass.setScreen(new MenuScreen(myGameClass));
-        }
-
-        if (gameWorld1.getBoolean_X()) {
-            // myGameClass.spriteBatch.draw(tr_X, tr_X_x, tr_X_y,X_width, X_height);
-        }
-
         mGC_spriteBatch.draw(tr_propusk, gameWorld1.getInt_tr_propusk_x(), tr_propusk_y, tr_propusk_width, tr_propusk_height);
         mGC_gs1_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         mGC_gs1_text_score.draw(mGC_spriteBatch, gameWorld1.getString_score(), text_score_x, text_score_y);
         mGC_gs1_text_pryklad.draw(mGC_spriteBatch, gameWorld1.getString_to_screen(), text_pryklad_x, text_pryklad_y);
-        mGC_gs1_text_vidp.draw(mGC_spriteBatch, gameWorld1.getString_input(), text_vidp_x, text_vidp_y);
-        mGC_gs1_text_time.draw(mGC_spriteBatch, gameWorld1.getString_timer(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
-        mGC_spriteBatch.end();
+        mGC_gs1_text_time.draw(mGC_spriteBatch, gameWorld1.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
 
+        if (gameWorld1.bool_answer_right){
+            mGC_gs1_text_vidp_right.draw(mGC_spriteBatch, gameWorld1.getString_input(), text_vidp_x, text_vidp_y);
+        }else {
+            mGC_gs1_text_vidp_wrong.draw(mGC_spriteBatch, gameWorld1.getString_input(), text_vidp_x, text_vidp_y);
+        }
+
+        mGC_spriteBatch.end();
 
         stage_vg.act(delta);
         stage_vg.draw();
@@ -164,7 +167,8 @@ public class GameScreen1 implements Screen {
         mGC_gs1_text_text_score = myGameClass.gs1_text_text_score;
         mGC_gs1_text_score = myGameClass.gs1_text_score;
         mGC_gs1_text_pryklad = myGameClass.gs1_text_pryklad;
-        mGC_gs1_text_vidp = myGameClass.gs1_text_vidp;
+        mGC_gs1_text_vidp_right = myGameClass.gs1_text_vidp_right;
+        mGC_gs1_text_vidp_wrong = myGameClass.gs1_text_vidp_wrong;
     }
 
     public void variables_x_y() {   // налаштування значень Х і У для прорисовки

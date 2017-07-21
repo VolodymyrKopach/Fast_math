@@ -16,20 +16,20 @@ public class GameWorld1 {
     int int_min_plus, int_max_plus, int_result, true_variant, int_number_1, int_number_2;
 
     public int int_score = 0, int_tr_propusk_x;
-    public String string_to_screen = "пусто";
+    public String string_to_screen = "";
     public String string_input = "";
 
-    public String string_score, string_timer;
+    public String string_score, string_timer_game;
 
     public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
 
-    public float float_timer = 15;
+    public float float_timer = 15, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
 
-    public boolean boolean_X = false, boolean_text_button = false;
+    public boolean boolean_X = false, bool_answer_right = false, bool_timer_wait_start = false;
 
     String string_znak = "", string_propusk = "     ", string_propusk_in_pryklad = "";
-    public int int_btn_1 = 10, int_btn_2, int_btn_3, int_btn_4, int_btn_5, int_btn_6;
+    public int int_btn_1, int_btn_2, int_btn_3, int_btn_4, int_btn_5, int_btn_6;
 
     GameScreen1 gameScreen1;
 
@@ -48,13 +48,15 @@ public class GameWorld1 {
         Gdx.app.log("GameWorld1", "запуск гри");
 
         string_input = "";
-        boolean_text_button = false;
         // зчитує який рівен вибраний, і після запускає гру
         if (getGame().equals("easy")) {
+            setHighScore_easy(int_score);
             game_easy();
         } else if (getGame().equals("normal")) {
+            setHighScore_normal(int_score);
             game_normal();
         } else if (getGame().equals("hard")) {
+            setHighScore_hard(int_score);
             game_hard();
         }
     }
@@ -134,6 +136,119 @@ public class GameWorld1 {
         make_pryklad();
     }
 
+
+    public void make_pryklad() { // метод в якому створюється приклад
+
+        Gdx.app.log("GameWorld1", "pryklad render");
+
+        setString_score(String.valueOf(int_score));
+
+        int int_pryklad_random = 3; //(int) (Math.random() * 3);  // рандомний вибір де буде пропуск
+        int int_true_value = new Random().nextInt(6) + 1; //(int) (Math.random() * 6);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
+
+        if (getGame().equals("easy")) {  // перевірка чи рівень easy
+
+            switch (int_pryklad_random) {
+                case 1:  // пропуск в першого числа
+                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
+                    string_propusk_in_pryklad = "number_1";
+
+                    true_variant = int_number_1;
+
+                    break;
+
+
+                case 2:
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
+                    string_propusk_in_pryklad = "number_2";
+
+                    true_variant = int_number_2;
+
+                    break;
+
+                case 3:
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
+                    string_propusk_in_pryklad = "result";
+
+                    true_variant = int_result;
+
+                    break;
+            }
+
+            Gdx.app.log("GameWorld1", "pryklad render/switch easy");
+
+
+        } else if (getGame().equals("normal")) {
+            switch (int_pryklad_random) {
+                case 1:
+                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
+                    string_propusk_in_pryklad = "number_1";
+
+                    true_variant = int_number_1;
+
+                    break;
+
+                case 2:
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
+                    string_propusk_in_pryklad = "number_2";
+
+                    true_variant = int_number_2;
+
+                    break;
+
+                case 3:
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
+                    string_propusk_in_pryklad = "result";
+
+                    true_variant = int_result;
+
+                    break;
+            }
+
+            Gdx.app.log("GameWorld1", "switch normal");
+
+
+        } else if (getGame().equals("hard")) {
+            switch (int_pryklad_random) {
+                case 1:
+                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
+                    string_propusk_in_pryklad = "number_1";
+
+                    true_variant = int_number_1;
+
+                    break;
+
+                case 2:
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
+                    string_propusk_in_pryklad = "number_2";
+
+                    true_variant = int_number_2;
+
+                    break;
+
+                case 3:
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
+                    string_propusk_in_pryklad = "result";
+
+                    true_variant = int_result;
+
+                    break;
+            }
+
+            Gdx.app.log("GameWorld1", "switch hard");
+
+        }
+        setInt_tr_propusk_x();
+
+        setRandomValues();
+        setTrueValue(int_true_value);
+        gameScreen1.updateButtonText(this);
+
+        Gdx.app.log("GameWorld1", "updateButtonText");
+
+    }
+
+
     void setRandomValues() {
         // присвоєння рандомних значень варіантів відповідей
         setInt_btn_1(true_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
@@ -167,139 +282,6 @@ public class GameWorld1 {
                 break;
 
         }
-    }
-
-    public void make_pryklad() { // метод в якому створюється приклад
-
-        Gdx.app.log("GameWorld1", "pryklad render");
-
-        setString_score(String.valueOf(int_score));
-
-        int int_pryklad_random = 3; //(int) (Math.random() * 3);  // рандомний вибір де буде пропуск
-        int int_true_value = new Random().nextInt(6) + 1; //(int) (Math.random() * 6);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
-
-        if (getGame().equals("easy")) {  // перевірка чи рівень easy
-
-            switch (int_pryklad_random) {
-                case 1:  // пропуск в першого числа
-                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
-                    string_propusk_in_pryklad = "number_1";
-
-                    true_variant = int_number_1;
-
-                    setRandomValues();
-                    setTrueValue(int_true_value);
-                    break;
-
-
-                case 2:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
-                    string_propusk_in_pryklad = "number_2";
-
-                    true_variant = int_number_2;
-
-                    setRandomValues();
-                    setTrueValue(int_true_value);
-
-                    break;
-
-                case 3:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
-                    string_propusk_in_pryklad = "result";
-
-                    true_variant = int_result;
-
-                    setRandomValues();
-                    setTrueValue(int_true_value);
-
-                    break;
-            }
-
-            Gdx.app.log("GameWorld1", "pryklad render/switch easy");
-
-
-        } else if (getGame().equals("normal")) {
-            switch (int_pryklad_random) {
-                case 1:
-                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
-                    string_propusk_in_pryklad = "number_1";
-
-                    true_variant = int_number_1;
-
-                    setRandomValues();
-                    setTrueValue(int_true_value);
-
-                    break;
-
-                case 2:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
-                    string_propusk_in_pryklad = "number_2";
-
-                    true_variant = int_number_2;
-
-                    setRandomValues();
-                    setTrueValue(int_true_value);
-                    break;
-
-                case 3:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
-                    string_propusk_in_pryklad = "result";
-
-                    true_variant = int_result;
-
-                    setRandomValues();
-                    setTrueValue(int_true_value);
-
-                    break;
-            }
-
-            Gdx.app.log("GameWorld1", "switch normal");
-
-
-        } else if (getGame().equals("hard")) {
-            switch (int_pryklad_random) {
-                case 1:
-                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
-                    string_propusk_in_pryklad = "number_1";
-
-                    true_variant = int_number_1;
-
-                    setRandomValues();
-                    setTrueValue(int_true_value);
-
-                    break;
-
-                case 2:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
-                    string_propusk_in_pryklad = "number_2";
-
-                    true_variant = int_number_2;
-
-                    setRandomValues();
-                    setTrueValue(int_true_value);
-
-                    break;
-
-                case 3:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
-                    string_propusk_in_pryklad = "result";
-
-                    true_variant = int_result;
-
-                    setRandomValues();
-                    setTrueValue(int_true_value);
-
-                    break;
-            }
-
-            Gdx.app.log("GameWorld1", "switch hard");
-
-        }
-        setInt_tr_propusk_x();
-        //  gameScreen1.updateButtonText(this);
-
-        Gdx.app.log("GameWorld1", "updateButtonText");
-
     }
 
 
@@ -349,56 +331,47 @@ public class GameWorld1 {
         return int_tr_propusk_x;
     }
 
-    private void nextGame() { //викликаєтьсчя після того, як ти вибрав правильну відповідь
-        boolean_X = false;
-        boolean_text_button = true;
-        int_score++;
-        float_timer = 15;
-        setString_input("");
-
-        if (getGame().equals("easy")) {
-            setHighScore_easy(int_score);
-            game_easy();
-
-        } else if (getGame().equals("normal")) {
-            setHighScore_normal(int_score);
-            game_normal();
-
-        } else if (getGame().equals("hard")) {
-            setHighScore_hard(int_score);
-            game_hard();
-        }
-    }
 
     public void answer() {  // метод який виконується коли вибираєш якусь відповідь
 
         Gdx.app.log("GameWorld1", "answer");
 
         if (string_propusk_in_pryklad.equals("number_1")) {  //  зчитка де немає числа
-            if (string_input.equals(String.valueOf(true_variant))) {
-                nextGame();
-            } else {
-                boolean_X = true;
-            }
+            if (string_input.equals(String.valueOf(int_number_1))) {
+                answer_right();
 
+            } else {
+                answer_wrong();
+            }
 
         } else if (string_propusk_in_pryklad.equals("number_2")) {
             if (string_input.equals(String.valueOf(int_number_2))) {
+                answer_right();
 
-                nextGame();
             } else {
-                boolean_X = true;
+                answer_wrong();
             }
-
 
         } else if (string_propusk_in_pryklad.equals("result")) {
             if (string_input.equals(String.valueOf(int_result))) {
-                nextGame();
-            } else {
-                boolean_X = true;
-            }
+                answer_right();
 
+            } else {
+                answer_wrong();
+            }
         }
+    }
+
+    private void answer_right() { //викликаєтьсчя після того, як ти вибрав правильну відповідь
+        bool_timer_wait_start = true;
+        bool_answer_right = true;
+        int_score++;
+        float_timer = 15;
+    }
+
+    public void answer_wrong(){
+        bool_answer_right = false;
+
     }
 
 
@@ -531,25 +504,29 @@ public class GameWorld1 {
     }
 
 
-    public void setString_timer(float dt) {
+    public void timer_game(float dt) {
         float_timer -= dt;
 
         int_timer = (int) float_timer;
 
-        string_timer = int_timer + "";
+        if(int_timer<0){
+            // що відбудеться коли закінчиться час
+        }else{string_timer_game = int_timer + "";}
     }
 
-    public String getString_timer() {
-        return string_timer;
+    public String getTimer_game() {
+        return string_timer_game;
     }
 
+    public void timer_wait(float dt) {
+        float_timer_wait -= dt;
 
-    public boolean getBoolean_X() {
-        return boolean_X;
-    }
+        Gdx.app.log(" ", float_timer_wait + "");
 
-    public boolean getBoolean_text_button() {
-        return boolean_text_button;
+        if(float_timer_wait<0){
+            bool_timer_wait_start = false;
+            startGame();
+        }
     }
 
     /* public void inputNumber(){
