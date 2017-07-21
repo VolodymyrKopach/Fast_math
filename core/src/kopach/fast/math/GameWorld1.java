@@ -175,8 +175,8 @@ public class GameWorld1 {
 
         setString_score(String.valueOf(int_score));
 
-        int int_pryklad_random = new Random().nextInt(3)+1;; //(int) (Math.random() * 3);  // рандомний вибір де буде пропуск
-        int int_true_value = new Random().nextInt(6)+1;// рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
+        int int_pryklad_random = 3; //(int) (Math.random() * 3);  // рандомний вибір де буде пропуск
+        int int_true_value = new Random().nextInt(6) + 1; //(int) (Math.random() * 6);  // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
 
         if (getGame().equals("easy")) {  // перевірка чи рівень easy
 
@@ -247,13 +247,6 @@ public class GameWorld1 {
 
                     true_variant = int_result;
 
-                   /* setInt_btn_1(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-                    setInt_btn_2(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-                    setInt_btn_3(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-                    setInt_btn_4(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-                    setInt_btn_5(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-                    setInt_btn_6(int_result + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);  */
-
                     setRandomValues();
                     setTrueValue(int_true_value);
 
@@ -303,9 +296,9 @@ public class GameWorld1 {
 
         }
         setInt_tr_propusk_x();
-        gameScreen1.updateButtonText(this);
+        //  gameScreen1.updateButtonText(this);
 
-        Gdx.app.log("GameWorld1","updateButtonText");
+        Gdx.app.log("GameWorld1", "updateButtonText");
 
     }
 
