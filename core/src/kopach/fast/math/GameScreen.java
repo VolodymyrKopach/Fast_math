@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
     public GameWorld gameWorld;
 
     public TextureAtlas textureAtlas_vg;
-    public TextureRegion tr_screen, tr_fon, tr_X;
+    public TextureRegion tr_screen, tr_fon, tr_X, tr_left_border;
 
     Viewport viewport;
     public OrthographicCamera orthographicCamera;
@@ -43,10 +43,10 @@ public class GameScreen implements Screen {
     boolean flag_is_scroll_to_left;
 
     float screen_width = 720, screen_height = 1280;
-    public float width_btn, height_btn, width_btn_answer, height_btn_answer, width_btn_C, height_btn_C, tr_screen_width, tr_screen_height;
+    public float width_btn, height_btn, width_btn_answer, height_btn_answer, width_btn_C, height_btn_C, tr_screen_width, tr_screen_height, tr_left_border_width, tr_left_border_height;
     float width_X, height_X;
     public float vidstan_width, vidstan_height;
-    public float btn_C_x, btn_C_y, btn0_x, btn0_y, btn1_x, btn1_y, btn2_x, btn2_y, btn3_x, btn3_y, btn4_x, btn4_y, btn5_x, btn5_y, btn6_x, btn6_y, btn7_x, btn7_y, btn8_x, btn8_y, btn9_x, btn9_y, btn_minus_x, btn_minus_y, btn_answer_x, btn_answer_y, tr_X_x, tr_X_y, tr_screen_x, tr_screen_y;
+    public float btn_C_x, btn_C_y, btn0_x, btn0_y, btn1_x, btn1_y, btn2_x, btn2_y, btn3_x, btn3_y, btn4_x, btn4_y, btn5_x, btn5_y, btn6_x, btn6_y, btn7_x, btn7_y, btn8_x, btn8_y, btn9_x, btn9_y, btn_minus_x, btn_minus_y, btn_answer_x, btn_answer_y, tr_X_x, tr_X_y, tr_screen_x, tr_screen_y, tr_left_border_x, tr_left_border_y;
     float text_score_x, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y;
 
     public GameScreen(final MyGameClass myGameClass) {
@@ -67,6 +67,7 @@ public class GameScreen implements Screen {
         tr_screen = new TextureRegion(textureAtlas_vg.findRegion("screen"));
         tr_fon = new TextureRegion(textureAtlas_vg.findRegion("fon"));
         tr_X = new TextureRegion(textureAtlas_vg.findRegion("x"));
+        tr_left_border = new TextureRegion(textureAtlas_vg.findRegion("fon"));
 
         stage_vg = new Stage(viewport);
         stage_vg.clear();
@@ -113,6 +114,7 @@ public class GameScreen implements Screen {
         myGameClass.gs_text_vidp.draw(myGameClass.spriteBatch, gameWorld.getString_input(), text_vidp_x, text_vidp_y);
         myGameClass.gs_text_score.draw(myGameClass.spriteBatch, gameWorld.getString_score(), text_score_x, text_score_y);
         myGameClass.gs_text_time.draw(myGameClass.spriteBatch, gameWorld.getString_timer(), text_time_x, text_time_y);
+        myGameClass.spriteBatch.draw(tr_left_border, tr_left_border_x, tr_left_border_y, tr_left_border_width, tr_left_border_height);
         myGameClass.spriteBatch.end();
 
         stage_vg.act(delta);
@@ -170,9 +172,12 @@ public class GameScreen implements Screen {
         tr_screen_height = 200;
         vidstan_width = 20;
         vidstan_height = 18;
+        tr_left_border_width = 30;
+        tr_left_border_height = 200;
 
 
         tr_screen_x = screen_width / 2 - (tr_screen_width / 2);
+        tr_left_border_x = 0;
         btn1_x = (screen_width - (width_btn * 3 + vidstan_width * 2)) / 2;
         btn4_x = btn1_x;
         btn7_x = btn1_x;
@@ -194,6 +199,7 @@ public class GameScreen implements Screen {
 
         tr_X_y = screen_height - width_X - 20;
         tr_screen_y = tr_X_y - 40 - tr_screen_height;
+        tr_left_border_y = tr_screen_y;
         btn_C_y = tr_screen_y + (tr_screen_height / 2 - 60);
         btn1_y = tr_screen_y - height_btn - 98;
         btn2_y = btn1_y;
