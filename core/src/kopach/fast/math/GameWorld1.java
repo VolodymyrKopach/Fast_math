@@ -524,6 +524,7 @@ public class GameWorld1 {
         Gdx.app.log(" ", float_timer_wait + "");
 
         if(float_timer_wait<0){
+            float_timer_wait = 0.5f;
             bool_timer_wait_start = false;
             startGame();
         }
