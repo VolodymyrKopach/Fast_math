@@ -38,7 +38,10 @@ public class GameScreen implements Screen {
     BitmapFont text_to_button;
     BitmapFont mGC_gs_text_pryklad, mGC_gs_text_vidp, mGC_gs_text_score, mGC_gs_text_time;
     SpriteBatch mGC_spriteBatch;
+
+    //цей прапор служить для перевірки, щоб завжди було тільки одне видалення
     boolean flag_is_scroll_to_left;
+
     float screen_width = 720, screen_height = 1280;
     public float width_btn, height_btn, width_btn_answer, height_btn_answer, width_btn_C, height_btn_C, tr_screen_width, tr_screen_height;
     float width_X, height_X;
@@ -223,6 +226,10 @@ public class GameScreen implements Screen {
     public void textButton() {
         Gdx.app.log("log", "text button");
 
+        // скоротив ініціалізацію кнопок
+
+        //остання цифра в методі CreateButton це цифра яку ми будемо додаватив текстове поле,
+        // якщо -1 то не додаємо нічого
         btn_answer = createButton("btn_answer_press", "btn_answer", -1);
         btn_answer.setPosition(btn_answer_x, btn_answer_y);
         btn_answer.setSize(width_btn, height_btn);
@@ -314,8 +321,6 @@ public class GameScreen implements Screen {
                     text_vidp_x += 50;
                 }
                 flag_is_scroll_to_left = false;
-                // dispose();
-
             }
         });
     }
@@ -338,6 +343,7 @@ public class GameScreen implements Screen {
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     gameWorld.setString_input(String.valueOf(number));
                     if (gameWorld.getString_input().length() == 4) {
+                        //цей прапор служить для перевірки, щоб завжди було тільки одне видалення
                         if (!flag_is_scroll_to_left) {
                             text_pryklad_x -= 50;
                             text_vidp_x -= 50;
