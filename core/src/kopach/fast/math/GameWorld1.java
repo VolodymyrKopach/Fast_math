@@ -511,7 +511,7 @@ public class GameWorld1 {
 
         if(int_timer<0){
             // що відбудеться коли закінчиться час
-        }else{string_timer_game = int_timer + "";}
+        }else {string_timer_game = int_timer + "";}
     }
 
     public String getTimer_game() {
