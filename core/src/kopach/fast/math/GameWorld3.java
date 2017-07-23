@@ -3,6 +3,7 @@ package kopach.fast.math;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Random;
  */
 
 public class GameWorld3 {
-
+    ArrayList<Integer> values;
     int int_min_plus, int_max_plus, int_result, true_variant, int_number_1, int_number_2;
 
     public int int_score = 0;
@@ -25,13 +26,12 @@ public class GameWorld3 {
     int int_timer = 2;  //любе число, головне >0
 
     public boolean bool_answer_right = false, bool_timer_wait_start = false; // колит нажав на відповідь, і відповідь правильна, то чекає пів секунди і потім виводить новий приклад
-
-    public int int_btn_1, int_btn_2, int_btn_3, int_btn_4, int_btn_5, int_btn_6, int_btn_7, int_btn_8, int_btn_9, int_btn_10, int_btn_11, int_btn_12, int_btn_13, int_btn_14, int_btn_15, int_btn_16, int_btn_17, int_btn_18, int_btn_19, int_btn_20, int_btn_21, int_btn_22, int_btn_23, int_btn_24;
-
     GameScreen3 gameScreen3;
 
     public GameWorld3(GameScreen3 gameScreen3) { // запускаться відразу при запуску класа
         this.gameScreen3 = gameScreen3;
+        values = new ArrayList<Integer>();
+        generateValue();
         preferences_game = Gdx.app.getPreferences("My_preferences_game");
 
         preferences_easy = Gdx.app.getPreferences("My_preferences_score_easy");
@@ -39,6 +39,30 @@ public class GameWorld3 {
         preferences_hard = Gdx.app.getPreferences("My_preferences_score_hard");
 
         startGame();
+    }
+
+    private void generateValue() {
+        // заповнюємо масив числами
+        for (int i = 0; i < 24; i++) {
+            values.add(new Random().nextInt(100));
+        }
+        checkIsUnique();
+    }
+
+    private void checkIsUnique() {
+        for (int i = 0; i < values.size(); i++) {
+            for (int j = 1 + i; j < values.size(); j++) {
+                if (values.get(i) == values.get(j)) {
+                    Gdx.app.log("GameScreen1", "Знайдено однакові значення " + i);
+                    values.set(i, new Random().nextInt(100));
+                }
+            }
+        }
+    }
+
+    //Витягуємо звідси число для кнопки
+    public String getValue(int position) {
+        return String.valueOf(values.get(position));
     }
 
     public void startGame() {
@@ -77,176 +101,6 @@ public class GameWorld3 {
         int_score++;
         float_timer = 15;
     }
-
-
-    public void setInt_btn_1(int int_btn_1) {
-        this.int_btn_1 = int_btn_1;
-    }
-    public int getInt_btn_1() {
-        return int_btn_1;
-    }
-
-    public void setInt_btn_2(int int_btn_2) {
-        this.int_btn_2 = int_btn_2;
-    }
-    public int getInt_btn_2() {
-        return int_btn_2;
-    }
-
-    public void setInt_btn_3(int int_btn_3) {
-        this.int_btn_3 = int_btn_3;
-    }
-    public int getInt_btn_3() {
-        return int_btn_3;
-    }
-
-    public void setInt_btn_4(int int_btn_4) {
-        this.int_btn_4 = int_btn_4;
-    }
-    public int getInt_btn_4() {
-        return int_btn_4;
-    }
-
-    public void setInt_btn_5(int int_btn_5) {
-        this.int_btn_5 = int_btn_5;
-    }
-    public int getInt_btn_5() {
-        return int_btn_5;
-    }
-
-    public void setInt_btn_6(int int_btn_6) {
-        this.int_btn_6 = int_btn_6;
-    }
-    public int getInt_btn_6() {
-        return int_btn_6;
-    }
-
-    public void setInt_btn_7(int int_btn_7) {
-        this.int_btn_7 = int_btn_7;
-    }
-    public int getInt_btn_7() {
-        return int_btn_7;
-    }
-
-    public void setInt_btn_8(int int_btn_8) {
-        this.int_btn_8 = int_btn_8;
-    }
-    public int getInt_btn_8() {
-        return int_btn_8;
-    }
-
-    public void setInt_btn_9(int int_btn_9) {
-        this.int_btn_9 = int_btn_9;
-    }
-    public int getInt_btn_9() {
-        return int_btn_9;
-    }
-
-    public void setInt_btn_10(int int_btn_10) {
-        this.int_btn_10 = int_btn_10;
-    }
-    public int getInt_btn_10() {
-        return int_btn_10;
-    }
-
-    public void setInt_btn_11(int int_btn_11) {
-        this.int_btn_11 = int_btn_11;
-    }
-    public int getInt_btn_11() {
-        return int_btn_11;
-    }
-
-    public void setInt_btn_12(int int_btn_12) {
-        this.int_btn_12 = int_btn_12;
-    }
-    public int getInt_btn_12() {
-        return int_btn_12;
-    }
-
-    public void setInt_btn_13(int int_btn_13) {
-        this.int_btn_13 = int_btn_13;
-    }
-    public int getInt_btn_13() {
-        return int_btn_13;
-    }
-
-    public void setInt_btn_14(int int_btn_14) {
-        this.int_btn_14 = int_btn_14;
-    }
-    public int getInt_btn_14() {
-        return int_btn_14;
-    }
-
-    public void setInt_btn_15(int int_btn_15) {
-        this.int_btn_15 = int_btn_15;
-    }
-    public int getInt_btn_15() {
-        return int_btn_15;
-    }
-
-    public void setInt_btn_16(int int_btn_16) {
-        this.int_btn_16 = int_btn_16;
-    }
-    public int getInt_btn_16() {
-        return int_btn_16;
-    }
-
-    public void setInt_btn_17(int int_btn_17) {
-        this.int_btn_17 = int_btn_17;
-    }
-    public int getInt_btn_17() {
-        return int_btn_17;
-    }
-
-    public void setInt_btn_18(int int_btn_18) {
-        this.int_btn_18 = int_btn_18;
-    }
-    public int getInt_btn_18() {
-        return int_btn_18;
-    }
-
-    public void setInt_btn_19(int int_btn_19) {
-        this.int_btn_19 = int_btn_19;
-    }
-    public int getInt_btn_19() {
-        return int_btn_19;
-    }
-
-    public void setInt_btn_20(int int_btn_20) {
-        this.int_btn_20 = int_btn_20;
-    }
-    public int getInt_btn_20() {
-        return int_btn_20;
-    }
-
-    public void setInt_btn_21(int int_btn_21) {
-        this.int_btn_21 = int_btn_21;
-    }
-    public int getInt_btn_21() {
-        return int_btn_21;
-    }
-
-    public void setInt_btn_22(int int_btn_22) {
-        this.int_btn_22 = int_btn_22;
-    }
-    public int getInt_btn_22() {
-        return int_btn_22;
-    }
-
-    public void setInt_btn_23(int int_btn_23) {
-        this.int_btn_23 = int_btn_23;
-    }
-    public int getInt_btn_23() {
-        return int_btn_23;
-    }
-
-    public void setInt_btn_24(int int_btn_24) {
-        this.int_btn_24 = int_btn_24;
-    }
-    public int getInt_btn_24() {
-        return int_btn_24;
-    }
-
 
     public void setGame(String string_game) {  //  запам'ятовування вибраного рівня
         preferences_game.putString("save_game", string_game);
@@ -300,7 +154,7 @@ public class GameWorld3 {
     }
 
     public String getString_score() {
-        return string_score;
+        return "20";
     }
 
 
@@ -309,9 +163,11 @@ public class GameWorld3 {
 
         int_timer = (int) float_timer;
 
-        if(int_timer<0){
+        if (int_timer < 0) {
             // що відбудеться коли закінчиться час
-        }else {string_timer_game = int_timer + "";}
+        } else {
+            string_timer_game = int_timer + "";
+        }
     }
 
     public String getTimer_game() {
@@ -323,7 +179,7 @@ public class GameWorld3 {
 
         Gdx.app.log(" ", float_timer_wait + "");
 
-        if(float_timer_wait<0){
+        if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
             bool_timer_wait_start = false;
             startGame();

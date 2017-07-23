@@ -33,7 +33,7 @@ public class MyGameClass extends Game {
 
         bitmapFont();
 
-        this.setScreen(new GameScreen2(this));
+        this.setScreen(new GameScreen3(this));
     }
 
     public void render() {

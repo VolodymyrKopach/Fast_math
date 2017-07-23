@@ -143,6 +143,7 @@ public class GameWorld1 {
 
 
     public void make_pryklad() { // метод в якому створюється приклад
+        gameScreen1.FLAG_SHOW_QUESTION_MARK = true;
 
         Gdx.app.log("GameWorld1", "pryklad render");
 
@@ -256,12 +257,20 @@ public class GameWorld1 {
 
     void setRandomValues() {
         // присвоєння рандомних значень варіантів відповідей
-        setInt_btn_1(true_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-        setInt_btn_2(true_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-        setInt_btn_3(true_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-        setInt_btn_4(true_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-        setInt_btn_5(true_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
-        setInt_btn_6(true_variant + new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus);
+        setInt_btn_1(calculateValue());
+        setInt_btn_2(calculateValue());
+        setInt_btn_3(calculateValue());
+        setInt_btn_4(calculateValue());
+        setInt_btn_5(calculateValue());
+        setInt_btn_6(calculateValue());
+    }
+
+    private int calculateValue() {
+        if (new Random().nextInt(2) == 0) {
+            return true_variant + new Random().nextInt(25);
+        } else {
+            return true_variant - new Random().nextInt(25);
+        }
     }
 
     // призначення правильної відповіді, рандомно вибраній змінні
@@ -285,7 +294,6 @@ public class GameWorld1 {
             case 6:
                 setInt_btn_6(true_variant);
                 break;
-
         }
     }
 
@@ -374,9 +382,8 @@ public class GameWorld1 {
         float_timer = 15;
     }
 
-    public void answer_wrong(){
+    public void answer_wrong() {
         bool_answer_right = false;
-
     }
 
 
@@ -506,18 +513,24 @@ public class GameWorld1 {
         return string_score;
     }
 
-    public void setString_best_score_this_level(String string_best_result_this_level) {this.string_best_score_this_level = string_best_result_this_level;}
+    public void setString_best_score_this_level(String string_best_result_this_level) {
+        this.string_best_score_this_level = string_best_result_this_level;
+    }
 
-    public String getString_best_score_this_level() {return string_best_score_this_level;}
+    public String getString_best_score_this_level() {
+        return string_best_score_this_level;
+    }
 
     public void timer_game(float dt) {
         float_timer -= dt;
 
         int_timer = (int) float_timer;
 
-        if(int_timer<0){
+        if (int_timer < 0) {
             // що відбудеться коли закінчиться час
-        }else {string_timer_game = int_timer + "";}
+        } else {
+            string_timer_game = int_timer + "";
+        }
     }
 
     public String getTimer_game() {
@@ -529,7 +542,7 @@ public class GameWorld1 {
 
         Gdx.app.log(" ", float_timer_wait + "");
 
-        if(float_timer_wait<0){
+        if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
             bool_timer_wait_start = false;
             startGame();
