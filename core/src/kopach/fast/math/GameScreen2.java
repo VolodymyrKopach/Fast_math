@@ -178,7 +178,7 @@ public class GameScreen2 implements Screen{
         text_text_score_x = screen_width - 165;
         text_score_x = text_text_score_x + 126;
 
-        text_text_best_score_y = 1240;  text_best_score_y = text_text_best_score_y + 4;
+        text_text_best_score_y = screen_height - 40;  text_best_score_y = text_text_best_score_y + 4;
         text_left_znak_y = 1000;
         text_right_znak_y = text_left_znak_y;
         text_left_number_1_y = 1050;  text_left_number_2_y = 930;
@@ -186,7 +186,7 @@ public class GameScreen2 implements Screen{
         text_vidp_y = 300;
         text_time_y = screen_height - 50;
         text_time_y = screen_height - 50;
-        text_text_score_y = screen_height - 60;
+        text_text_score_y = screen_height - 40;
         text_score_y = text_text_score_y + 4;
 
 

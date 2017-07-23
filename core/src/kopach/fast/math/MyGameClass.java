@@ -33,7 +33,7 @@ public class MyGameClass extends Game {
 
         bitmapFont();
 
-        this.setScreen(new GameScreen3(this));
+        this.setScreen(new GameScreen1(this));
     }
 
     public void render() {
@@ -90,7 +90,7 @@ public class MyGameClass extends Game {
         gs1_text_text_no_prav_vidp.getData().setScale(0.5f, 0.5f);
         gs1_text_no_prav_vidp.getData().setScale(0.6f, 0.6f);
         gs1_text_pryklad.getData().setScale(1.4f, 1.4f);
-        gs1_text_vidp_right.getData().setScale(1.5f, 1.5f);
+        gs1_text_vidp_right.getData().setScale(1.6f, 1.6f);
         gs1_text_vidp_wrong.getData().setScale(1.5f, 1.5f);
         gs1_text_btn.getData().setScale(0.8f, 0.8f);
 

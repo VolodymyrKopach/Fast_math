@@ -13,13 +13,12 @@ public class GameWorld2 {
     int int_min_plus, int_max_plus, int_left_result, int_right_result, true_variant, int_left_number_1, int_left_number_2, int_right_number_1, int_right_number_2;
 
     public int int_score = 0;
-   // public String string_left_n = "пусто";
     public String string_input = " ";
     public String string_answer;
 
     public String string_score = "0", string_timer, string_best_score_this_level;
 
-    public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
+    public Preferences preferences_game_gw2, preferences_easy_gw2, preferences_normal_gw2, preferences_hard_gw2;
 
     public float float_timer = 15;
     int int_timer = 2;  //любе число, головне >0
@@ -32,11 +31,13 @@ public class GameWorld2 {
 
     public GameWorld2(GameScreen2 gameScreen2) { // запускаться відразу при запуску класа
         this.gameScreen2 = gameScreen2;
-        preferences_game = Gdx.app.getPreferences("My_preferences_game");
+        preferences_game_gw2 = Gdx.app.getPreferences("My_preferences_game");
 
-        preferences_easy = Gdx.app.getPreferences("My_preferences_score_easy");
-        preferences_normal = Gdx.app.getPreferences("My_preferences_score_normal");
-        preferences_hard = Gdx.app.getPreferences("My_preferences_score_hard");
+        setGame_gw2("easy"); //по стандарту буде відкриватись рівень easy
+
+        preferences_easy_gw2 = Gdx.app.getPreferences("My_preferences_score_easy");
+        preferences_normal_gw2 = Gdx.app.getPreferences("My_preferences_score_normal");
+        preferences_hard_gw2 = Gdx.app.getPreferences("My_preferences_score_hard");
 
         startGame();
     }
@@ -46,11 +47,11 @@ public class GameWorld2 {
 
         boolean_text_button = false;
         // зчитує який рівен вибраний, і після запускає гру
-        if (getGame().equals("easy")) {
+        if (getGame_gw2().equals("easy")) {
             game_easy();
-        } else if (getGame().equals("normal")) {
+        } else if (getGame_gw2().equals("normal")) {
             game_normal();
-        } else if (getGame().equals("hard")) {
+        } else if (getGame_gw2().equals("hard")) {
             game_hard();
         }
     }
@@ -59,7 +60,7 @@ public class GameWorld2 {
     public void game_easy() {
         Gdx.app.log("GameWorld2", "game level");
 
-        setString_best_score_this_level(String.valueOf(getHighScore_easy()));
+        setString_best_score_this_level(String.valueOf(getHighScore_easy_gw2()));
 
         // створення приклада
         int_min_plus = 10;
@@ -102,7 +103,7 @@ public class GameWorld2 {
     public void game_normal() {
         Gdx.app.log("GameWorld2", "game level");
 
-        setString_best_score_this_level(String.valueOf(getHighScore_normal()));
+        setString_best_score_this_level(String.valueOf(getHighScore_normal_gw2()));
 
         // створення приклада
         int_min_plus = 100;
@@ -144,7 +145,7 @@ public class GameWorld2 {
     public void game_hard() {
         Gdx.app.log("GameWorld2", "game level");
 
-        setString_best_score_this_level(String.valueOf(getHighScore_hard()));
+        setString_best_score_this_level(String.valueOf(getHighScore_hard_gw2()));
 
         // створення приклада
         int_min_plus = 1000;
@@ -192,16 +193,16 @@ public class GameWorld2 {
         float_timer = 15;
         setString_input("");
 
-        if (getGame().equals("easy")) {
-            setHighScore_easy(int_score);
+        if (getGame_gw2().equals("easy")) {
+            setHighScore_easy_gw2(int_score);
             game_easy();
 
-        } else if (getGame().equals("normal")) {
-            setHighScore_normal(int_score);
+        } else if (getGame_gw2().equals("normal")) {
+            setHighScore_normal_gw2(int_score);
             game_normal();
 
-        } else if (getGame().equals("hard")) {
-            setHighScore_hard(int_score);
+        } else if (getGame_gw2().equals("hard")) {
+            setHighScore_hard_gw2(int_score);
             game_hard();
         }
     }
@@ -271,50 +272,50 @@ public class GameWorld2 {
 
     public String getString_right_znak() {return string_right_znak;}
 
-    public void setGame(String string_game) {  //  запам'ятовування вибраного рівня
-        preferences_game.putString("save_game", string_game);
-        preferences_game.flush();
+    public void setGame_gw2(String string_game) {  //  запам'ятовування вибраного рівня
+        preferences_game_gw2.putString("save_game", string_game);
+        preferences_game_gw2.flush();
 
     }
 
-    public String getGame() {
-        return preferences_game.getString("save_game");
+    public String getGame_gw2() {
+        return preferences_game_gw2.getString("save_game");
     }
 
 
-    public void setHighScore_easy(int int_score_easy_to_save) {
-        if (int_score_easy_to_save > getHighScore_easy()) {
-            preferences_easy.putInteger("save_int_score", int_score_easy_to_save);
-            preferences_easy.flush();
+    public void setHighScore_easy_gw2(int int_score_easy_to_save) {
+        if (int_score_easy_to_save > getHighScore_easy_gw2()) {
+            preferences_easy_gw2.putInteger("save_int_score", int_score_easy_to_save);
+            preferences_easy_gw2.flush();
         }
     }
 
-    public int getHighScore_easy() {
-        return preferences_easy.getInteger("save_int_score", 0);
+    public int getHighScore_easy_gw2() {
+        return preferences_easy_gw2.getInteger("save_int_score", 0);
 
     }
 
-    public void setHighScore_normal(int int_score_normal_to_save) {
-        if (int_score_normal_to_save > getHighScore_normal()) {
-            preferences_normal.putInteger("save_int_score", int_score_normal_to_save);
-            preferences_normal.flush();
+    public void setHighScore_normal_gw2(int int_score_normal_to_save) {
+        if (int_score_normal_to_save > getHighScore_normal_gw2()) {
+            preferences_normal_gw2.putInteger("save_int_score", int_score_normal_to_save);
+            preferences_normal_gw2.flush();
         }
     }
 
-    public int getHighScore_normal() {
-        return preferences_normal.getInteger("save_int_score", 0);
+    public int getHighScore_normal_gw2() {
+        return preferences_normal_gw2.getInteger("save_int_score", 0);
 
     }
 
-    public void setHighScore_hard(int int_score_hard_to_save) {
-        if (int_score_hard_to_save > getHighScore_hard()) {
-            preferences_hard.putInteger("save_int_score", int_score_hard_to_save);
-            preferences_hard.flush();
+    public void setHighScore_hard_gw2(int int_score_hard_to_save) {
+        if (int_score_hard_to_save > getHighScore_hard_gw2()) {
+            preferences_hard_gw2.putInteger("save_int_score", int_score_hard_to_save);
+            preferences_hard_gw2.flush();
         }
     }
 
-    public int getHighScore_hard() {
-        return preferences_hard.getInteger("save_int_score", 0);
+    public int getHighScore_hard_gw2() {
+        return preferences_hard_gw2.getInteger("save_int_score", 0);
 
     }
 

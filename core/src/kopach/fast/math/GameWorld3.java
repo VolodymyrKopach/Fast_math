@@ -18,7 +18,7 @@ public class GameWorld3 {
     public String string_to_screen = "";
     public String string_input = "";
 
-    public String string_score, string_timer_game;
+    public String string_score, string_timer_game, string_best_score_this_level;
 
     public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
 
@@ -84,14 +84,17 @@ public class GameWorld3 {
 
 
     public void game_easy() {
+        setString_best_score_this_level(String.valueOf(getHighScore_easy()));
         Gdx.app.log("GameWorld1", "game level");
     }
 
     public void game_normal() {
+        setString_best_score_this_level(String.valueOf(getHighScore_normal()));
         Gdx.app.log("GameWorld1", "game normal");
     }
 
     public void game_hard() {
+        setString_best_score_this_level(String.valueOf(getHighScore_hard()));
         Gdx.app.log("GameWorld1", "game hard");
     }
 
@@ -155,6 +158,14 @@ public class GameWorld3 {
 
     public String getString_score() {
         return "20";
+    }
+
+    public void setString_best_score_this_level(String string_best_result_this_level) {
+        this.string_best_score_this_level = string_best_result_this_level;
+    }
+
+    public String getString_best_score_this_level() {
+        return string_best_score_this_level;
     }
 
 

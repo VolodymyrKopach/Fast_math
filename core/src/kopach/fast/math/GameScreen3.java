@@ -52,7 +52,7 @@ public class GameScreen3 implements Screen {
 
     float screen_width = 720, screen_height = 1280;
     float tr_propusk_width, tr_propusk_height;
-    float tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
+    float text_text_best_score_x, text_text_best_score_y, text_best_score_x, text_best_score_y, tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
 
     public GameScreen3(final MyGameClass myGameClass) {   // метод що запускається відразу
         this.myGameClass = myGameClass;
@@ -189,24 +189,20 @@ public class GameScreen3 implements Screen {
         tr_propusk_width = 90;
         tr_propusk_height = 110;
 
-        //   tr_propusk_x = gameWorld1.getInt_tr_propusk_x();
-        tr_propusk_y = 900;
-
         text_pryklad_x = 75;
-        text_vidp_x = tr_propusk_x; // Буде залежати від того якої частини приклада не буде вистачати
         text_text_ne_prav_vidp_x = 20;
         text_ne_prav_vidp_x = text_text_ne_prav_vidp_x + 140;
         text_time_x = screen_width / 2 - 6;
-        text_text_score_x = screen_width - 165;
-        text_score_x = text_text_score_x + 126;
+        text_text_score_x = screen_width - 165;  text_score_x = text_text_score_x + 126;
+        text_text_best_score_x = 20;  text_best_score_x = 90;
 
         text_pryklad_y = 980;
         text_vidp_y = text_pryklad_y;
         text_text_ne_prav_vidp_y = screen_height - 50;
         text_ne_prav_vidp_y = text_text_ne_prav_vidp_y + 4;
         text_time_y = screen_height - 50;
-        text_text_score_y = text_ne_prav_vidp_y;
-        text_score_y = text_text_score_y + 4;
+        text_text_score_y = text_ne_prav_vidp_y;   text_score_y = text_text_score_y + 4;
+        text_text_best_score_y = 1240;  text_best_score_y = text_text_best_score_y + 4;
 
 
     }
@@ -322,7 +318,7 @@ public class GameScreen3 implements Screen {
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable("btn krug");
-        style.down = skin.getDrawable(down);
+        style.checked = skin.getDrawable(down);
         style.font = myGameClass.gs1_text_btn;
         TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_width, btn_height);

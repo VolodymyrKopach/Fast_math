@@ -198,7 +198,7 @@ public class GameScreen implements Screen {
         tr_X_x = screen_width / 2 - (width_X / 2);
         text_text_best_score_x = 20;
         text_best_score_x = 90;
-        text_time_x = 35;
+        text_time_x = screen_width/2 - 21;
         text_score_x = screen_width - 160;
         text_pryklad_x = tr_screen_x + 20;
         text_vidp_x = btn_C_x - 200;
@@ -220,8 +220,8 @@ public class GameScreen implements Screen {
         btn0_y = btn8_y - vidstan_height - height_btn;
         btn_answer_y = btn9_y - vidstan_height - height_btn;
         text_time_y = screen_height - 20;
-        text_score_y = text_time_y;
-        text_text_best_score_y = 1240;  text_best_score_y = text_text_best_score_y + 4;
+        text_score_y = screen_height - 40;
+        text_text_best_score_y = screen_height - 40;  text_best_score_y = text_text_best_score_y + 4;
         text_pryklad_y = tr_screen_y + tr_screen_height / 2 + 25;
         text_vidp_y = text_pryklad_y;
 

@@ -9,8 +9,6 @@ import java.util.Random;
  * Created by vova on 18.05.17.
  */
 
-//Змінив метод створення приклада
-
 public class GameWorld1 {
 
     int int_min_plus, int_max_plus, int_result, true_variant, int_number_1, int_number_2;
@@ -21,7 +19,7 @@ public class GameWorld1 {
 
     public String string_score, string_timer_game, string_best_score_this_level;
 
-    public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
+    public Preferences preferences_game_gw1, preferences_easy_gw1, preferences_normal_gw1, preferences_hard_gw1;
 
     public float float_timer = 15, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
@@ -35,11 +33,13 @@ public class GameWorld1 {
 
     public GameWorld1(GameScreen1 gameScreen1) { // запускаться відразу при запуску класа
         this.gameScreen1 = gameScreen1;
-        preferences_game = Gdx.app.getPreferences("My_preferences_game");
+        preferences_game_gw1 = Gdx.app.getPreferences("My_preferences_game_gw1");
 
-        preferences_easy = Gdx.app.getPreferences("My_preferences_score_easy");
-        preferences_normal = Gdx.app.getPreferences("My_preferences_score_normal");
-        preferences_hard = Gdx.app.getPreferences("My_preferences_score_hard");
+        setGame("easy"); //по стандарту буде відкриватись рівень easy
+
+        preferences_easy_gw1 = Gdx.app.getPreferences("My_preferences_score_easy_gw1");
+        preferences_normal_gw1 = Gdx.app.getPreferences("My_preferences_score_normal_gw1");
+        preferences_hard_gw1 = Gdx.app.getPreferences("My_preferences_score_hard_gw1");
 
         startGame();
     }
@@ -50,13 +50,13 @@ public class GameWorld1 {
         string_input = "";
         // зчитує який рівен вибраний, і після запускає гру
         if (getGame().equals("easy")) {
-            setHighScore_easy(int_score);
+            setHighScore_easy_gw1(int_score);
             game_easy();
         } else if (getGame().equals("normal")) {
-            setHighScore_normal(int_score);
+            setHighScore_normal_gw1(int_score);
             game_normal();
         } else if (getGame().equals("hard")) {
-            setHighScore_hard(int_score);
+            setHighScore_hard_gw1(int_score);
             game_hard();
         }
     }
@@ -65,7 +65,7 @@ public class GameWorld1 {
     public void game_easy() {
         Gdx.app.log("GameWorld1", "game level");
 
-        setString_best_score_this_level(String.valueOf(getHighScore_easy()));
+        setString_best_score_this_level(String.valueOf(getHighScore_easy_gw1()));
 
         int prykladrandom = new Random().nextInt(2);
         // створення приклада
@@ -92,7 +92,7 @@ public class GameWorld1 {
     public void game_normal() {
         Gdx.app.log("GameWorld1", "game normal");
 
-        setString_best_score_this_level(String.valueOf(getHighScore_normal()));
+        setString_best_score_this_level(String.valueOf(getHighScore_normal_gw1()));
 
         int prykladrandom = (int) (Math.random() * 2);
 
@@ -119,7 +119,7 @@ public class GameWorld1 {
     public void game_hard() {
         Gdx.app.log("GameWorld1", "game hard");
 
-        setString_best_score_this_level(String.valueOf(getHighScore_hard()));
+        setString_best_score_this_level(String.valueOf(getHighScore_hard_gw1()));
 
         int prykladrandom = new Random().nextInt(2);
 
@@ -442,49 +442,49 @@ public class GameWorld1 {
 
 
     public void setGame(String string_game) {  //  запам'ятовування вибраного рівня
-        preferences_game.putString("save_game", string_game);
-        preferences_game.flush();
+        preferences_game_gw1.putString("save_game", string_game);
+        preferences_game_gw1.flush();
 
     }
 
     public String getGame() {
-        return preferences_game.getString("save_game");
+        return preferences_game_gw1.getString("save_game");
     }
 
 
-    public void setHighScore_easy(int int_score_easy_to_save) {
-        if (int_score_easy_to_save > getHighScore_easy()) {
-            preferences_easy.putInteger("save_int_score", int_score_easy_to_save);
-            preferences_easy.flush();
+    public void setHighScore_easy_gw1(int int_score_easy_to_save) {
+        if (int_score_easy_to_save > getHighScore_easy_gw1()) {
+            preferences_easy_gw1.putInteger("save_int_score", int_score_easy_to_save);
+            preferences_easy_gw1.flush();
         }
     }
 
-    public int getHighScore_easy() {
-        return preferences_easy.getInteger("save_int_score", 0);
+    public int getHighScore_easy_gw1() {
+        return preferences_easy_gw1.getInteger("save_int_score", 0);
 
     }
 
-    public void setHighScore_normal(int int_score_normal_to_save) {
-        if (int_score_normal_to_save > getHighScore_normal()) {
-            preferences_normal.putInteger("save_int_score", int_score_normal_to_save);
-            preferences_normal.flush();
+    public void setHighScore_normal_gw1(int int_score_normal_to_save) {
+        if (int_score_normal_to_save > getHighScore_normal_gw1()) {
+            preferences_normal_gw1.putInteger("save_int_score", int_score_normal_to_save);
+            preferences_normal_gw1.flush();
         }
     }
 
-    public int getHighScore_normal() {
-        return preferences_normal.getInteger("save_int_score", 0);
+    public int getHighScore_normal_gw1() {
+        return preferences_normal_gw1.getInteger("save_int_score", 0);
 
     }
 
-    public void setHighScore_hard(int int_score_hard_to_save) {
-        if (int_score_hard_to_save > getHighScore_hard()) {
-            preferences_hard.putInteger("save_int_score", int_score_hard_to_save);
-            preferences_hard.flush();
+    public void setHighScore_hard_gw1(int int_score_hard_to_save) {
+        if (int_score_hard_to_save > getHighScore_hard_gw1()) {
+            preferences_hard_gw1.putInteger("save_int_score", int_score_hard_to_save);
+            preferences_hard_gw1.flush();
         }
     }
 
-    public int getHighScore_hard() {
-        return preferences_hard.getInteger("save_int_score", 0);
+    public int getHighScore_hard_gw1() {
+        return preferences_hard_gw1.getInteger("save_int_score", 0);
     }
 
     public void setString_to_screen(String string_to_screen) {
