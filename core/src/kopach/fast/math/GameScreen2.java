@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen2 implements Screen{
     private static final float BTN_1_X = 50;
-    private static final float BTN_1_Y = 100;
+    private static final float BTN_1_Y = 200;
     private static final float vidstan_width = 40;
  //   private static final float vidstan_height = 50;
     private static final float btn_width = 173;
@@ -47,7 +47,7 @@ public class GameScreen2 implements Screen{
 
     float screen_width = 720, screen_height = 1280;
     float tr_propusk_width, tr_propusk_height;
-    float tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_left_znak_x, text_left_znak_y, text_right_znak_x, text_right_znak_y, text_left_number_1_x, text_left_number_1_y, text_left_number_2_x, text_left_number_2_y, text_right_number_1_x, text_right_number_1_y, text_right_number_2_x, text_right_number_2_y;
+    float text_text_best_score_x, text_text_best_score_y, text_best_score_x, text_best_score_y, tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_left_znak_x, text_left_znak_y, text_right_znak_x, text_right_znak_y, text_left_number_1_x, text_left_number_1_y, text_left_number_2_x, text_left_number_2_y, text_right_number_1_x, text_right_number_1_y, text_right_number_2_x, text_right_number_2_y;
 
     public GameScreen2(final MyGameClass myGameClass) {   // метод що запускається відразу
         this.myGameClass = myGameClass;
@@ -105,6 +105,8 @@ public class GameScreen2 implements Screen{
         mGC_spriteBatch.draw(tr_propusk, tr_propusk_x, tr_propusk_y, tr_propusk_width, tr_propusk_height);
         mGC_gs2_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         mGC_gs2_text_score.draw(mGC_spriteBatch, gameWorld2.getString_score(), text_score_x, text_score_y);
+        mGC_gs2_text_text_best_score.draw(mGC_spriteBatch, "BS:", text_text_best_score_x, text_text_best_score_y);
+        mGC_gs2_text_best_score.draw(mGC_spriteBatch, gameWorld2.getString_best_score_this_level(), text_best_score_x, text_best_score_y);
         mGC_gs2_text_znak.draw(mGC_spriteBatch, gameWorld2.getString_left_znak(), text_left_znak_x, text_left_znak_y);
         mGC_gs2_text_znak.draw(mGC_spriteBatch, gameWorld2.getString_right_znak(), text_right_znak_x, text_right_znak_y);
         mGC_gs2_text_pryklad.draw(mGC_spriteBatch, String.valueOf(gameWorld2.getInt_left_number_1()), text_left_number_1_x, text_left_number_1_y);
@@ -165,6 +167,7 @@ public class GameScreen2 implements Screen{
 
         tr_propusk_x = screen_width/2-tr_propusk_width/2;  tr_propusk_y = 900;
 
+        text_text_best_score_x = 20;  text_best_score_x = 90;
         text_left_znak_x = 100;
         text_right_znak_x = 450;
         text_left_number_1_x = 150;  text_left_number_2_x = text_left_number_1_x;
@@ -175,6 +178,7 @@ public class GameScreen2 implements Screen{
         text_text_score_x = screen_width - 165;
         text_score_x = text_text_score_x + 126;
 
+        text_text_best_score_y = 1240;  text_best_score_y = text_text_best_score_y + 4;
         text_left_znak_y = 1000;
         text_right_znak_y = text_left_znak_y;
         text_left_number_1_y = 1050;  text_left_number_2_y = 930;

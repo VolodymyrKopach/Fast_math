@@ -17,7 +17,7 @@ public class GameWorld {
     public String string_to_screen = "0";
     public String string_input = "";
 
-    public String string_result = "", string_score;
+    public String string_result = "", string_score, string_best_score_this_level;
 
     public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
     public int int_save_pref_easy, int_save_pref_normal, int_save_pref_hard;
@@ -52,14 +52,11 @@ public class GameWorld {
 
 
     public  void game_easy() {
-
-
-
         Gdx.app.log("log","game easy");
 
+        setString_best_score_this_level(String.valueOf(getHighScore_easy()));
+
         int prykladrandom = (int) (Math.random() * 2);
-
-
 
         string_score = "Score: " + int_score+"";
 
@@ -97,9 +94,9 @@ public class GameWorld {
 
         Gdx.app.log("log","game normal");
 
+        setString_best_score_this_level(String.valueOf(getHighScore_normal()));
+
         int prykladrandom = (int) (Math.random() * 2);
-
-
 
         string_score = "Score: " + int_score+"";
 
@@ -137,9 +134,9 @@ public class GameWorld {
 
         Gdx.app.log("log","game hard");
 
+        setString_best_score_this_level(String.valueOf(getHighScore_hard()));
+
         int prykladrandom = (int) (Math.random() * 2);
-
-
 
         string_score = "Score: " + int_score+"";
 
@@ -278,6 +275,11 @@ public class GameWorld {
         string_input = string_input+number;
         inputNumber();
     }
+
+    public void setString_best_score_this_level(String string_best_result_this_level) {this.string_best_score_this_level = string_best_result_this_level;}
+
+    public String getString_best_score_this_level() {return string_best_score_this_level;}
+
 
     public boolean getBoolean_X(){
         return boolean_X;

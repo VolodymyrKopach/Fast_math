@@ -47,7 +47,7 @@ public class GameScreen1 implements Screen {
 
     float screen_width = 720, screen_height = 1280;
     float tr_propusk_width, tr_propusk_height;
-    float tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
+    float text_text_best_score_x, text_text_best_score_y, text_best_score_x, text_best_score_y, tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
 
     public GameScreen1(final MyGameClass myGameClass) {   // метод що запускається відразу
         this.myGameClass = myGameClass;
@@ -106,10 +106,10 @@ public class GameScreen1 implements Screen {
         mGC_spriteBatch.draw(tr_propusk, gameWorld1.getInt_tr_propusk_x(), tr_propusk_y, tr_propusk_width, tr_propusk_height);
         mGC_gs1_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         mGC_gs1_text_score.draw(mGC_spriteBatch, gameWorld1.getString_score(), text_score_x, text_score_y);
-        mGC_gs1_text_text_best_score.draw(mGC_spriteBatch, "BS: ", text_text_score_x, text_text_score_y);
-        mGC_gs1_text_best_score.draw(mGC_spriteBatch, gameWorld1.getString_best_score_this_level(), text_score_x, text_score_y);
+        mGC_gs1_text_text_best_score.draw(mGC_spriteBatch, "BS: ", text_text_best_score_x, text_text_best_score_y);
+        mGC_gs1_text_best_score.draw(mGC_spriteBatch, gameWorld1.getString_best_score_this_level(), text_best_score_x, text_best_score_y);
         mGC_gs1_text_pryklad.draw(mGC_spriteBatch, gameWorld1.getString_to_screen(), text_pryklad_x, text_pryklad_y);
-        mGC_gs1_text_time.draw(mGC_spriteBatch, gameWorld1.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
+        mGC_gs1_text_time.draw(mGC_spriteBatch, gameWorld1.getTimer_game(), text_time_x, text_time_y);
 
         if (gameWorld1.bool_answer_right){
             mGC_gs1_text_vidp_right.draw(mGC_spriteBatch, gameWorld1.getString_input(), text_vidp_x, text_vidp_y);
@@ -182,6 +182,7 @@ public class GameScreen1 implements Screen {
      //   tr_propusk_x = gameWorld1.getInt_tr_propusk_x();
         tr_propusk_y = 900;
 
+        text_text_best_score_x = 20;   text_best_score_x = 90;
         text_pryklad_x = 75;
         text_vidp_x = tr_propusk_x; // Буде залежати від того якої частини приклада не буде вистачати
         text_text_ne_prav_vidp_x = 20;
@@ -190,6 +191,7 @@ public class GameScreen1 implements Screen {
         text_text_score_x = screen_width - 165;
         text_score_x = text_text_score_x + 126;
 
+        text_text_best_score_y = 1240;  text_best_score_y = text_text_best_score_y + 4;
         text_pryklad_y = 980;
         text_vidp_y = text_pryklad_y;
         text_text_ne_prav_vidp_y = screen_height - 50;
