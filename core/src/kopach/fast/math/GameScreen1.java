@@ -41,7 +41,7 @@ public class GameScreen1 implements Screen {
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont mGC_gs1_text_text_score, mGC_gs1_text_score, mGC_gs1_text_pryklad, mGC_gs1_text_vidp_right, mGC_gs1_text_vidp_wrong, mGC_gs1_text_time;
+    BitmapFont mGC_gs1_text_text_score, mGC_gs1_text_score, mGC_gs1_text_text_best_score, mGC_gs1_text_best_score, mGC_gs1_text_pryklad, mGC_gs1_text_vidp_right, mGC_gs1_text_vidp_wrong, mGC_gs1_text_time;
     SpriteBatch mGC_spriteBatch;
 
 
@@ -106,6 +106,8 @@ public class GameScreen1 implements Screen {
         mGC_spriteBatch.draw(tr_propusk, gameWorld1.getInt_tr_propusk_x(), tr_propusk_y, tr_propusk_width, tr_propusk_height);
         mGC_gs1_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         mGC_gs1_text_score.draw(mGC_spriteBatch, gameWorld1.getString_score(), text_score_x, text_score_y);
+        mGC_gs1_text_text_best_score.draw(mGC_spriteBatch, "BS: ", text_text_score_x, text_text_score_y);
+        mGC_gs1_text_best_score.draw(mGC_spriteBatch, gameWorld1.getString_best_score_this_level(), text_score_x, text_score_y);
         mGC_gs1_text_pryklad.draw(mGC_spriteBatch, gameWorld1.getString_to_screen(), text_pryklad_x, text_pryklad_y);
         mGC_gs1_text_time.draw(mGC_spriteBatch, gameWorld1.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
 
@@ -166,6 +168,8 @@ public class GameScreen1 implements Screen {
         mGC_gs1_text_time = myGameClass.gs1_text_time;
         mGC_gs1_text_text_score = myGameClass.gs1_text_text_score;
         mGC_gs1_text_score = myGameClass.gs1_text_score;
+        mGC_gs1_text_text_best_score = myGameClass.gs1_text_text_best_score;
+        mGC_gs1_text_best_score = myGameClass.gs1_text_best_score;
         mGC_gs1_text_pryklad = myGameClass.gs1_text_pryklad;
         mGC_gs1_text_vidp_right = myGameClass.gs1_text_vidp_right;
         mGC_gs1_text_vidp_wrong = myGameClass.gs1_text_vidp_wrong;

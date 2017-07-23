@@ -19,7 +19,7 @@ public class GameWorld1 {
     public String string_to_screen = "";
     public String string_input = "";
 
-    public String string_score, string_timer_game;
+    public String string_score, string_timer_game, string_best_score_this_level;
 
     public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
 
@@ -64,8 +64,10 @@ public class GameWorld1 {
 
     public void game_easy() {
         Gdx.app.log("GameWorld1", "game level");
-        int prykladrandom = new Random().nextInt(2);
 
+        setString_best_score_this_level(String.valueOf(getHighScore_easy()));
+
+        int prykladrandom = new Random().nextInt(2);
         // створення приклада
         int_min_plus = 10;
         int_max_plus = 100;
@@ -90,6 +92,8 @@ public class GameWorld1 {
     public void game_normal() {
         Gdx.app.log("GameWorld1", "game normal");
 
+        setString_best_score_this_level(String.valueOf(getHighScore_normal()));
+
         int prykladrandom = (int) (Math.random() * 2);
 
         int_min_plus = 100;
@@ -113,8 +117,9 @@ public class GameWorld1 {
     }
 
     public void game_hard() {
-
         Gdx.app.log("GameWorld1", "game hard");
+
+        setString_best_score_this_level(String.valueOf(getHighScore_hard()));
 
         int prykladrandom = new Random().nextInt(2);
 
@@ -473,9 +478,7 @@ public class GameWorld1 {
 
     public int getHighScore_hard() {
         return preferences_hard.getInteger("save_int_score", 0);
-
     }
-
 
     public void setString_to_screen(String string_to_screen) {
         this.string_to_screen = string_to_screen;
@@ -503,6 +506,9 @@ public class GameWorld1 {
         return string_score;
     }
 
+    public void setString_best_score_this_level(String string_best_result_this_level) {this.string_best_score_this_level = string_best_result_this_level;}
+
+    public String getString_best_score_this_level() {return string_best_score_this_level;}
 
     public void timer_game(float dt) {
         float_timer -= dt;

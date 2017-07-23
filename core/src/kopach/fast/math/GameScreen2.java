@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen2 implements Screen{
     private static final float BTN_1_X = 50;
-    private static final float BTN_1_Y = 140;
+    private static final float BTN_1_Y = 100;
     private static final float vidstan_width = 40;
  //   private static final float vidstan_height = 50;
     private static final float btn_width = 173;
@@ -41,7 +41,7 @@ public class GameScreen2 implements Screen{
     public TextButton btn_less, btn_equal, btn_greater;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont mGC_gs2_text_text_score, mGC_gs2_text_score, mGC_gs2_text_znak, mGC_gs2_text_pryklad, mGC_gs2_text_vidp, mGC_gs2_text_time;
+    BitmapFont mGC_gs2_text_text_score, mGC_gs2_text_score, mGC_gs2_text_text_best_score, mGC_gs2_text_best_score, mGC_gs2_text_znak, mGC_gs2_text_pryklad, mGC_gs2_text_vidp, mGC_gs2_text_time;
     SpriteBatch mGC_spriteBatch;
 
 
@@ -153,6 +153,8 @@ public class GameScreen2 implements Screen{
         mGC_gs2_text_time = myGameClass.gs2_text_time;
         mGC_gs2_text_text_score = myGameClass.gs2_text_text_score;
         mGC_gs2_text_score = myGameClass.gs2_text_score;
+        mGC_gs2_text_text_best_score = myGameClass.gs2_text_text_best_score;
+        mGC_gs2_text_best_score = myGameClass.gs2_text_best_score;
         mGC_gs2_text_znak = myGameClass.gs2_text_znak;
         mGC_gs2_text_pryklad = myGameClass.gs2_text_pryklad;
         mGC_gs2_text_vidp = myGameClass.gs2_text_vidp;
@@ -210,12 +212,7 @@ public class GameScreen2 implements Screen{
                 return BTN_1_X + btn_width + vidstan_width;
             case 3:
                 return BTN_1_X + btn_width * 2 + vidstan_width * 2;
-            case 4:
-                return BTN_1_X;
-            case 5:
-                return BTN_1_X + btn_width + vidstan_width;
-            case 6:
-                return BTN_1_X + btn_width * 2 + vidstan_width * 2;
+
         }
         return 0;
     }
@@ -223,17 +220,12 @@ public class GameScreen2 implements Screen{
     private float getButtonY(int position) {
         switch (position) {
             case 1:
-                return BTN_1_Y + btn_height;
+                return BTN_1_Y;
             case 2:
-                return BTN_1_Y + btn_height;
+                return BTN_1_Y;
             case 3:
-                return BTN_1_Y + btn_height;
-            case 4:
                 return BTN_1_Y;
-            case 5:
-                return BTN_1_Y;
-            case 6:
-                return BTN_1_Y;
+
         }
         return 0;
     }

@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
     public TextButton.TextButtonStyle btn1_style, btn2_style, btn3_style, btn4_style, btn5_style, btn6_style, btn7_style, btn8_style, btn9_style, btn_minus_style, btn0_style, btn_C_style, btn_answer_style;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont mGC_gs_text_pryklad, mGC_gs_text_vidp, mGC_gs_text_score, mGC_gs_text_time;
+    BitmapFont mGC_gs_text_pryklad, mGC_gs_text_vidp, mGC_gs_text_score, mGC_gs_text_text_best_score, mGC_gs_text_best_score, mGC_gs_text_time;
     SpriteBatch mGC_spriteBatch;
 
     //цей прапор служить для перевірки, щоб завжди було тільки одне видалення
@@ -154,6 +154,8 @@ public class GameScreen implements Screen {
 
         mGC_gs_text_time = myGameClass.gs_text_time;
         mGC_gs_text_score = myGameClass.gs_text_score;
+        mGC_gs_text_text_best_score = myGameClass.gs_text_text_best_score;
+        mGC_gs_text_best_score = myGameClass.gs_text_best_score;
         mGC_gs_text_pryklad = myGameClass.gs_text_pryklad;
         mGC_gs_text_vidp = myGameClass.gs_text_vidp;
 

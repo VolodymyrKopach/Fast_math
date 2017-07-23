@@ -42,7 +42,7 @@ public class GameScreen3 implements Screen{
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont mGC_gs1_text_text_score, mGC_gs1_text_score, mGC_gs1_text_pryklad, mGC_gs1_text_vidp_right, mGC_gs1_text_vidp_wrong, mGC_gs1_text_time;
+    BitmapFont mGC_gs3_text_text_score, mGC_gs3_text_score, mGC_gs3_text_text_best_score, mGC_gs3_text_best_score, mGC_gs3_text_time;
     SpriteBatch mGC_spriteBatch;
 
 
@@ -105,16 +105,12 @@ public class GameScreen3 implements Screen{
         myGameClass.spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
 
         mGC_spriteBatch.draw(tr_propusk, gameWorld3.getInt_tr_propusk_x(), tr_propusk_y, tr_propusk_width, tr_propusk_height);
-        mGC_gs1_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
-        mGC_gs1_text_score.draw(mGC_spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
-        mGC_gs1_text_pryklad.draw(mGC_spriteBatch, gameWorld3.getString_to_screen(), text_pryklad_x, text_pryklad_y);
-        mGC_gs1_text_time.draw(mGC_spriteBatch, gameWorld3.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
+        mGC_gs3_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
+        mGC_gs3_text_score.draw(mGC_spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
+        mGC_gs3_text_time.draw(mGC_spriteBatch, gameWorld3.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
+        mGC_gs3_text_text_score.draw(mGC_spriteBatch, "BS:", text_text_score_x, text_text_score_y);
+        mGC_gs3_text_score.draw(mGC_spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
 
-        if (gameWorld3.bool_answer_right){
-            mGC_gs1_text_vidp_right.draw(mGC_spriteBatch, gameWorld3.getString_input(), text_vidp_x, text_vidp_y);
-        }else {
-            mGC_gs1_text_vidp_wrong.draw(mGC_spriteBatch, gameWorld3.getString_input(), text_vidp_x, text_vidp_y);
-        }
 
         mGC_spriteBatch.end();
 
@@ -182,12 +178,12 @@ public class GameScreen3 implements Screen{
     public void variables() {    // ініціалізація переміних і т.д.
         mGC_spriteBatch = myGameClass.spriteBatch;
 
-        mGC_gs1_text_time = myGameClass.gs1_text_time;
-        mGC_gs1_text_text_score = myGameClass.gs1_text_text_score;
-        mGC_gs1_text_score = myGameClass.gs1_text_score;
-        mGC_gs1_text_pryklad = myGameClass.gs1_text_pryklad;
-        mGC_gs1_text_vidp_right = myGameClass.gs1_text_vidp_right;
-        mGC_gs1_text_vidp_wrong = myGameClass.gs1_text_vidp_wrong;
+        mGC_gs3_text_time = myGameClass.gs3_text_time;
+        mGC_gs3_text_text_score = myGameClass.gs3_text_text_score;
+        mGC_gs3_text_score = myGameClass.gs3_text_score;
+        mGC_gs3_text_text_best_score = myGameClass.gs3_text_text_best_score;
+        mGC_gs3_text_best_score = myGameClass.gs3_text_best_score;
+
     }
 
     public void variables_x_y() {   // налаштування значень Х і У для прорисовки
