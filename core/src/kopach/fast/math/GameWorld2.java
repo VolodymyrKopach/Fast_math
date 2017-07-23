@@ -17,7 +17,7 @@ public class GameWorld2 {
     public String string_input = " ";
     public String string_answer;
 
-    public String string_score = "0", string_timer;
+    public String string_score = "0", string_timer, string_best_score_this_level;
 
     public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
 
@@ -59,6 +59,7 @@ public class GameWorld2 {
     public void game_easy() {
         Gdx.app.log("GameWorld2", "game level");
 
+        setString_best_score_this_level(String.valueOf(getHighScore_easy()));
 
         // створення приклада
         int_min_plus = 10;
@@ -101,6 +102,8 @@ public class GameWorld2 {
     public void game_normal() {
         Gdx.app.log("GameWorld2", "game level");
 
+        setString_best_score_this_level(String.valueOf(getHighScore_normal()));
+
         // створення приклада
         int_min_plus = 100;
         int_max_plus = 1000;
@@ -140,6 +143,8 @@ public class GameWorld2 {
 
     public void game_hard() {
         Gdx.app.log("GameWorld2", "game level");
+
+        setString_best_score_this_level(String.valueOf(getHighScore_hard()));
 
         // створення приклада
         int_min_plus = 1000;
@@ -330,6 +335,10 @@ public class GameWorld2 {
     public String getString_score() {
         return string_score;
     }
+
+    public void setString_best_score_this_level(String string_best_result_this_level) {this.string_best_score_this_level = string_best_result_this_level;}
+
+    public String getString_best_score_this_level() {return string_best_score_this_level;}
 
 
     public void setString_timer(float dt) {

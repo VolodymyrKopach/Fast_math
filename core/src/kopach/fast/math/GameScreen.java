@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
     float width_X, height_X;
     public float vidstan_width, vidstan_height;
     public float btn_C_x, btn_C_y, btn0_x, btn0_y, btn1_x, btn1_y, btn2_x, btn2_y, btn3_x, btn3_y, btn4_x, btn4_y, btn5_x, btn5_y, btn6_x, btn6_y, btn7_x, btn7_y, btn8_x, btn8_y, btn9_x, btn9_y, btn_minus_x, btn_minus_y, btn_answer_x, btn_answer_y, tr_X_x, tr_X_y, tr_screen_x, tr_screen_y, tr_left_border_x, tr_left_border_y;
-    float text_score_x, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y;
+    float text_text_best_score_x, text_text_best_score_y, text_best_score_x, text_best_score_y, text_score_x, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y;
 
     public GameScreen(final MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
@@ -114,6 +114,8 @@ public class GameScreen implements Screen {
         myGameClass.gs_text_vidp.draw(myGameClass.spriteBatch, gameWorld.getString_input(), text_vidp_x, text_vidp_y);
         myGameClass.gs_text_score.draw(myGameClass.spriteBatch, gameWorld.getString_score(), text_score_x, text_score_y);
         myGameClass.gs_text_time.draw(myGameClass.spriteBatch, gameWorld.getString_timer(), text_time_x, text_time_y);
+        myGameClass.gs_text_text_best_score.draw(mGC_spriteBatch, "BS:", text_text_best_score_x, text_text_best_score_y);
+        myGameClass.gs_text_best_score.draw(mGC_spriteBatch, gameWorld.getString_best_score_this_level(), text_best_score_x, text_best_score_y);
         myGameClass.spriteBatch.draw(tr_left_border, tr_left_border_x, tr_left_border_y, tr_left_border_width, tr_left_border_height);
         myGameClass.spriteBatch.end();
 
@@ -194,6 +196,8 @@ public class GameScreen implements Screen {
         btn_answer_x = btn0_x + width_btn + vidstan_width;
         btn_C_x = (screen_width - tr_screen_width) / 2 + tr_screen_width - 90;
         tr_X_x = screen_width / 2 - (width_X / 2);
+        text_text_best_score_x = 20;
+        text_best_score_x = 90;
         text_time_x = 35;
         text_score_x = screen_width - 160;
         text_pryklad_x = tr_screen_x + 20;
@@ -217,6 +221,7 @@ public class GameScreen implements Screen {
         btn_answer_y = btn9_y - vidstan_height - height_btn;
         text_time_y = screen_height - 20;
         text_score_y = text_time_y;
+        text_text_best_score_y = 1240;  text_best_score_y = text_text_best_score_y + 4;
         text_pryklad_y = tr_screen_y + tr_screen_height / 2 + 25;
         text_vidp_y = text_pryklad_y;
 
