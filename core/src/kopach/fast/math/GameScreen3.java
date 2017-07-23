@@ -104,12 +104,11 @@ public class GameScreen3 implements Screen{
         myGameClass.spriteBatch.begin();
         myGameClass.spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
 
-        mGC_spriteBatch.draw(tr_propusk, gameWorld3.getInt_tr_propusk_x(), tr_propusk_y, tr_propusk_width, tr_propusk_height);
         mGC_gs3_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         mGC_gs3_text_score.draw(mGC_spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
         mGC_gs3_text_time.draw(mGC_spriteBatch, gameWorld3.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
-        mGC_gs3_text_text_score.draw(mGC_spriteBatch, "BS:", text_text_score_x, text_text_score_y);
-        mGC_gs3_text_score.draw(mGC_spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
+     //   mGC_gs3_text_text_best_score.draw(mGC_spriteBatch, "BS:", text_text_score_x, text_text_score_y);              //Дороблю
+     //   mGC_gs3_text_best_score.draw(mGC_spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);      //Дороблю
 
 
         mGC_spriteBatch.end();
@@ -361,8 +360,8 @@ public class GameScreen3 implements Screen{
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                gameWorld3.setString_input(String.valueOf(finalTextButton.getText()));
-                gameWorld3.answer();
+               // gameWorld3.setString_input(String.valueOf(finalTextButton.getText()));
+               // gameWorld3.answer();
             }
         });
         return textButton;
