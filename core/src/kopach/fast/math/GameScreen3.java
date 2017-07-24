@@ -28,9 +28,11 @@ public class GameScreen3 implements Screen {
     private static final float BTN_DOWN_POINT_Y = 140;
     private static final float vidstan_width = 20;
     private static final float vidstan_height = 30;
-    private static final float btn_width = (720 - (BTN_POINT_X * 2 + vidstan_width * 3)) / 4;
-    private static final float btn_height = btn_width;
+    private static float btn_width;
+    private static float btn_height;
     MyGameClass myGameClass;
+    int level;
+    int num_of_btn;
     public GameWorld3 gameWorld3;
     ArrayList<Integer> valuesForCheck;//використовуємо цей аррей для перевірки чи вибрана кнопка є правильною
 
@@ -42,8 +44,8 @@ public class GameScreen3 implements Screen {
     public Stage stage_vg;
 
 
-    public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24;
-    TextButton[] textButtons = new TextButton[]{btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24};
+    public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24, btn_25, btn_26, btn_27, btn_28, btn_29, btn_30;
+    TextButton[] textButtons = new TextButton[]{btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24, btn_25, btn_26, btn_27, btn_28, btn_29, btn_30};
     Skin skin;
     BitmapFont text_to_button;
     BitmapFont mGC_gs3_text_text_score, mGC_gs3_text_score, mGC_gs3_text_text_best_score, mGC_gs3_text_best_score, mGC_gs3_text_time;
@@ -52,7 +54,7 @@ public class GameScreen3 implements Screen {
 
     float screen_width = 720, screen_height = 1280;
     float tr_propusk_width, tr_propusk_height;
-    float text_text_best_score_x, text_text_best_score_y, text_best_score_x, text_best_score_y, tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
+    float tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
 
     public GameScreen3(final MyGameClass myGameClass) {   // метод що запускається відразу
         this.myGameClass = myGameClass;
@@ -62,13 +64,26 @@ public class GameScreen3 implements Screen {
         stage_vg = new Stage(viewport);
         stage_vg.clear();
         Gdx.input.setInputProcessor(stage_vg);
+        //TODO постав тут цифри 1-3 і запусти
+        level = 3;
 
         skin = new Skin();
         textureAtlas_vg = new TextureAtlas("texture/TextureAtlas.atlas");
         skin.addRegions(textureAtlas_vg);
-        createTextButtons();
 
+        btn_width = (720 - (BTN_POINT_X * 2 + vidstan_width * 3)) / (level + 1);
+        btn_height = (1280 - (BTN_DOWN_POINT_Y * 2 + vidstan_height * 2)) / (level + 2);
+        if (level == 1) {
+            num_of_btn = 6;
+            Gdx.app.log("tag", "height" + btn_height);
+        } else if (level == 2) {
+            num_of_btn = 12;
+        } else if (level == 3) {
+            num_of_btn = 20;
+        }
+        createTextButtons();
         gameWorld3 = new GameWorld3(this);
+        gameWorld3.generateValue(num_of_btn);
 
         Gdx.input.setCatchBackKey(true);
         variables_x_y();
@@ -76,7 +91,7 @@ public class GameScreen3 implements Screen {
 
         valuesForCheck = new ArrayList<Integer>();
         //копіюємо масив
-        for (int i = 0; i < gameWorld3.values.size(); i++) {
+        for (int i = 0; i < num_of_btn; i++) {
             valuesForCheck.add(gameWorld3.values.get(i));
         }
         //сортуємо від меншого до більшого
@@ -168,7 +183,7 @@ public class GameScreen3 implements Screen {
 
     void updateButtonText() {
         Gdx.app.log("tag", "update");
-        for (int i = 0; i < textButtons.length; i++) {
+        for (int i = 0; i < num_of_btn; i++) {
             textButtons[i].setText(gameWorld3.getValue(i));
         }
     }
@@ -189,20 +204,24 @@ public class GameScreen3 implements Screen {
         tr_propusk_width = 90;
         tr_propusk_height = 110;
 
+        //   tr_propusk_x = gameWorld1.getInt_tr_propusk_x();
+        tr_propusk_y = 900;
+
         text_pryklad_x = 75;
+        text_vidp_x = tr_propusk_x; // Буде залежати від того якої частини приклада не буде вистачати
         text_text_ne_prav_vidp_x = 20;
         text_ne_prav_vidp_x = text_text_ne_prav_vidp_x + 140;
         text_time_x = screen_width / 2 - 6;
-        text_text_score_x = screen_width - 165;  text_score_x = text_text_score_x + 126;
-        text_text_best_score_x = 20;  text_best_score_x = 90;
+        text_text_score_x = screen_width - 165;
+        text_score_x = text_text_score_x + 126;
 
         text_pryklad_y = 980;
         text_vidp_y = text_pryklad_y;
         text_text_ne_prav_vidp_y = screen_height - 50;
         text_ne_prav_vidp_y = text_text_ne_prav_vidp_y + 4;
         text_time_y = screen_height - 50;
-        text_text_score_y = text_ne_prav_vidp_y;   text_score_y = text_text_score_y + 4;
-        text_text_best_score_y = 1240;  text_best_score_y = text_text_best_score_y + 4;
+        text_text_score_y = text_ne_prav_vidp_y;
+        text_score_y = text_text_score_y + 4;
 
 
     }
@@ -218,99 +237,37 @@ public class GameScreen3 implements Screen {
 
     public void createTextButtons() {   // налаштування кнопок
         Gdx.app.log("GameScreen3", "create text button");
-        for (int i = 0; i < textButtons.length; i++) {
+        for (int i = 0; i < num_of_btn; i++) {
             textButtons[i] = drawButton("btn krug press", i + 1);
         }
     }
 
     private float getButtonX(int position) {
-        //Можна зробити таку штуку,щоб було менще коду
-        switch (position) {
-            case 1:
-            case 5:
-            case 9:
-            case 13:
-            case 17:
-            case 21:
-                return BTN_POINT_X;
-            case 2:
-            case 6:
-            case 10:
-            case 14:
-            case 18:
-            case 22:
-                return BTN_POINT_X + btn_width + vidstan_width;
-            case 3:
-            case 7:
-            case 11:
-            case 15:
-            case 19:
-            case 23:
-                return BTN_POINT_X + btn_width * 2 + vidstan_width * 2;
-            case 4:
-            case 8:
-            case 12:
-            case 16:
-            case 20:
-            case 24:
-                return BTN_POINT_X + btn_width * 3 + vidstan_width * 3;
+        //Придумав такий алггоритм, 530 це точка в якій малюється четверта кнопка
+        float previousX = BTN_POINT_X;
+        for (int i = 1; i != position; i++) {
+            previousX = previousX + btn_width + vidstan_width;
+            if (previousX > 650) {
+                previousX = BTN_POINT_X;
+            }
         }
-        return 0;
+        return previousX;
     }
 
     private float getButtonY(int position) {
-        switch (position) {
-            case 1:
-                return BTN_DOWN_POINT_Y + btn_height * 5 + vidstan_height * 5;
-            case 2:
-                return BTN_DOWN_POINT_Y + btn_height * 5 + vidstan_height * 5;
-            case 3:
-                return BTN_DOWN_POINT_Y + btn_height * 5 + vidstan_height * 5;
-            case 4:
-                return BTN_DOWN_POINT_Y + btn_height * 5 + vidstan_height * 5;
-            case 5:
-                return BTN_DOWN_POINT_Y + btn_height * 4 + vidstan_height * 4;
-            case 6:
-                return BTN_DOWN_POINT_Y + btn_height * 4 + vidstan_height * 4;
-            case 7:
-                return BTN_DOWN_POINT_Y + btn_height * 4 + vidstan_height * 4;
-            case 8:
-                return BTN_DOWN_POINT_Y + btn_height * 4 + vidstan_height * 4;
-            case 9:
-                return BTN_DOWN_POINT_Y + btn_height * 3 + vidstan_height * 3;
-            case 10:
-                return BTN_DOWN_POINT_Y + btn_height * 3 + vidstan_height * 3;
-            case 11:
-                return BTN_DOWN_POINT_Y + btn_height * 3 + vidstan_height * 3;
-            case 12:
-                return BTN_DOWN_POINT_Y + btn_height * 3 + vidstan_height * 3;
-            case 13:
-                return BTN_DOWN_POINT_Y + btn_height * 2 + vidstan_height * 2;
-            case 14:
-                return BTN_DOWN_POINT_Y + btn_height * 2 + vidstan_height * 2;
-            case 15:
-                return BTN_DOWN_POINT_Y + btn_height * 2 + vidstan_height * 2;
-            case 16:
-                return BTN_DOWN_POINT_Y + btn_height * 2 + vidstan_height * 2;
-            case 17:
-                return BTN_DOWN_POINT_Y + btn_height + vidstan_height;
-            case 18:
-                return BTN_DOWN_POINT_Y + btn_height + vidstan_height;
-            case 19:
-                return BTN_DOWN_POINT_Y + btn_height + vidstan_height;
-            case 20:
-                return BTN_DOWN_POINT_Y + btn_height + vidstan_height;
-            case 21:
-                return BTN_DOWN_POINT_Y;
-            case 22:
-                return BTN_DOWN_POINT_Y;
-            case 23:
-                return BTN_DOWN_POINT_Y;
-            case 24:
-                return BTN_DOWN_POINT_Y;
-
+        int floor = 1;
+        //floor - ряд , рахую з низу
+        int i = level + 1;
+        if (position % i == 0) {
+            floor = position / i;
+        } else {
+            floor = (position + i) / i;
         }
-        return 0;
+        if (floor == 1) {
+            return BTN_DOWN_POINT_Y;
+        } else {
+            return BTN_DOWN_POINT_Y + btn_height * (floor - 1) + vidstan_height * (floor - 1);
+        }
     }
 
     //Цей метод створює кожну кнопку по черзі
@@ -318,7 +275,7 @@ public class GameScreen3 implements Screen {
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable("btn krug");
-        style.checked = skin.getDrawable(down);
+        style.down = skin.getDrawable(down);
         style.font = myGameClass.gs1_text_btn;
         TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_width, btn_height);

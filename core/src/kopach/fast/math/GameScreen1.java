@@ -185,20 +185,22 @@ public class GameScreen1 implements Screen {
         //   tr_propusk_x = gameWorld1.getInt_tr_propusk_x();
         tr_propusk_y = 900;
 
-        text_text_best_score_x = 20;   text_best_score_x = 90;
+        text_text_best_score_x = 20;
+        text_best_score_x = 90;
         text_pryklad_x = 75;
         text_vidp_x = tr_propusk_x; // Буде залежати від того якої частини приклада не буде вистачати
-      //  text_text_ne_prav_vidp_x = 20;
-      //  text_ne_prav_vidp_x = text_text_ne_prav_vidp_x + 140;
+        //  text_text_ne_prav_vidp_x = 20;
+        //  text_ne_prav_vidp_x = text_text_ne_prav_vidp_x + 140;
         text_time_x = screen_width / 2 - 6;
         text_text_score_x = screen_width - 165;
         text_score_x = text_text_score_x + 126;
 
-        text_text_best_score_y = screen_height - 40;  text_best_score_y = text_text_best_score_y + 4;
+        text_text_best_score_y = screen_height - 40;
+        text_best_score_y = text_text_best_score_y + 4;
         text_pryklad_y = 980;
         text_vidp_y = text_pryklad_y;
-      //  text_text_ne_prav_vidp_y = screen_height - 50;
-      //  text_ne_prav_vidp_y = text_text_ne_prav_vidp_y + 4;
+        //  text_text_ne_prav_vidp_y = screen_height - 50;
+        //  text_ne_prav_vidp_y = text_text_ne_prav_vidp_y + 4;
         text_time_y = screen_height - 50;
         text_text_score_y = screen_height - 40;
         text_score_y = text_text_score_y + 4;
@@ -283,6 +285,7 @@ public class GameScreen1 implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 gameWorld1.setString_input(String.valueOf(finalTextButton.getText()));
+                FLAG_SHOW_QUESTION_MARK = false;
                 gameWorld1.answer();
             }
         });

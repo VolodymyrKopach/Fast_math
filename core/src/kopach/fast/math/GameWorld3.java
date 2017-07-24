@@ -31,7 +31,6 @@ public class GameWorld3 {
     public GameWorld3(GameScreen3 gameScreen3) { // запускаться відразу при запуску класа
         this.gameScreen3 = gameScreen3;
         values = new ArrayList<Integer>();
-        generateValue();
         preferences_game = Gdx.app.getPreferences("My_preferences_game");
 
         preferences_easy = Gdx.app.getPreferences("My_preferences_score_easy");
@@ -41,7 +40,7 @@ public class GameWorld3 {
         startGame();
     }
 
-    private void generateValue() {
+    public void generateValue(int num_of_btn) {
         // заповнюємо масив числами
         for (int i = 0; i < 24; i++) {
             values.add(new Random().nextInt(100));
