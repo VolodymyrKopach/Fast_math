@@ -28,8 +28,7 @@ public class GameScreen3 implements Screen {
     private static final float BTN_DOWN_POINT_Y = 140;
     private static final float vidstan_width = 20;
     private static final float vidstan_height = 30;
-    private static float btn_width;
-    private static float btn_height;
+    private static float btn_diametr;
     MyGameClass myGameClass;
     int level;
     int num_of_btn;
@@ -71,11 +70,9 @@ public class GameScreen3 implements Screen {
         textureAtlas_vg = new TextureAtlas("texture/TextureAtlas.atlas");
         skin.addRegions(textureAtlas_vg);
 
-        btn_width = (720 - (BTN_POINT_X * 2 + vidstan_width * 3)) / (level + 1);
-        btn_height = (1280 - (BTN_DOWN_POINT_Y * 2 + vidstan_height * 2)) / (level + 2);
+        btn_diametr = (720 - (BTN_POINT_X * 2 + vidstan_width * (level ))) / (level + 1);
         if (level == 1) {
             num_of_btn = 6;
-            Gdx.app.log("tag", "height" + btn_height);
         } else if (level == 2) {
             num_of_btn = 12;
         } else if (level == 3) {
@@ -212,8 +209,8 @@ public class GameScreen3 implements Screen {
         text_text_ne_prav_vidp_x = 20;
         text_ne_prav_vidp_x = text_text_ne_prav_vidp_x + 140;
         text_time_x = screen_width / 2 - 6;
-        text_text_score_x = screen_width - 165;
-        text_score_x = text_text_score_x + 126;
+        text_text_score_x = screen_width - 200;
+        text_score_x = text_text_score_x + 130;
 
         text_pryklad_y = 980;
         text_vidp_y = text_pryklad_y;
@@ -246,8 +243,8 @@ public class GameScreen3 implements Screen {
         //Придумав такий алггоритм, 530 це точка в якій малюється четверта кнопка
         float previousX = BTN_POINT_X;
         for (int i = 1; i != position; i++) {
-            previousX = previousX + btn_width + vidstan_width;
-            if (previousX > 650) {
+            previousX = previousX + btn_diametr + vidstan_width;
+            if (previousX > (720 - btn_diametr)) {
                 previousX = BTN_POINT_X;
             }
         }
@@ -264,9 +261,9 @@ public class GameScreen3 implements Screen {
             floor = (position + i) / i;
         }
         if (floor == 1) {
-            return BTN_DOWN_POINT_Y;
+            return 1200 - BTN_DOWN_POINT_Y - btn_diametr;
         } else {
-            return BTN_DOWN_POINT_Y + btn_height * (floor - 1) + vidstan_height * (floor - 1);
+            return 1200 - (BTN_DOWN_POINT_Y + btn_diametr * (floor) + vidstan_height * (floor - 1));
         }
     }
 
@@ -278,7 +275,7 @@ public class GameScreen3 implements Screen {
         style.down = skin.getDrawable(down);
         style.font = myGameClass.gs1_text_btn;
         TextButton textButton = new TextButton("", style);
-        textButton.setSize(btn_width, btn_height);
+        textButton.setSize(btn_diametr, btn_diametr);
         stage_vg.addActor(textButton);
         final TextButton finalTextButton = textButton;
         textButton.setPosition(getButtonX(position), getButtonY(position));
