@@ -317,6 +317,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
                 height_btn_play = 200;
 
                 tr_menu_game_4_y += deltaX/3;
+
                 */
         }
 
