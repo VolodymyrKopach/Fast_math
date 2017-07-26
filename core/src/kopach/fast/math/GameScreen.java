@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
     public TextButton.TextButtonStyle btn1_style, btn2_style, btn3_style, btn4_style, btn5_style, btn6_style, btn7_style, btn8_style, btn9_style, btn_minus_style, btn0_style, btn_C_style, btn_answer_style;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont mGC_gs_text_pryklad, mGC_gs_text_vidp, mGC_gs_text_score, mGC_gs_text_text_best_score, mGC_gs_text_best_score, mGC_gs_text_time;
+    BitmapFont mGC_gs_text_to_btn, mGC_gs_text_pryklad, mGC_gs_text_vidp, mGC_gs_text_score, mGC_gs_text_text_best_score, mGC_gs_text_best_score, mGC_gs_text_time;
     SpriteBatch mGC_spriteBatch;
 
     //цей прапор служить для перевірки, щоб завжди було тільки одне видалення
@@ -155,6 +155,7 @@ public class GameScreen implements Screen {
         mGC_spriteBatch = myGameClass.spriteBatch;
 
         mGC_gs_text_time = myGameClass.gs_text_time;
+        mGC_gs_text_to_btn = myGameClass.gs_text_to_btn;
         mGC_gs_text_score = myGameClass.gs_text_score;
         mGC_gs_text_text_best_score = myGameClass.gs_text_text_best_score;
         mGC_gs_text_best_score = myGameClass.gs_text_best_score;
@@ -223,7 +224,7 @@ public class GameScreen implements Screen {
         text_score_y = screen_height - 40;
         text_text_best_score_y = screen_height - 40;  text_best_score_y = text_text_best_score_y + 4;
         text_pryklad_y = tr_screen_y + tr_screen_height / 2 + 25;
-        text_vidp_y = text_pryklad_y;
+        text_vidp_y = text_pryklad_y+4;
 
     }
 
@@ -243,7 +244,7 @@ public class GameScreen implements Screen {
 
         //остання цифра в методі CreateButton це цифра яку ми будемо додаватив текстове поле,
         // якщо -1 то не додаємо нічого
-        btn_answer = createButton("btn_answer_press", "btn_answer", -1);
+        btn_answer = createButton("btn answer press", "btn answer", -1, " ");
         btn_answer.setPosition(btn_answer_x, btn_answer_y);
         btn_answer.setSize(width_btn, height_btn);
         btn_answer.addListener(new InputListener() {
@@ -258,11 +259,11 @@ public class GameScreen implements Screen {
         });
 
 
-        btn_0 = createButton("btn0_press", "btn0", 0);
+        btn_0 = createButton("btn press", "btn", 0, "0");
         btn_0.setSize(width_btn, height_btn);
         btn_0.setPosition(btn0_x, btn0_y);
 
-        btn_minus = createButton("btnminus_press", "btnminus", -1);
+        btn_minus = createButton("btn press", "btn", -1, "-");
         btn_minus.setPosition(btn_minus_x, btn_minus_y);
         btn_minus.setSize(width_btn, height_btn);
         btn_minus.addListener(new InputListener() {
@@ -277,48 +278,48 @@ public class GameScreen implements Screen {
             }
         });
 
-        btn_9 = createButton("btn9_press", "btn9", 9);
+        btn_9 = createButton("btn press", "btn", 9, "9");
         btn_9.setSize(width_btn, height_btn);
         btn_9.setPosition(btn9_x, btn9_y);
 
 
-        btn_8 = createButton("btn8_press", "btn8", 8);
+        btn_8 = createButton("btn press", "btn", 8, "8");
         btn_8.setSize(width_btn, height_btn);
         btn_8.setPosition(btn8_x, btn8_y);
 
 
-        btn_7 = createButton("btn7_press", "btn7", 7);
+        btn_7 = createButton("btn press", "btn", 7, "7");
         btn_7.setSize(width_btn, height_btn);
         btn_7.setPosition(btn7_x, btn7_y);
 
 
-        btn_6 = createButton("btn6_press", "btn6", 6);
+        btn_6 = createButton("btn press", "btn", 6, "6");
         btn_6.setSize(width_btn, height_btn);
         btn_6.setPosition(btn6_x, btn6_y);
 
 
-        btn_5 = createButton("btn5_press", "btn5", 5);
+        btn_5 = createButton("btn press", "btn", 5, "5");
         btn_5.setSize(width_btn, height_btn);
         btn_5.setPosition(btn5_x, btn5_y);
 
-        btn_4 = createButton("btn4_press", "btn4", 4);
+        btn_4 = createButton("btn press", "btn", 4, "4");
         btn_4.setSize(width_btn, height_btn);
         btn_4.setPosition(btn4_x, btn4_y);
 
-        btn_3 = createButton("btn3_press", "btn3", 3);
+        btn_3 = createButton("btn press", "btn", 3, "3");
         btn_3.setSize(width_btn, height_btn);
         btn_3.setPosition(btn3_x, btn3_y);
 
 
-        btn_2 = createButton("btn2_press", "btn2", 2);
+        btn_2 = createButton("btn press", "btn", 2, "2");
         btn_2.setSize(width_btn, height_btn);
         btn_2.setPosition(btn2_x, btn2_y);
 
-        btn_1 = createButton("btn1_press", "btn1", 1);
+        btn_1 = createButton("btn press", "btn", 1, "1");
         btn_1.setSize(width_btn, height_btn);
         btn_1.setPosition(btn1_x, btn1_y);
 
-        btn_C = createButton("btn_C_press", "btn_C", -1);
+        btn_C = createButton("btn C press", "btn C", -1, " ");
         btn_C.setSize(width_btn_C, height_btn_C);
         btn_C.setPosition(btn_C_x, btn_C_y);
         btn_C.addListener(new InputListener() {
@@ -338,12 +339,12 @@ public class GameScreen implements Screen {
         });
     }
 
-    TextButton createButton(String drawableDown, String drawableUp, final int number) {
+    TextButton createButton(String drawableDown, String drawableUp, final int number, String text_to_number) {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable(drawableUp);
         style.down = skin.getDrawable(drawableDown);
-        style.font = text_to_button;
-        TextButton textButton = new TextButton(" ", style);
+        style.font = mGC_gs_text_to_btn;
+        TextButton textButton = new TextButton(text_to_number, style);
         stage_vg.addActor(textButton);
         if (number >= 0) {
             textButton.addListener(new InputListener() {

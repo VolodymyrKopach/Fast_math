@@ -272,7 +272,7 @@ public class GameScreen3 implements Screen {
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable("btn krug");
-        style.down = skin.getDrawable(down);
+        style.checked = skin.getDrawable(down);
         style.font = myGameClass.gs1_text_btn;
         TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_diametr, btn_diametr);

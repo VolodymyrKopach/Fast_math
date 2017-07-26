@@ -33,7 +33,7 @@ public class GameWorld2 {
         this.gameScreen2 = gameScreen2;
         preferences_game_gw2 = Gdx.app.getPreferences("My_preferences_game");
 
-        setGame_gw2("easy"); //по стандарту буде відкриватись рівень easy
+        setGame_gw2("normal"); //по стандарту буде відкриватись рівень easy
 
         preferences_easy_gw2 = Gdx.app.getPreferences("My_preferences_score_easy");
         preferences_normal_gw2 = Gdx.app.getPreferences("My_preferences_score_normal");

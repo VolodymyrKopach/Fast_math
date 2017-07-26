@@ -10,7 +10,7 @@ public class MyGameClass extends Game {
     private AdsController adsController;
 
     public SpriteBatch spriteBatch;
-    public BitmapFont gs_text_vidp, gs_text_pryklad, gs_text_score, gs_text_text_best_score, gs_text_best_score, gs_text_time, text_restart_t_s, text_restart_t_b_s, text_restart_s, text_restart_b_s;
+    public BitmapFont gs_text_to_btn, gs_text_vidp, gs_text_pryklad, gs_text_score, gs_text_text_best_score, gs_text_best_score, gs_text_time, text_restart_t_s, text_restart_t_b_s, text_restart_s, text_restart_b_s;
     public BitmapFont score_textlevel, score_t_b_s, score_b_s;
     public BitmapFont gs1_text_text_score, gs1_text_score, gs1_text_text_best_score, gs1_text_best_score, gs1_text_time, gs1_text_text_no_prav_vidp, gs1_text_no_prav_vidp, gs1_text_pryklad, gs1_text_vidp_right, gs1_text_vidp_wrong, gs1_text_btn;
     public BitmapFont gs2_text_text_score, gs2_text_score, gs2_text_text_best_score, gs2_text_best_score, gs2_text_time, gs2_text_pryklad, gs2_text_vidp, gs2_text_znak;
@@ -33,7 +33,7 @@ public class MyGameClass extends Game {
 
         bitmapFont();
 
-        this.setScreen(new GameScreen3(this));
+        this.setScreen(new GameScreen2(this));
     }
 
     public void render() {
@@ -41,6 +41,7 @@ public class MyGameClass extends Game {
     }
 
     public void bitmapFont() {
+        gs_text_to_btn = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
         gs_text_vidp = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
         gs_text_pryklad = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
         gs_text_score = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
@@ -48,6 +49,7 @@ public class MyGameClass extends Game {
         gs_text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
         gs_text_time = new BitmapFont(Gdx.files.internal("bitmapfont/game text time.fnt"), Gdx.files.internal("bitmapfont/game text time.png"), false);
         gs_text_vidp.getData().setScale(1.5f, 1.5f);
+        gs_text_to_btn.getData().setScale(1.4f, 1.4f);
         gs_text_pryklad.getData().setScale(1.4f, 1.4f);
         gs_text_score.getData().setScale(0.5f, 0.5f);
         gs_text_text_best_score.getData().setScale(0.5f, 0.5f);
