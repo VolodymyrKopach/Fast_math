@@ -37,6 +37,8 @@ public class GameWorld3 {
         preferences_normal = Gdx.app.getPreferences("My_preferences_score_normal");
         preferences_hard = Gdx.app.getPreferences("My_preferences_score_hard");
 
+        setGame("easy");
+
         startGame();
     }
 
