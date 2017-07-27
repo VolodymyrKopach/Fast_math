@@ -33,10 +33,9 @@ public class GameScreen implements Screen {
     public Stage stage_vg;
 
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0, btn_answer, btn_C, btn_minus;
-    public TextButton.TextButtonStyle btn1_style, btn2_style, btn3_style, btn4_style, btn5_style, btn6_style, btn7_style, btn8_style, btn9_style, btn_minus_style, btn0_style, btn_C_style, btn_answer_style;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont mGC_gs_text_to_btn, mGC_gs_text_pryklad, mGC_gs_text_vidp, mGC_gs_text_score, mGC_gs_text_text_best_score, mGC_gs_text_best_score, mGC_gs_text_time;
+    BitmapFont text_to_btn, text_pryklad, text_vidp, text_score, text_best_score, text_time;
     SpriteBatch mGC_spriteBatch;
 
     //цей прапор служить для перевірки, щоб завжди було тільки одне видалення
@@ -55,8 +54,9 @@ public class GameScreen implements Screen {
 
         Gdx.input.setCatchBackKey(true);
 
-        variables_x_y();
         variables();
+
+        mGC_spriteBatch = new SpriteBatch(); //myGameClass.spriteBatch;
 
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
@@ -96,28 +96,28 @@ public class GameScreen implements Screen {
         gameWorld.setString_timer(delta);
 
         // orthographicCamera.update();
-        myGameClass.spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+        mGC_spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
-        myGameClass.spriteBatch.begin();
-        myGameClass.spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
+        mGC_spriteBatch.begin();
+        mGC_spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             myGameClass.setScreen(new MenuScreen(myGameClass));
         }
 
-        myGameClass.spriteBatch.draw(tr_screen, tr_screen_x, tr_screen_y, tr_screen_width, tr_screen_height);
+        mGC_spriteBatch.draw(tr_screen, tr_screen_x, tr_screen_y, tr_screen_width, tr_screen_height);
 
         if (gameWorld.getBoolean_X()) {
-            myGameClass.spriteBatch.draw(tr_X, tr_X_x, tr_X_y, width_X, height_X);
+            mGC_spriteBatch.draw(tr_X, tr_X_x, tr_X_y, width_X, height_X);
         }
-        myGameClass.gs_text_pryklad.draw(myGameClass.spriteBatch, gameWorld.getString_to_screen(), text_pryklad_x, text_pryklad_y);
-        myGameClass.gs_text_vidp.draw(myGameClass.spriteBatch, gameWorld.getString_input(), text_vidp_x, text_vidp_y);
-        myGameClass.gs_text_score.draw(myGameClass.spriteBatch, gameWorld.getString_score(), text_score_x, text_score_y);
-        myGameClass.gs_text_time.draw(myGameClass.spriteBatch, gameWorld.getString_timer(), text_time_x, text_time_y);
-        myGameClass.gs_text_text_best_score.draw(mGC_spriteBatch, "BS:", text_text_best_score_x, text_text_best_score_y);
-        myGameClass.gs_text_best_score.draw(mGC_spriteBatch, gameWorld.getString_best_score_this_level(), text_best_score_x, text_best_score_y);
-        myGameClass.spriteBatch.draw(tr_left_border, tr_left_border_x, tr_left_border_y, tr_left_border_width, tr_left_border_height);
-        myGameClass.spriteBatch.end();
+        text_pryklad.draw(mGC_spriteBatch, gameWorld.getString_to_screen(), text_pryklad_x, text_pryklad_y);
+        text_vidp.draw(mGC_spriteBatch, gameWorld.getString_input(), text_vidp_x, text_vidp_y);
+        text_score.draw(mGC_spriteBatch, gameWorld.getString_score(), text_score_x, text_score_y);
+        text_time.draw(mGC_spriteBatch, gameWorld.getString_timer(), text_time_x, text_time_y);
+      //  gs_text_text_best_score.draw(mGC_spriteBatch, "BS:", text_text_best_score_x, text_text_best_score_y);
+        text_best_score.draw(mGC_spriteBatch, gameWorld.getString_best_score_this_level(), text_best_score_x, text_best_score_y);
+        mGC_spriteBatch.draw(tr_left_border, tr_left_border_x, tr_left_border_y, tr_left_border_width, tr_left_border_height);
+        mGC_spriteBatch.end();
 
         stage_vg.act(delta);
         stage_vg.draw();
@@ -146,25 +146,47 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
-
+        textureAtlas_vg.dispose();
+        stage_vg.dispose();
+        skin.dispose();
+        text_to_button.dispose();
+        text_to_btn.dispose();
+        text_pryklad.dispose();
+        text_vidp.dispose();
+        text_score.dispose();
+        text_best_score.dispose();
+        text_time.dispose();
+        mGC_spriteBatch.dispose();
     }
-
 
     public void variables() {
-        mGC_spriteBatch = myGameClass.spriteBatch;
 
-        mGC_gs_text_time = myGameClass.gs_text_time;
-        mGC_gs_text_to_btn = myGameClass.gs_text_to_btn;
-        mGC_gs_text_score = myGameClass.gs_text_score;
-        mGC_gs_text_text_best_score = myGameClass.gs_text_text_best_score;
-        mGC_gs_text_best_score = myGameClass.gs_text_best_score;
-        mGC_gs_text_pryklad = myGameClass.gs_text_pryklad;
-        mGC_gs_text_vidp = myGameClass.gs_text_vidp;
+        text_to_btn = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
+        text_vidp = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
+        text_pryklad = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
+        text_score = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
+        // text_text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
+        text_time = new BitmapFont(Gdx.files.internal("bitmapfont/game text time.fnt"), Gdx.files.internal("bitmapfont/game text time.png"), false);
+        text_vidp.getData().setScale(1.5f, 1.5f);
+        text_to_btn.getData().setScale(1.4f, 1.4f);
+        text_pryklad.getData().setScale(1.4f, 1.4f);
+        text_score.getData().setScale(0.5f, 0.5f);
+        // text_text_best_score.getData().setScale(0.5f, 0.5f);
+        text_best_score.getData().setScale(0.6f, 0.6f);
+        text_time.getData().setScale(1.3f, 1.3f);
 
-    }
 
-    public void variables_x_y() {
+      //  text_restart_s = new BitmapFont(Gdx.files.internal("bitmapfont/black plus.fnt"), Gdx.files.internal("bitmapfont/black plus.png"), false);
+      //  text_restart_t_s = new BitmapFont(Gdx.files.internal("bitmapfont/black.fnt"), Gdx.files.internal("bitmapfont/black.png"), false);
+      //  text_restart_t_b_s = new BitmapFont(Gdx.files.internal("bitmapfont/black.fnt"), Gdx.files.internal("bitmapfont/black.png"), false);
+      //  text_restart_b_s = new BitmapFont(Gdx.files.internal("bitmapfont/blue normal.fnt"), Gdx.files.internal("bitmapfont/blue normal.png"), false);
+      //  text_restart_s.getData().setScale(1, 1);
+      //  text_restart_t_s.getData().setScale(1f, 1f);
+      //  text_restart_t_b_s.getData().setScale(1f, 1f);
+      //  text_restart_b_s.getData().setScale(1.3f, 1.3f);
+
+
         width_btn = 185;
         height_btn = 185;
         width_btn_answer = 235;
@@ -231,7 +253,7 @@ public class GameScreen implements Screen {
     public void game_level() {
         if (gameWorld.float_timer < 0) {
             gameWorld.float_timer = 10;
-            myGameClass.setScreen(new RestartScreen(myGameClass));
+          //  myGameClass.setScreen(new RestartScreen(myGameClass));
             Gdx.app.log("log", "good");
         }
     }
@@ -343,7 +365,7 @@ public class GameScreen implements Screen {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable(drawableUp);
         style.down = skin.getDrawable(drawableDown);
-        style.font = mGC_gs_text_to_btn;
+        style.font = text_to_btn;
         TextButton textButton = new TextButton(text_to_number, style);
         stage_vg.addActor(textButton);
         if (number >= 0) {

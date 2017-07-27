@@ -47,8 +47,8 @@ public class GameScreen3 implements Screen {
     TextButton[] textButtons = new TextButton[]{btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24, btn_25, btn_26, btn_27, btn_28, btn_29, btn_30};
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont mGC_gs3_text_text_score, mGC_gs3_text_score, mGC_gs3_text_text_best_score, mGC_gs3_text_best_score, mGC_gs3_text_time;
-    SpriteBatch mGC_spriteBatch;
+    BitmapFont text_text_score, text_score, text_text_best_score, text_best_score, text_time;
+    SpriteBatch spriteBatch;
 
 
     float screen_width = 720, screen_height = 1280;
@@ -65,6 +65,8 @@ public class GameScreen3 implements Screen {
         Gdx.input.setInputProcessor(stage_vg);
         //TODO постав тут цифри 1-3 і запусти
         level = 3;
+
+        spriteBatch = new SpriteBatch();
 
         skin = new Skin();
         textureAtlas_vg = new TextureAtlas("texture/TextureAtlas.atlas");
@@ -83,7 +85,6 @@ public class GameScreen3 implements Screen {
         gameWorld3.generateValue(num_of_btn);
 
         Gdx.input.setCatchBackKey(true);
-        variables_x_y();
         variables();
 
         valuesForCheck = new ArrayList<Integer>();
@@ -138,14 +139,14 @@ public class GameScreen3 implements Screen {
         myGameClass.spriteBatch.begin();
         myGameClass.spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
 
-        mGC_gs3_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
-        mGC_gs3_text_score.draw(mGC_spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
-        mGC_gs3_text_time.draw(mGC_spriteBatch, gameWorld3.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
-        //   mGC_gs3_text_text_best_score.draw(spriteBatch, "BS:", text_text_score_x, text_text_score_y);              //Дороблю
-        //   mGC_gs3_text_best_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);      //Дороблю
+        text_text_score.draw(spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
+        text_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
+        text_time.draw(spriteBatch, gameWorld3.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
+        text_text_best_score.draw(spriteBatch, "BS:", text_text_score_x, text_text_score_y);              //Дороблю
+        text_best_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);      //Дороблю
 
 
-        mGC_spriteBatch.end();
+        spriteBatch.end();
 
         stage_vg.act(delta);
         stage_vg.draw();
@@ -174,7 +175,16 @@ public class GameScreen3 implements Screen {
 
     @Override
     public void dispose() {
-
+        textureAtlas_vg.dispose();
+        stage_vg.dispose();
+        skin.dispose();
+        text_to_button.dispose();
+        text_text_score.dispose();
+        text_score.dispose();
+        text_text_best_score.dispose();
+        text_best_score.dispose();
+        text_time.dispose();
+        spriteBatch.dispose();
 
     }
 
@@ -186,18 +196,21 @@ public class GameScreen3 implements Screen {
     }
 
 
-    public void variables() {    // ініціалізація переміних і т.д.
-        mGC_spriteBatch = myGameClass.spriteBatch;
+    public void variables() {   // налаштування значень Х і У для прорисовки
+        text_text_score = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_score = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
+        text_time = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
+       // text_btn = new BitmapFont(Gdx.files.internal("bitmapfont/white bold 70.fnt"), Gdx.files.internal("bitmapfont/white bold 70.png"), false);
+        text_text_score.getData().setScale(0.5f, 0.5f);
+        text_score.getData().setScale(0.6f, 0.6f);
+        text_time.getData().setScale(0.7f, 0.7f);
+        text_text_best_score.getData().setScale(0.5f, 0.5f);
+        text_best_score.getData().setScale(0.6f, 0.6f);
+        // text_btn.getData().setScale(0.8f, 0.8f);
 
-        mGC_gs3_text_time = myGameClass.gs3_text_time;
-        mGC_gs3_text_text_score = myGameClass.gs3_text_text_score;
-        mGC_gs3_text_score = myGameClass.gs3_text_score;
-        mGC_gs3_text_text_best_score = myGameClass.gs3_text_text_best_score;
-        mGC_gs3_text_best_score = myGameClass.gs3_text_best_score;
 
-    }
-
-    public void variables_x_y() {   // налаштування значень Х і У для прорисовки
         tr_propusk_width = 90;
         tr_propusk_height = 110;
 
@@ -273,7 +286,7 @@ public class GameScreen3 implements Screen {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable("btn krug");
         style.checked = skin.getDrawable(down);
-        style.font = myGameClass.gs2_text_time;
+        style.font = text_time;
         TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_diametr, btn_diametr);
         stage_vg.addActor(textButton);

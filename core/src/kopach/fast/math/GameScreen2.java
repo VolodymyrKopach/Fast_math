@@ -41,8 +41,8 @@ public class GameScreen2 implements Screen{
     public TextButton btn_less, btn_equal, btn_greater;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont mGC_gs2_text_text_score, mGC_gs2_text_score, mGC_gs2_text_text_best_score, mGC_gs2_text_best_score, mGC_gs2_text_znak, mGC_gs2_text_pryklad, mGC_gs2_text_vidp, mGC_gs2_text_time;
-    SpriteBatch mGC_spriteBatch;
+    BitmapFont text_text_score, text_score, text_text_best_score, text_best_score, text_znak, text_pryklad, text_vidp, text_time;
+    SpriteBatch spriteBatch;
 
 
     float screen_width = 720, screen_height = 1280;
@@ -58,6 +58,8 @@ public class GameScreen2 implements Screen{
         stage.clear();
         Gdx.input.setInputProcessor(stage);
 
+        spriteBatch = new SpriteBatch();
+
         skin = new Skin();
         textureAtlas = new TextureAtlas("texture/TextureAtlas.atlas");
         skin.addRegions(textureAtlas);
@@ -67,7 +69,6 @@ public class GameScreen2 implements Screen{
 
         Gdx.input.setCatchBackKey(true);
         variables_x_y();
-        variables();
 
         Gdx.app.log("GameScreen2", "gw2 start game");
 
@@ -102,20 +103,20 @@ public class GameScreen2 implements Screen{
             // myGameClass.spriteBatch.draw(tr_X, tr_X_x, tr_X_y,X_width, X_height);
         }
 
-        mGC_spriteBatch.draw(tr_propusk, tr_propusk_x, tr_propusk_y, tr_propusk_width, tr_propusk_height);
-        mGC_gs2_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
-        mGC_gs2_text_score.draw(mGC_spriteBatch, gameWorld2.getString_score(), text_score_x, text_score_y);
-        mGC_gs2_text_text_best_score.draw(mGC_spriteBatch, "BS:", text_text_best_score_x, text_text_best_score_y);
-        mGC_gs2_text_best_score.draw(mGC_spriteBatch, gameWorld2.getString_best_score_this_level(), text_best_score_x, text_best_score_y);
-        mGC_gs2_text_znak.draw(mGC_spriteBatch, gameWorld2.getString_left_znak(), text_left_znak_x, text_left_znak_y);
-        mGC_gs2_text_znak.draw(mGC_spriteBatch, gameWorld2.getString_right_znak(), text_right_znak_x, text_right_znak_y);
-        mGC_gs2_text_pryklad.draw(mGC_spriteBatch, String.valueOf(gameWorld2.getInt_left_number_1()), text_left_number_1_x, text_left_number_1_y);
-        mGC_gs2_text_pryklad.draw(mGC_spriteBatch, String.valueOf(gameWorld2.getInt_left_number_2()), text_left_number_2_x, text_left_number_2_y);
-        mGC_gs2_text_pryklad.draw(mGC_spriteBatch, String.valueOf(gameWorld2.getInt_right_number_1()), text_right_number_1_x, text_right_number_1_y);
-        mGC_gs2_text_pryklad.draw(mGC_spriteBatch, String.valueOf(gameWorld2.getInt_right_number_2()), text_right_number_2_x, text_right_number_2_y);
-        mGC_gs2_text_vidp.draw(mGC_spriteBatch, gameWorld2.getString_input(), text_vidp_x, text_vidp_y);
-        mGC_gs2_text_time.draw(mGC_spriteBatch, gameWorld2.getString_timer(), text_time_x, text_time_y);
-        mGC_spriteBatch.end();
+        spriteBatch.draw(tr_propusk, tr_propusk_x, tr_propusk_y, tr_propusk_width, tr_propusk_height);
+        text_text_score.draw(spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
+        text_score.draw(spriteBatch, gameWorld2.getString_score(), text_score_x, text_score_y);
+        text_text_best_score.draw(spriteBatch, "BS:", text_text_best_score_x, text_text_best_score_y);
+        text_best_score.draw(spriteBatch, gameWorld2.getString_best_score_this_level(), text_best_score_x, text_best_score_y);
+        text_znak.draw(spriteBatch, gameWorld2.getString_left_znak(), text_left_znak_x, text_left_znak_y);
+        text_znak.draw(spriteBatch, gameWorld2.getString_right_znak(), text_right_znak_x, text_right_znak_y);
+        text_pryklad.draw(spriteBatch, String.valueOf(gameWorld2.getInt_left_number_1()), text_left_number_1_x, text_left_number_1_y);
+        text_pryklad.draw(spriteBatch, String.valueOf(gameWorld2.getInt_left_number_2()), text_left_number_2_x, text_left_number_2_y);
+        text_pryklad.draw(spriteBatch, String.valueOf(gameWorld2.getInt_right_number_1()), text_right_number_1_x, text_right_number_1_y);
+        text_pryklad.draw(spriteBatch, String.valueOf(gameWorld2.getInt_right_number_2()), text_right_number_2_x, text_right_number_2_y);
+        text_vidp.draw(spriteBatch, gameWorld2.getString_input(), text_vidp_x, text_vidp_y);
+        text_time.draw(spriteBatch, gameWorld2.getString_timer(), text_time_x, text_time_y);
+        spriteBatch.end();
 
 
         stage.act(delta);
@@ -145,24 +146,41 @@ public class GameScreen2 implements Screen{
 
     @Override
     public void dispose() {
+        textureAtlas.dispose();
+        stage.dispose();
+        skin.dispose();
+        text_to_button.dispose();
+        text_text_score.dispose();
+        text_score.dispose();
+        text_text_best_score.dispose();
+        text_best_score.dispose();
+        text_znak.dispose();
+        text_pryklad.dispose();
+        text_vidp.dispose();
+        text_time.dispose();
+        spriteBatch.dispose();
 
-
-    }
-
-    public void variables() {    // ініціалізація переміних і т.д.
-        mGC_spriteBatch = myGameClass.spriteBatch;
-
-        mGC_gs2_text_time = myGameClass.gs2_text_time;
-        mGC_gs2_text_text_score = myGameClass.gs2_text_text_score;
-        mGC_gs2_text_score = myGameClass.gs2_text_score;
-        mGC_gs2_text_text_best_score = myGameClass.gs2_text_text_best_score;
-        mGC_gs2_text_best_score = myGameClass.gs2_text_best_score;
-        mGC_gs2_text_znak = myGameClass.gs2_text_znak;
-        mGC_gs2_text_pryklad = myGameClass.gs2_text_pryklad;
-        mGC_gs2_text_vidp = myGameClass.gs2_text_vidp;
     }
 
     public void variables_x_y() {   // налаштування значень Х і У для прорисовки
+        text_text_score = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_score = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
+        text_text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
+        text_time = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_pryklad = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_znak = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_vidp = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_text_score.getData().setScale(0.5f, 0.5f);
+        text_score.getData().setScale(0.6f, 0.6f);
+        text_text_best_score.getData().setScale(0.5f, 0.5f);
+        text_best_score.getData().setScale(0.6f, 0.6f);
+        text_time.getData().setScale(0.7f, 0.7f);
+        text_pryklad.getData().setScale(1.6f, 1.6f);
+        text_znak.getData().setScale(1.5f, 1.5f);
+        text_vidp.getData().setScale(1.7f, 1.7f);
+
+
         tr_propusk_width = 90;  tr_propusk_height = 110;
 
         tr_propusk_x = screen_width/2-tr_propusk_width/2;  tr_propusk_y = 900;
@@ -230,7 +248,7 @@ public class GameScreen2 implements Screen{
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable(up);
         style.down = skin.getDrawable(down);
-        style.font = myGameClass.gs2_text_time;
+        style.font = text_time;
         TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_width, btn_height);
         stage.addActor(textButton);

@@ -48,7 +48,7 @@ public class GameWorld1 {
         this.gameScreen1 = gameScreen1;
         preferences_game_gw1 = Gdx.app.getPreferences("My_preferences_game_gw1");
 
-        setGame("easy"); //по стандарту буде відкриватись рівень easy
+        setGame("normal"); //по стандарту буде відкриватись рівень easy
 
         preferences_easy_gw1 = Gdx.app.getPreferences("My_preferences_score_easy_gw1");
         preferences_normal_gw1 = Gdx.app.getPreferences("My_preferences_score_normal_gw1");
@@ -203,13 +203,15 @@ public class GameWorld1 {
 
         } else if (getGame().equals("normal")) {
             switch (int_pryklad_random) {
-                case 1:
-                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
+                case 1:  // пропуск в першого числа
+                    questionMarkPosition = 1;
+                    setString_to_screen(string_znak + " " + int_number_2 + " = " + int_result);
                     string_propusk_in_pryklad = "number_1";
 
                     true_variant = int_number_1;
 
                     break;
+
 
                 case 2:
                     questionMarkPosition = 2;
@@ -222,7 +224,8 @@ public class GameWorld1 {
                     break;
 
                 case 3:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
+                    questionMarkPosition = 3;
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " =");
                     string_propusk_in_pryklad = "result";
 
                     true_variant = int_result;
@@ -235,13 +238,15 @@ public class GameWorld1 {
 
         } else if (getGame().equals("hard")) {
             switch (int_pryklad_random) {
-                case 1:
-                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
+                case 1:  // пропуск в першого числа
+                    questionMarkPosition = 1;
+                    setString_to_screen(string_znak + " " + int_number_2 + " = " + int_result);
                     string_propusk_in_pryklad = "number_1";
 
                     true_variant = int_number_1;
 
                     break;
+
 
                 case 2:
                     questionMarkPosition = 2;
@@ -251,18 +256,18 @@ public class GameWorld1 {
 
                     true_variant = int_number_2;
 
-                    true_variant = int_number_2;
-
                     break;
 
                 case 3:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
+                    questionMarkPosition = 3;
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " =");
                     string_propusk_in_pryklad = "result";
 
                     true_variant = int_result;
 
                     break;
             }
+
 
             Gdx.app.log("GameWorld1", "switch hard");
 

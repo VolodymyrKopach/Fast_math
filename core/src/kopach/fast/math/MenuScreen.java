@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
@@ -34,6 +35,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
     Skin skin;
     BitmapFont text_to_button;
 
+    SpriteBatch spriteBatch;
+
     Viewport viewport;
     public OrthographicCamera orthographicCamera;
     public Stage stage_ms;
@@ -53,6 +56,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
+
+        spriteBatch = new SpriteBatch();
 
         textureAtlas_ms = new TextureAtlas("texture/TextureAtlas.atlas");
 
@@ -100,16 +105,16 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         }
 
         orthographicCamera.update();
-        myGameClass.spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+        spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
-        myGameClass.spriteBatch.begin();
-        myGameClass.spriteBatch.draw(tr_menu_fon, 0, 0, screen_width, screen_height);
-        myGameClass.spriteBatch.draw(tr_menu_game_1, tr_menu_game_1_x, tr_menu_game_1_y, width_tr_level_game_1, height_tr_level_game_1);
-        myGameClass.spriteBatch.draw(tr_menu_game_2, tr_menu_game_2_x, tr_menu_game_2_y, width_tr_level_game_2, height_tr_level_game_2);
-        myGameClass.spriteBatch.draw(tr_menu_game_3, tr_menu_game_3_x, tr_menu_game_3_y, width_tr_level_game_3, height_tr_level_game_3);
-        myGameClass.spriteBatch.draw(tr_menu_game_4, tr_menu_game_4_x, tr_menu_game_4_y, width_tr_level_game_4, height_tr_level_game_4);
+        spriteBatch.begin();
+        spriteBatch.draw(tr_menu_fon, 0, 0, screen_width, screen_height);
+        spriteBatch.draw(tr_menu_game_1, tr_menu_game_1_x, tr_menu_game_1_y, width_tr_level_game_1, height_tr_level_game_1);
+        spriteBatch.draw(tr_menu_game_2, tr_menu_game_2_x, tr_menu_game_2_y, width_tr_level_game_2, height_tr_level_game_2);
+        spriteBatch.draw(tr_menu_game_3, tr_menu_game_3_x, tr_menu_game_3_y, width_tr_level_game_3, height_tr_level_game_3);
+        spriteBatch.draw(tr_menu_game_4, tr_menu_game_4_x, tr_menu_game_4_y, width_tr_level_game_4, height_tr_level_game_4);
       //  myGameClass.spriteBatch.draw(tr_level_text, tr_level_text_x, tr_level_text_y, width_tr_level_text, height_tr_level_text);
-        myGameClass.spriteBatch.end();
+        spriteBatch.end();
 
         stage_ms.act(delta);
         stage_ms.draw();
@@ -137,6 +142,11 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     @Override
     public void dispose() {
+        textureAtlas_ms.dispose();
+        skin.dispose();
+        text_to_button.dispose();
+        stage_ms.dispose();
+
 
     }
 
@@ -170,7 +180,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_play_4_y = tr_menu_game_4_y+(height_tr_level_game_4/2)-(width_btn_play/2) -25;
 
         stage_ms.clear();
-        textButton();
+     //   textButton();
     }
 
     void action_swipe(int int_for_swipe, float deltaX){
