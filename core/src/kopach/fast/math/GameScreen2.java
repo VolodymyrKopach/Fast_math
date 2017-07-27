@@ -168,9 +168,9 @@ public class GameScreen2 implements Screen{
         tr_propusk_x = screen_width/2-tr_propusk_width/2;  tr_propusk_y = 900;
 
         text_text_best_score_x = 20;  text_best_score_x = 90;
-        text_left_znak_x = 100;
+        text_left_znak_x = 20;
         text_right_znak_x = 450;
-        text_left_number_1_x = 150;  text_left_number_2_x = text_left_number_1_x;
+        text_left_number_1_x = 70;  text_left_number_2_x = text_left_number_1_x;
         text_right_number_1_x = 500;  text_right_number_2_x = text_right_number_1_x;
         text_vidp_x = tr_propusk_x; // Буде залежати від того якої частини приклада не буде вистачати
         text_time_x = 20;
@@ -191,14 +191,6 @@ public class GameScreen2 implements Screen{
 
 
     }
-
- /*   public void game_level(){
-        if(gameWorld1.float_timer < 0){
-            gameWorld1.float_timer = 10;
-            myGameClass.setScreen(new RestartScreen(myGameClass));
-            Gdx.app.log("log","good");
-        }
-    } */
 
 
     public void createTextButtons() {   // налаштування кнопок
@@ -224,9 +216,7 @@ public class GameScreen2 implements Screen{
     private float getButtonY(int position) {
         switch (position) {
             case 1:
-                return BTN_1_Y;
             case 2:
-                return BTN_1_Y;
             case 3:
                 return BTN_1_Y;
 
@@ -240,7 +230,7 @@ public class GameScreen2 implements Screen{
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable(up);
         style.down = skin.getDrawable(down);
-        style.font = myGameClass.gs1_text_btn; // Поки що любий текст, так як тексту на кнопці не буде
+        style.font = myGameClass.gs2_text_time;
         TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_width, btn_height);
         stage.addActor(textButton);

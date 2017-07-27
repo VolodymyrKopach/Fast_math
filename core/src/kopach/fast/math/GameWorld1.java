@@ -30,6 +30,19 @@ public class GameWorld1 {
     public int int_btn_1, int_btn_2, int_btn_3, int_btn_4, int_btn_5, int_btn_6;
 
     GameScreen1 gameScreen1;
+    String firstPart;
+
+    public String getSecondPart() {
+        return secondPart;
+    }
+
+    public String getFirstPart() {
+
+        return firstPart;
+    }
+
+    String secondPart;
+    private int questionMarkPosition;
 
     public GameWorld1(GameScreen1 gameScreen1) { // запускаться відразу при запуску класа
         this.gameScreen1 = gameScreen1;
@@ -156,7 +169,8 @@ public class GameWorld1 {
 
             switch (int_pryklad_random) {
                 case 1:  // пропуск в першого числа
-                    setString_to_screen(string_propusk + " " + string_znak + " " + int_number_2 + " = " + int_result);
+                    questionMarkPosition = 1;
+                    setString_to_screen(string_znak + " " + int_number_2 + " = " + int_result);
                     string_propusk_in_pryklad = "number_1";
 
                     true_variant = int_number_1;
@@ -165,7 +179,9 @@ public class GameWorld1 {
 
 
                 case 2:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
+                    questionMarkPosition = 2;
+                    firstPart = int_number_1 + " " + string_znak;
+                    secondPart = "= " + int_number_2;
                     string_propusk_in_pryklad = "number_2";
 
                     true_variant = int_number_2;
@@ -173,7 +189,8 @@ public class GameWorld1 {
                     break;
 
                 case 3:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = " + string_propusk);
+                    questionMarkPosition = 3;
+                    setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " =");
                     string_propusk_in_pryklad = "result";
 
                     true_variant = int_result;
@@ -195,7 +212,9 @@ public class GameWorld1 {
                     break;
 
                 case 2:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
+                    questionMarkPosition = 2;
+                    firstPart = int_number_1 + " " + string_znak;
+                    secondPart = "= " + int_number_2;
                     string_propusk_in_pryklad = "number_2";
 
                     true_variant = int_number_2;
@@ -225,8 +244,12 @@ public class GameWorld1 {
                     break;
 
                 case 2:
-                    setString_to_screen(int_number_1 + " " + string_znak + " " + string_propusk + " = " + int_result);
+                    questionMarkPosition = 2;
+                    firstPart = int_number_1 + " " + string_znak;
+                    secondPart = "= " + int_number_2;
                     string_propusk_in_pryklad = "number_2";
+
+                    true_variant = int_number_2;
 
                     true_variant = int_number_2;
 
@@ -491,7 +514,7 @@ public class GameWorld1 {
         this.string_to_screen = string_to_screen;
     }
 
-    public String getString_to_screen() {
+    public String getString_pryklad() {
         return string_to_screen;
     }
 
@@ -547,6 +570,10 @@ public class GameWorld1 {
             bool_timer_wait_start = false;
             startGame();
         }
+    }
+
+    public int getQuestionMarkPosition() {
+        return questionMarkPosition;
     }
 
     /* public void inputNumber(){

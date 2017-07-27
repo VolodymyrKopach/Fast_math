@@ -5,10 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -42,23 +39,25 @@ public class GameScreen1 implements Screen {
 
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6;
     Skin skin;
-    BitmapFont text_to_button;
-    BitmapFont mGC_gs1_text_text_score, mGC_gs1_text_score, mGC_gs1_text_text_best_score, mGC_gs1_text_best_score, mGC_gs1_text_pryklad, mGC_gs1_text_vidp_right, mGC_gs1_text_vidp_wrong, mGC_gs1_text_time;
-    SpriteBatch mGC_spriteBatch;
+    BitmapFont score_value_font, btn_text, best_scrore_text_font, best_score_value_font, text_pryklad_font, mGC_gs1_text_vidp_right, mGC_gs1_text_vidp_wrong, time_font;
+    SpriteBatch spriteBatch;
+    float textWidth;
 
 
     float screen_width = 720, screen_height = 1280;
     float tr_propusk_width, tr_propusk_height;
-    float text_text_best_score_x, text_text_best_score_y, text_best_score_x, text_best_score_y, tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
+    float best_score_text_x, best_score_text_y, best_score_value_x, best_score_value_y, tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
 
-    public GameScreen1(final MyGameClass myGameClass) {   // метод що запускається відразу
+    public GameScreen1(final MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
+        loadFont();
 
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
         stage_vg = new Stage(viewport);
         stage_vg.clear();
         Gdx.input.setInputProcessor(stage_vg);
+        spriteBatch = new SpriteBatch();
 
         skin = new Skin();
         textureAtlas_vg = new TextureAtlas("texture/TextureAtlas.atlas");
@@ -69,7 +68,6 @@ public class GameScreen1 implements Screen {
 
         Gdx.input.setCatchBackKey(true);
         variables_x_y();
-        variables();
 
         Gdx.app.log("GameScreen1", "gw1 start game");
 
@@ -77,9 +75,9 @@ public class GameScreen1 implements Screen {
         tr_fon = new TextureRegion(textureAtlas_vg.findRegion("fon 1"));
         tr_X = new TextureRegion(textureAtlas_vg.findRegion("x"));
         tr_propusk = new TextureRegion(textureAtlas_vg.findRegion("znak pytanya"));
-        text_to_button = new BitmapFont();
-        //  myGameClass.bannerAdShow();
+        //  myGameClass.bannerAdShow()
     }
+
 
     @Override
     public void show() {
@@ -100,30 +98,79 @@ public class GameScreen1 implements Screen {
             myGameClass.setScreen(new MenuScreen(myGameClass));
         }
 
-        myGameClass.spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+        spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
-        myGameClass.spriteBatch.begin();
-        myGameClass.spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
+        spriteBatch.begin();
+        spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
+        // if (FLAG_SHOW_QUESTION_MARK)
+        //      spriteBatch.draw(tr_propusk, gameWorld1.getInt_tr_propusk_x(), tr_propusk_y, tr_propusk_width, tr_propusk_height);
 
-        if (FLAG_SHOW_QUESTION_MARK)
-            mGC_spriteBatch.draw(tr_propusk, gameWorld1.getInt_tr_propusk_x(), tr_propusk_y, tr_propusk_width, tr_propusk_height);
-        mGC_gs1_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
-        mGC_gs1_text_score.draw(mGC_spriteBatch, gameWorld1.getString_score(), text_score_x, text_score_y);
-        mGC_gs1_text_text_best_score.draw(mGC_spriteBatch, "BS: ", text_text_best_score_x, text_text_best_score_y);
-        mGC_gs1_text_best_score.draw(mGC_spriteBatch, gameWorld1.getString_best_score_this_level(), text_best_score_x, text_best_score_y);
-        mGC_gs1_text_pryklad.draw(mGC_spriteBatch, gameWorld1.getString_to_screen(), text_pryklad_x, text_pryklad_y);
-        mGC_gs1_text_time.draw(mGC_spriteBatch, gameWorld1.getTimer_game(), text_time_x, text_time_y);
+        score_value_font.draw(spriteBatch, gameWorld1.getString_score(), text_score_x, text_score_y);
+        best_scrore_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
+        best_score_value_font.draw(spriteBatch, gameWorld1.getString_best_score_this_level(), best_score_value_x, best_score_value_y);
+        // text_pryklad_font.draw(spriteBatch, gameWorld1.getString_pryklad(), text_pryklad_x, text_pryklad_y);
+        time_font.draw(spriteBatch, gameWorld1.getTimer_game(), text_time_x, text_time_y);
+        drawPryklad();
 
-        if (gameWorld1.bool_answer_right) {
-            mGC_gs1_text_vidp_right.draw(mGC_spriteBatch, gameWorld1.getString_input(), gameWorld1.getInt_tr_propusk_x(), text_vidp_y);
-        } else {
-            mGC_gs1_text_vidp_wrong.draw(mGC_spriteBatch, gameWorld1.getString_input(), gameWorld1.getInt_tr_propusk_x(), text_vidp_y);
-        }
 
-        mGC_spriteBatch.end();
+        spriteBatch.end();
 
         stage_vg.act(delta);
         stage_vg.draw();
+    }
+
+    private void drawPryklad() {
+        int position = gameWorld1.getQuestionMarkPosition(); //отримуємо позицію де буде зявлятися знак питання(1,2,3)
+        if (position == 1) {
+            if (FLAG_SHOW_QUESTION_MARK) {
+                //малюємо текст з знаком питання
+                spriteBatch.draw(tr_propusk, 30, tr_propusk_y, tr_propusk_width, tr_propusk_height);
+                text_pryklad_font.draw(spriteBatch, gameWorld1.getString_pryklad(), 30 + tr_propusk_width + 20, text_pryklad_y);
+            } else {
+                //текст з відповіддю користувача
+                if (gameWorld1.bool_answer_right) {
+                    mGC_gs1_text_vidp_right.draw(spriteBatch, gameWorld1.getString_input(), 30, text_vidp_y);
+                } else {
+                    mGC_gs1_text_vidp_wrong.draw(spriteBatch, gameWorld1.getString_input(), 30, text_vidp_y);
+                }
+                text_pryklad_font.draw(spriteBatch, gameWorld1.getString_pryklad(), 30 + getTextWidth(text_pryklad_font, gameWorld1.getString_input()) + 20, text_pryklad_y);
+            }
+        } else if (position == 2) {
+            if (FLAG_SHOW_QUESTION_MARK) {
+                //малюємо текст з знаком питання
+                text_pryklad_font.draw(spriteBatch, gameWorld1.getFirstPart(), 30, text_pryklad_y);
+                spriteBatch.draw(tr_propusk, 30 + getTextWidth(text_pryklad_font, gameWorld1.getFirstPart()) + 30, tr_propusk_y, tr_propusk_width, tr_propusk_height);
+                text_pryklad_font.draw(spriteBatch, gameWorld1.getSecondPart(), 30 + getTextWidth(text_pryklad_font, gameWorld1.getFirstPart()) + 60 + tr_propusk_width, text_pryklad_y);
+            } else {
+                //текст з відповіддю користувача
+                text_pryklad_font.draw(spriteBatch, gameWorld1.getFirstPart(), 30, text_pryklad_y);
+                if (gameWorld1.bool_answer_right) {
+                    mGC_gs1_text_vidp_right.draw(spriteBatch, gameWorld1.getString_input(), getTextWidth(text_pryklad_font, gameWorld1.getFirstPart()) + 60, text_vidp_y);
+                } else {
+                    mGC_gs1_text_vidp_wrong.draw(spriteBatch, gameWorld1.getString_input(), getTextWidth(text_pryklad_font, gameWorld1.getFirstPart()) + 60, text_vidp_y);
+                }
+                text_pryklad_font.draw(spriteBatch, gameWorld1.getSecondPart(), getTextWidth(text_pryklad_font, gameWorld1.getFirstPart())+ getTextWidth(mGC_gs1_text_vidp_wrong, gameWorld1.getSecondPart()), text_pryklad_y);
+
+            }
+        } else {
+            if (FLAG_SHOW_QUESTION_MARK) {
+                //малюємо текст з знаком питання
+                text_pryklad_font.draw(spriteBatch, gameWorld1.getString_pryklad(), 30, text_pryklad_y);
+                spriteBatch.draw(tr_propusk, getTextWidth(text_pryklad_font, gameWorld1.getString_pryklad()) + 60, tr_propusk_y, tr_propusk_width, tr_propusk_height);
+            } else {
+                //текст з відповіддю користувача
+                text_pryklad_font.draw(spriteBatch, gameWorld1.getString_pryklad(), 30, text_pryklad_y);
+                if (gameWorld1.bool_answer_right) {
+                    mGC_gs1_text_vidp_right.draw(spriteBatch, gameWorld1.getString_input(), getTextWidth(text_pryklad_font, gameWorld1.getString_pryklad()) + 60, text_vidp_y);
+                } else {
+                    mGC_gs1_text_vidp_wrong.draw(spriteBatch, gameWorld1.getString_input(), getTextWidth(text_pryklad_font, gameWorld1.getString_pryklad()) + 60, text_vidp_y);
+                }
+            }
+        }
+    }
+
+    float getTextWidth(BitmapFont font, String text) {
+        return new GlyphLayout(font, text).width;
     }
 
     @Override
@@ -149,13 +196,19 @@ public class GameScreen1 implements Screen {
 
     @Override
     public void dispose() {
-
+        spriteBatch.dispose();
+        best_score_value_font.dispose();
+        best_scrore_text_font.dispose();
+        score_value_font.dispose();
+        text_pryklad_font.dispose();
+        time_font.dispose();
+        mGC_gs1_text_vidp_right.dispose();
+        mGC_gs1_text_vidp_wrong.dispose();
 
     }
 
     void updateButtonText(GameWorld1 gameWorld) {
         Gdx.app.log("tag", "update");
-        // Gdx.app.log("tag", "null " + gameWorld.getInt_btn_1()); А для чого це?
         btn_1.setText(String.valueOf(gameWorld.getInt_btn_1()));
         btn_2.setText(String.valueOf(gameWorld.getInt_btn_2()));
         btn_3.setText(String.valueOf(gameWorld.getInt_btn_3()));
@@ -164,18 +217,31 @@ public class GameScreen1 implements Screen {
         btn_6.setText(String.valueOf(gameWorld.getInt_btn_6()));
     }
 
+    void loadFont() {
+        time_font = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        time_font.getData().setScale(0.7f, 0.7f);
 
-    public void variables() {    // ініціалізація переміних і т.д.
-        mGC_spriteBatch = myGameClass.spriteBatch;
+        score_value_font = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
+        score_value_font.getData().setScale(0.6f, 0.6f);
 
-        mGC_gs1_text_time = myGameClass.gs1_text_time;
-        mGC_gs1_text_text_score = myGameClass.gs1_text_text_score;
-        mGC_gs1_text_score = myGameClass.gs1_text_score;
-        mGC_gs1_text_text_best_score = myGameClass.gs1_text_text_best_score;
-        mGC_gs1_text_best_score = myGameClass.gs1_text_best_score;
-        mGC_gs1_text_pryklad = myGameClass.gs1_text_pryklad;
-        mGC_gs1_text_vidp_right = myGameClass.gs1_text_vidp_right;
-        mGC_gs1_text_vidp_wrong = myGameClass.gs1_text_vidp_wrong;
+        best_scrore_text_font = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        best_scrore_text_font.getData().setScale(0.5f, 0.5f);
+
+        best_score_value_font = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
+        best_score_value_font.getData().setScale(0.6f, 0.6f);
+
+        text_pryklad_font = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        text_pryklad_font.getData().setScale(1.4f, 1.4f);
+
+        mGC_gs1_text_vidp_right = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
+        mGC_gs1_text_vidp_right.getData().setScale(1.6f, 1.6f);
+
+        mGC_gs1_text_vidp_wrong = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
+        mGC_gs1_text_vidp_wrong.getData().setScale(1.5f, 1.5f);
+
+        btn_text = new BitmapFont(Gdx.files.internal("bitmapfont/white bold 70.fnt"), Gdx.files.internal("bitmapfont/white bold 70.png"), false);
+        btn_text.getData().setScale(0.8f, 0.8f);
+
     }
 
     public void variables_x_y() {   // налаштування значень Х і У для прорисовки
@@ -185,8 +251,8 @@ public class GameScreen1 implements Screen {
         //   tr_propusk_x = gameWorld1.getInt_tr_propusk_x();
         tr_propusk_y = 900;
 
-        text_text_best_score_x = 20;
-        text_best_score_x = 90;
+        best_score_text_x = 20;
+        best_score_value_x = 90;
         text_pryklad_x = 75;
         text_vidp_x = tr_propusk_x; // Буде залежати від того якої частини приклада не буде вистачати
         //  text_text_ne_prav_vidp_x = 20;
@@ -195,8 +261,8 @@ public class GameScreen1 implements Screen {
         text_text_score_x = screen_width - 165;
         text_score_x = text_text_score_x + 126;
 
-        text_text_best_score_y = screen_height - 40;
-        text_best_score_y = text_text_best_score_y + 4;
+        best_score_text_y = screen_height - 40;
+        best_score_value_y = best_score_text_y + 4;
         text_pryklad_y = 980;
         text_vidp_y = text_pryklad_y;
         //  text_text_ne_prav_vidp_y = screen_height - 50;
@@ -270,7 +336,7 @@ public class GameScreen1 implements Screen {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable("btn krug");
         style.down = skin.getDrawable(down);
-        style.font = myGameClass.gs1_text_btn;
+        style.font = btn_text;
         TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_width, btn_height);
         stage_vg.addActor(textButton);

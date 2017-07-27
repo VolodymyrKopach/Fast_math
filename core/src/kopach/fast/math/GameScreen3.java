@@ -141,8 +141,8 @@ public class GameScreen3 implements Screen {
         mGC_gs3_text_text_score.draw(mGC_spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         mGC_gs3_text_score.draw(mGC_spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
         mGC_gs3_text_time.draw(mGC_spriteBatch, gameWorld3.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
-        //   mGC_gs3_text_text_best_score.draw(mGC_spriteBatch, "BS:", text_text_score_x, text_text_score_y);              //Дороблю
-        //   mGC_gs3_text_best_score.draw(mGC_spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);      //Дороблю
+        //   mGC_gs3_text_text_best_score.draw(spriteBatch, "BS:", text_text_score_x, text_text_score_y);              //Дороблю
+        //   mGC_gs3_text_best_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);      //Дороблю
 
 
         mGC_spriteBatch.end();
@@ -273,7 +273,7 @@ public class GameScreen3 implements Screen {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable("btn krug");
         style.checked = skin.getDrawable(down);
-        style.font = myGameClass.gs1_text_btn;
+        style.font = myGameClass.gs2_text_time;
         TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_diametr, btn_diametr);
         stage_vg.addActor(textButton);
