@@ -3,13 +3,10 @@ package kopach.fast.math;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGameClass extends Game {
 
     private AdsController adsController;
-
-    public SpriteBatch spriteBatch;
     public BitmapFont score_textlevel, score_t_b_s, score_b_s;
 
     public MyGameClass(AdsController adsController) {
@@ -25,11 +22,7 @@ public class MyGameClass extends Game {
     }
 
     public void create() {
-        spriteBatch = new SpriteBatch();
-
-       // bitmapFont();
-
-        this.setScreen(new MenuScreen(this));
+        this.setScreen(new GameScreen1(this));
     }
 
     public void render() {

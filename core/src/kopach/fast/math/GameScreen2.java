@@ -90,10 +90,10 @@ public class GameScreen2 implements Screen{
 
         gameWorld2.setString_timer(delta);
 
-        myGameClass.spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+        spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
-        myGameClass.spriteBatch.begin();
-        myGameClass.spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
+        spriteBatch.begin();
+        spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {    //  спрацьовує коли нажато Back
             myGameClass.setScreen(new MenuScreen(myGameClass));

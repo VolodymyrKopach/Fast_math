@@ -41,12 +41,10 @@ public class GameScreen1 implements Screen {
     Skin skin;
     BitmapFont score_value_font, btn_text, best_scrore_text_font, best_score_value_font, text_pryklad_font, mGC_gs1_text_vidp_right, mGC_gs1_text_vidp_wrong, time_font;
     SpriteBatch spriteBatch;
-    float textWidth;
-
 
     float screen_width = 720, screen_height = 1280;
     float tr_propusk_width, tr_propusk_height;
-    float best_score_text_x, best_score_text_y, best_score_value_x, best_score_value_y, tr_propusk_x, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
+    float best_score_text_x, best_score_text_y, best_score_value_x, best_score_value_y, tr_propusk_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_pryklad_y, text_vidp_y, text_time_x, text_time_y;
 
     public GameScreen1(final MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
@@ -102,13 +100,10 @@ public class GameScreen1 implements Screen {
 
         spriteBatch.begin();
         spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
-        // if (FLAG_SHOW_QUESTION_MARK)
-        //      spriteBatch.draw(tr_propusk, gameWorld1.getInt_tr_propusk_x(), tr_propusk_y, tr_propusk_width, tr_propusk_height);
 
         score_value_font.draw(spriteBatch, gameWorld1.getString_score(), text_score_x, text_score_y);
         best_scrore_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
         best_score_value_font.draw(spriteBatch, gameWorld1.getString_best_score_this_level(), best_score_value_x, best_score_value_y);
-        // text_pryklad_font.draw(spriteBatch, gameWorld1.getString_pryklad(), text_pryklad_x, text_pryklad_y);
         time_font.draw(spriteBatch, gameWorld1.getTimer_game(), text_time_x, text_time_y);
         drawPryklad();
 
@@ -253,10 +248,6 @@ public class GameScreen1 implements Screen {
 
         best_score_text_x = 20;
         best_score_value_x = 90;
-        text_pryklad_x = 75;
-        text_vidp_x = tr_propusk_x; // Буде залежати від того якої частини приклада не буде вистачати
-        //  text_text_ne_prav_vidp_x = 20;
-        //  text_ne_prav_vidp_x = text_text_ne_prav_vidp_x + 140;
         text_time_x = screen_width / 2 - 6;
         text_text_score_x = screen_width - 165;
         text_score_x = text_text_score_x + 126;
@@ -265,22 +256,12 @@ public class GameScreen1 implements Screen {
         best_score_value_y = best_score_text_y + 4;
         text_pryklad_y = 980;
         text_vidp_y = text_pryklad_y;
-        //  text_text_ne_prav_vidp_y = screen_height - 50;
-        //  text_ne_prav_vidp_y = text_text_ne_prav_vidp_y + 4;
         text_time_y = screen_height - 50;
         text_text_score_y = screen_height - 40;
         text_score_y = text_text_score_y + 4;
 
 
     }
-
- /*   public void game_level(){
-        if(gameWorld1.float_timer < 0){
-            gameWorld1.float_timer = 10;
-            myGameClass.setScreen(new RestartScreen(myGameClass));
-            Gdx.app.log("log","good");
-        }
-    } */
 
 
     public void createTextButtons() {   // налаштування кнопок
@@ -297,15 +278,12 @@ public class GameScreen1 implements Screen {
     private float getButtonX(int position) {
         switch (position) {
             case 1:
-                return BTN_1_X;
-            case 2:
-                return BTN_1_X + btn_width + vidstan_width;
-            case 3:
-                return BTN_1_X + btn_width * 2 + vidstan_width * 2;
             case 4:
                 return BTN_1_X;
+            case 2:
             case 5:
                 return BTN_1_X + btn_width + vidstan_width;
+            case 3:
             case 6:
                 return BTN_1_X + btn_width * 2 + vidstan_width * 2;
         }
@@ -315,15 +293,11 @@ public class GameScreen1 implements Screen {
     private float getButtonY(int position) {
         switch (position) {
             case 1:
-                return BTN_4_Y + btn_height + vidstan_height;
             case 2:
-                return BTN_4_Y + btn_height + vidstan_height;
             case 3:
                 return BTN_4_Y + btn_height + vidstan_height;
             case 4:
-                return BTN_4_Y;
             case 5:
-                return BTN_4_Y;
             case 6:
                 return BTN_4_Y;
         }

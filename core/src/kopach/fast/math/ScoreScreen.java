@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -40,9 +41,11 @@ public class ScoreScreen implements Screen{
     float width_button, height_button;
     float btn_easy_x,btn_easy_y, btn_normal_x,btn_normal_y, btn_hard_x,btn_hard_y;
     float text_level_x, text_tbs_x, text_bs_x, text_level_y, text_tbs_y, text_bs_y;
+    SpriteBatch spriteBatch;
 
     public ScoreScreen(MyGameClass myGameClass){
         this.myGameClass = myGameClass;
+        spriteBatch = new SpriteBatch();
         scoreWorld = new ScoreWorld();
 
         Gdx.input.setCatchBackKey(true);
@@ -84,14 +87,14 @@ public class ScoreScreen implements Screen{
         }
 
         orthographicCamera.update();
-        myGameClass.spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+        spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
-        myGameClass.spriteBatch.begin();
-        myGameClass.spriteBatch.draw(tr_score_fon, 0, 0, screen_width, screen_height);
+        spriteBatch.begin();
+        spriteBatch.draw(tr_score_fon, 0, 0, screen_width, screen_height);
       //  myGameClass.score_textlevel.draw(myGameClass.spriteBatch, scoreWorld.getString_score_text_level(), text_level_x, text_level_y);
-        myGameClass.score_t_b_s.draw(myGameClass.spriteBatch,scoreWorld.getString_score_text_bestresult(), text_tbs_x, text_tbs_y);
-        myGameClass.score_b_s.draw(myGameClass.spriteBatch,scoreWorld.getString_score_bestresult(), text_bs_x, text_bs_y);
-        myGameClass.spriteBatch.end();
+        myGameClass.score_t_b_s.draw(spriteBatch,scoreWorld.getString_score_text_bestresult(), text_tbs_x, text_tbs_y);
+        myGameClass.score_b_s.draw(spriteBatch,scoreWorld.getString_score_bestresult(), text_bs_x, text_bs_y);
+        spriteBatch.end();
 
         stage_ss.act(delta);
         stage_ss.draw();
