@@ -3,214 +3,172 @@ TextureAtlas.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-btn play press
+game fon
   rotate: false
-  xy: 1, 1511
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-fon 1
-  rotate: false
-  xy: 1, 997
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-btn setting
-  rotate: false
-  xy: 515, 1511
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-btn menjshe press
-  rotate: false
-  xy: 1, 483
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-btn dorivnjue
-  rotate: false
-  xy: 515, 997
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-btn dorivnjue press
-  rotate: false
-  xy: 1029, 1511
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-btn biljshe
-  rotate: false
-  xy: 515, 483
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-btn back press
-  rotate: false
-  xy: 1029, 997
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-btn krug
-  rotate: false
-  xy: 1029, 483
-  size: 512, 512
-  orig: 512, 512
+  xy: 1, 767
+  size: 720, 1280
+  orig: 720, 1280
   offset: 0, 0
   index: -1
 menu game 1
   rotate: false
-  xy: 1543, 1493
+  xy: 1, 235
   size: 321, 530
   orig: 321, 530
   offset: 0, 0
   index: -1
-border
-  rotate: false
-  xy: 1, 471
-  size: 720, 10
-  orig: 720, 10
-  offset: 0, 0
-  index: -1
-menu game 4
-  rotate: false
-  xy: 1543, 1065
-  size: 234, 426
-  orig: 234, 426
-  offset: 0, 0
-  index: -1
-menu game 2
-  rotate: false
-  xy: 1, 43
-  size: 234, 426
-  orig: 234, 426
-  offset: 0, 0
-  index: -1
-menu game 3
-  rotate: false
-  xy: 237, 47
-  size: 236, 422
-  orig: 236, 422
-  offset: 0, 0
-  index: -1
 btn best score
   rotate: false
-  xy: 723, 353
+  xy: 1, 105
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
-znak pytanya
+text menu
   rotate: false
-  xy: 1866, 1767
-  size: 156, 256
-  orig: 156, 256
+  xy: 1, 13
+  size: 675, 90
+  orig: 675, 90
+  offset: 0, 0
+  index: -1
+border
+  rotate: false
+  xy: 1, 1
+  size: 720, 10
+  orig: 720, 10
+  offset: 0, 0
+  index: -1
+btn play press
+  rotate: false
+  xy: 324, 253
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+screen replay
+  rotate: false
+  xy: 723, 767
+  size: 720, 1280
+  orig: 720, 1280
+  offset: 0, 0
+  index: -1
+border game
+  rotate: false
+  xy: 324, 241
+  size: 720, 10
+  orig: 720, 10
+  offset: 0, 0
+  index: -1
+btn blue
+  rotate: false
+  xy: 838, 253
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
 btn restart press
   rotate: false
-  xy: 1237, 353
+  xy: 515, 111
   size: 256, 128
   orig: 256, 128
-  offset: 0, 0
-  index: -1
-btn restart
-  rotate: false
-  xy: 1543, 935
-  size: 256, 128
-  orig: 256, 128
-  offset: 0, 0
-  index: -1
-btn answer press
-  rotate: false
-  xy: 475, 341
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-btn_answer press
-  rotate: false
-  xy: 1866, 1637
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-fon
-  rotate: false
-  xy: 1543, 805
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-btn press
-  rotate: false
-  xy: 475, 211
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-screen
-  rotate: false
-  xy: 1866, 1507
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-btn answer
-  rotate: false
-  xy: 1543, 675
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-btn
-  rotate: false
-  xy: 475, 81
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-x
-  rotate: false
-  xy: 1543, 545
-  size: 128, 128
-  orig: 128, 128
   offset: 0, 0
   index: -1
 btn C
   rotate: false
-  xy: 1673, 853
+  xy: 678, 29
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
+btn restart
+  rotate: false
+  xy: 773, 111
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
 btn C press
   rotate: false
-  xy: 1673, 771
+  xy: 808, 29
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 score fon
   rotate: false
-  xy: 1, 1
+  xy: 938, 69
   size: 160, 40
   orig: 160, 40
   offset: 0, 0
   index: -1
+btn answer press
+  rotate: false
+  xy: 1031, 111
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 menu fon
   rotate: false
-  xy: 1495, 449
+  xy: 938, 35
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+fon 1
+  rotate: false
+  xy: 1445, 1535
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn setting
+  rotate: false
+  xy: 1445, 1021
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn blue press
+  rotate: false
+  xy: 1445, 507
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+menu game 4
+  rotate: false
+  xy: 1352, 79
+  size: 234, 426
+  orig: 234, 426
+  offset: 0, 0
+  index: -1
+fon
+  rotate: false
+  xy: 1161, 123
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+menu game 2
+  rotate: false
+  xy: 1588, 79
+  size: 234, 426
+  orig: 234, 426
+  offset: 0, 0
+  index: -1
+znak pytanya
+  rotate: false
+  xy: 1824, 249
+  size: 156, 256
+  orig: 156, 256
+  offset: 0, 0
+  index: -1
+btn press
+  rotate: false
+  xy: 1824, 119
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 
@@ -218,65 +176,180 @@ TextureAtlas2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+btn menjshe press
+  rotate: false
+  xy: 1, 1453
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn dorivnjue
+  rotate: false
+  xy: 1, 939
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn dorivnjue press
+  rotate: false
+  xy: 515, 1453
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn krug green
+  rotate: false
+  xy: 1, 425
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn biljshe
+  rotate: false
+  xy: 515, 939
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn back press
+  rotate: false
+  xy: 1029, 1453
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn krug red
+  rotate: false
+  xy: 515, 425
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+btn krug
+  rotate: false
+  xy: 1029, 939
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 btn back
+  rotate: false
+  xy: 1029, 425
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+menu game 3
+  rotate: false
+  xy: 1, 1
+  size: 236, 422
+  orig: 236, 422
+  offset: 0, 0
+  index: -1
+screen
+  rotate: false
+  xy: 1543, 1837
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+btn answer
+  rotate: false
+  xy: 239, 295
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+btn
+  rotate: false
+  xy: 1543, 1707
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+x
+  rotate: false
+  xy: 1673, 1837
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+
+TextureAtlas3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+btn exit
   rotate: false
   xy: 1, 1029
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn exit
+btn exit press
   rotate: false
   xy: 1, 515
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn exit press
+btn biljshe press
   rotate: false
   xy: 515, 1029
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn biljshe press
+btn menjshe
   rotate: false
   xy: 1, 1
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn menjshe
+btn 1
   rotate: false
   xy: 515, 515
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn 1
+btn setting press
   rotate: false
   xy: 1029, 1029
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn setting press
+btn krug press
   rotate: false
   xy: 515, 1
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn krug press
+btn function
   rotate: false
   xy: 1029, 515
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-btn play
+btn themes
   rotate: false
   xy: 1029, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+TextureAtlas4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+btn play
+  rotate: false
+  xy: 1, 1
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
