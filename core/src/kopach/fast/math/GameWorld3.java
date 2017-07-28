@@ -44,7 +44,8 @@ public class GameWorld3 {
 
     public void generateValue(int num_of_btn) {
         // заповнюємо масив числами
-        for (int i = 0; i < 24; i++) {
+        values.clear();
+        for (int i = 0; i < num_of_btn; i++) {
             values.add(new Random().nextInt(100));
         }
         checkIsUnique();
@@ -56,6 +57,7 @@ public class GameWorld3 {
                 if (values.get(i) == values.get(j)) {
                     Gdx.app.log("GameScreen1", "Знайдено однакові значення " + i);
                     values.set(i, new Random().nextInt(100));
+                    checkIsUnique();
                 }
             }
         }

@@ -35,7 +35,7 @@ public class GameScreen3 implements Screen {
     public GameWorld3 gameWorld3;
     ArrayList<Integer> valuesForCheck;//використовуємо цей аррей для перевірки чи вибрана кнопка є правильною
 
-    int trueAnswer = 0;
+    int trueAnswer;
 
 
     public TextureAtlas textureAtlas_vg;
@@ -83,12 +83,25 @@ public class GameScreen3 implements Screen {
             num_of_btn = 20;
         }
         variables();
-        createTextButtons();
         gameWorld3 = new GameWorld3(this);
-        gameWorld3.generateValue(num_of_btn);
-
+        createGame();
         Gdx.input.setCatchBackKey(true);
 
+        Gdx.app.log("GameScreen1", "gw1 start game");
+
+
+        tr_fon = new TextureRegion(textureAtlas_vg.findRegion("fon 1"));
+        tr_X = new TextureRegion(textureAtlas_vg.findRegion("x"));
+        tr_propusk = new TextureRegion(textureAtlas_vg.findRegion("znak pytanya"));
+        text_to_button = new BitmapFont();
+        //  myGameClass.bannerAdShow();
+    }
+
+    //генеруємо нову гру
+    void createGame() {
+        trueAnswer = 0;
+        stage_vg.clear();
+        gameWorld3.generateValue(num_of_btn);
         valuesForCheck = new ArrayList<Integer>();
         //копіюємо масив
         for (int i = 0; i < num_of_btn; i++) {
@@ -104,16 +117,7 @@ public class GameScreen3 implements Screen {
                 }
             }
         }
-
-        Gdx.app.log("GameScreen1", "gw1 start game");
-
-
-        tr_fon = new TextureRegion(textureAtlas_vg.findRegion("fon 1"));
-        tr_X = new TextureRegion(textureAtlas_vg.findRegion("x"));
-        tr_propusk = new TextureRegion(textureAtlas_vg.findRegion("znak pytanya"));
-        text_to_button = new BitmapFont();
-        //  myGameClass.bannerAdShow();
-
+        createTextButtons();
         updateButtonText();
     }
 
@@ -228,7 +232,7 @@ public class GameScreen3 implements Screen {
     public void createTextButtons() {   // налаштування кнопок
         Gdx.app.log("GameScreen3", "create text button");
         for (int i = 0; i < num_of_btn; i++) {
-            textButtons[i] = drawButton("btn krug press", i + 1);
+            textButtons[i] = drawButton(i + 1);
         }
     }
 
@@ -261,7 +265,7 @@ public class GameScreen3 implements Screen {
     }
 
     //Цей метод створює кожну кнопку по черзі
-    TextButton drawButton(String down, int position) {
+    TextButton drawButton(int position) {
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable("btn krug");
@@ -301,17 +305,46 @@ public class GameScreen3 implements Screen {
             textButton.getStyle().up = skin.getDrawable("btn krug red");
             textButton.getStyle().down = skin.getDrawable("btn krug red");
             findTrueButton();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    drawAllButtonInOneColor("btn krug red");
+                }
+            }).start();
         }
     }
 
+    //якщо відповідь правильна,до змінноЇ додаємо 1
     public void addTrueAnswer() {
         trueAnswer += 1;
         if (trueAnswer == num_of_btn) {
-            for (int i = 0; i < num_of_btn; i++) {
-                textButtons[i].getStyle().up = skin.getDrawable("btn krug green");
-                textButtons[i].getStyle().down = skin.getDrawable("btn krug green");
-            }
+            //інець гри, всі кнопки вибрано правильно
+            drawAllButtonInOneColor("btn krug green");
         }
+    }
+
+    void drawAllButtonInOneColor(String skinUp) {
+        for (int i = 0; i < num_of_btn; i++) {
+            textButtons[i].getStyle().up = skin.getDrawable(skinUp);
+            textButtons[i].getStyle().down = skin.getDrawable(skinUp);
+        }
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                createGame();
+            }
+        });
+        t.start();
     }
 
     private void findTrueButton() {
