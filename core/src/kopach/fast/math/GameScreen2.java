@@ -73,7 +73,7 @@ public class GameScreen2 implements Screen{
         Gdx.app.log("GameScreen2", "gw2 start game");
 
 
-        tr_fon = new TextureRegion(textureAtlas.findRegion("fon 1"));
+        tr_fon = new TextureRegion(textureAtlas.findRegion("fon"));
         tr_X = new TextureRegion(textureAtlas.findRegion("x"));
         tr_propusk = new TextureRegion(textureAtlas.findRegion("znak pytanya"));
         text_to_button = new BitmapFont();
@@ -87,6 +87,8 @@ public class GameScreen2 implements Screen{
 
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        Gdx.input.setInputProcessor(stage);
 
         gameWorld2.setString_timer(delta);
 
@@ -192,7 +194,7 @@ public class GameScreen2 implements Screen{
         text_right_number_1_x = 500;  text_right_number_2_x = text_right_number_1_x;
         text_vidp_x = tr_propusk_x; // Буде залежати від того якої частини приклада не буде вистачати
         text_time_x = 20;
-        text_time_x = screen_width / 2 - 6;
+        text_time_x = screen_width / 2 - 27;
         text_text_score_x = screen_width - 165;
         text_score_x = text_text_score_x + 126;
 
@@ -202,7 +204,6 @@ public class GameScreen2 implements Screen{
         text_left_number_1_y = 1050;  text_left_number_2_y = 930;
         text_right_number_1_y = text_left_number_1_y;  text_right_number_2_y = text_left_number_2_y;
         text_vidp_y = 300;
-        text_time_y = screen_height - 50;
         text_time_y = screen_height - 50;
         text_text_score_y = screen_height - 40;
         text_score_y = text_text_score_y + 4;
@@ -249,7 +250,7 @@ public class GameScreen2 implements Screen{
         style.up = skin.getDrawable(up);
         style.down = skin.getDrawable(down);
         style.font = text_time;
-        TextButton textButton = new TextButton("", style);
+        TextButton textButton = new TextButton(" ", style);
         textButton.setSize(btn_width, btn_height);
         stage.addActor(textButton);
         final TextButton finalTextButton = textButton;

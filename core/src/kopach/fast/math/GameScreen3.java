@@ -43,7 +43,7 @@ public class GameScreen3 implements Screen {
 
     Viewport viewport;
     public OrthographicCamera orthographicCamera;
-    public Stage stage_vg;
+    public Stage stage;
 
 
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24, btn_25, btn_26, btn_27, btn_28, btn_29, btn_30;
@@ -55,16 +55,16 @@ public class GameScreen3 implements Screen {
 
 
     float screen_width = 720, screen_height = 1280;
-    float text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_time_x, text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
+    float text_text_best_score_x, text_best_score_x, text_text_best_score_y, text_best_score_y, text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
 
     public GameScreen3(final MyGameClass myGameClass) {   // метод що запускається відразу
         this.myGameClass = myGameClass;
 
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
-        stage_vg = new Stage(viewport);
-        stage_vg.clear();
-        Gdx.input.setInputProcessor(stage_vg);
+        stage = new Stage(viewport);
+        stage.clear();
+        Gdx.input.setInputProcessor(stage);
         //TODO постав тут цифри 1-3 і запусти
         level = 1;
 
@@ -108,7 +108,7 @@ public class GameScreen3 implements Screen {
         Gdx.app.log("GameScreen1", "gw1 start game");
 
 
-        tr_fon = new TextureRegion(textureAtlas_vg.findRegion("fon 1"));
+        tr_fon = new TextureRegion(textureAtlas_vg.findRegion("fon"));
         tr_X = new TextureRegion(textureAtlas_vg.findRegion("x"));
         tr_propusk = new TextureRegion(textureAtlas_vg.findRegion("znak pytanya"));
         text_to_button = new BitmapFont();
@@ -125,6 +125,8 @@ public class GameScreen3 implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        Gdx.input.setInputProcessor(stage);
 
         gameWorld3.timer_game(delta);
 
@@ -143,15 +145,15 @@ public class GameScreen3 implements Screen {
 
         text_text_score.draw(spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         text_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
-        text_time.draw(spriteBatch, gameWorld3.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
-        text_text_best_score.draw(spriteBatch, "BS:", text_text_score_x, text_text_score_y);              //Дороблю
-        text_best_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);      //Дороблю
+        text_time.draw(spriteBatch, gameWorld3.getTimer_game(), text_time_x, text_time_y);
+        text_text_best_score.draw(spriteBatch, "BS:", text_text_best_score_x, text_text_best_score_y);
+        text_best_score.draw(spriteBatch, gameWorld3.getString_score(), text_best_score_x, text_best_score_y);
 
 
         spriteBatch.end();
 
-        stage_vg.act(delta);
-        stage_vg.draw();
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
@@ -178,7 +180,7 @@ public class GameScreen3 implements Screen {
     @Override
     public void dispose() {
         textureAtlas_vg.dispose();
-        stage_vg.dispose();
+        stage.dispose();
         skin.dispose();
         text_to_button.dispose();
         text_text_score.dispose();
@@ -211,12 +213,18 @@ public class GameScreen3 implements Screen {
         text_text_best_score.getData().setScale(0.5f, 0.5f);
         text_best_score.getData().setScale(0.6f, 0.6f);
         // text_btn.getData().setScale(0.8f, 0.8f);
+
+        text_text_best_score_x = 20;
+        text_best_score_x = 90;
         text_text_ne_prav_vidp_x = 20;
-        text_time_x = screen_width / 2 - 6;
+        text_time_x = screen_width / 2 - 27;
         text_text_score_x = screen_width - 200;
         text_score_x = text_text_score_x + 130;
 
+        text_text_best_score_y = screen_height - 40;
+        text_best_score_y = text_text_best_score_y + 4;
         text_text_ne_prav_vidp_y = screen_height - 50;
+        text_time_y = screen_height - 50;
         text_ne_prav_vidp_y = text_text_ne_prav_vidp_y + 4;
         text_text_score_y = text_ne_prav_vidp_y;
         text_score_y = text_text_score_y + 4;
@@ -268,7 +276,7 @@ public class GameScreen3 implements Screen {
         style.font = text_time;
         final TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_diametr, btn_diametr);
-        stage_vg.addActor(textButton);
+        stage.addActor(textButton);
         final TextButton finalTextButton = textButton;
         textButton.setPosition(getButtonX(position), getButtonY(position));
         textButton.addListener(new ClickListener() {

@@ -35,7 +35,7 @@ public class GameScreen1 implements Screen {
 
     Viewport viewport;
     public OrthographicCamera orthographicCamera;
-    public Stage stage_vg;
+    public Stage stage;
 
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6;
     Skin skin;
@@ -52,9 +52,9 @@ public class GameScreen1 implements Screen {
 
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
-        stage_vg = new Stage(viewport);
-        stage_vg.clear();
-        Gdx.input.setInputProcessor(stage_vg);
+        stage = new Stage(viewport);
+        stage.clear();
+        Gdx.input.setInputProcessor(stage);
         spriteBatch = new SpriteBatch();
 
         skin = new Skin();
@@ -70,7 +70,7 @@ public class GameScreen1 implements Screen {
         Gdx.app.log("GameScreen1", "gw1 start game");
 
 
-        tr_fon = new TextureRegion(textureAtlas_vg.findRegion("fon 1"));
+        tr_fon = new TextureRegion(textureAtlas_vg.findRegion("fon"));
         tr_X = new TextureRegion(textureAtlas_vg.findRegion("x"));
         tr_propusk = new TextureRegion(textureAtlas_vg.findRegion("znak pytanya"));
         //  myGameClass.bannerAdShow()
@@ -85,6 +85,8 @@ public class GameScreen1 implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        Gdx.input.setInputProcessor(stage);
 
         gameWorld1.timer_game(delta);
 
@@ -110,8 +112,8 @@ public class GameScreen1 implements Screen {
 
         spriteBatch.end();
 
-        stage_vg.act(delta);
-        stage_vg.draw();
+        stage.act(delta);
+        stage.draw();
     }
 
     private void drawPryklad() {
@@ -248,7 +250,7 @@ public class GameScreen1 implements Screen {
 
         best_score_text_x = 20;
         best_score_value_x = 90;
-        text_time_x = screen_width / 2 - 6;
+        text_time_x = screen_width / 2 - 27;
         text_text_score_x = screen_width - 165;
         text_score_x = text_text_score_x + 126;
 
@@ -313,7 +315,7 @@ public class GameScreen1 implements Screen {
         style.font = btn_text;
         TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_width, btn_height);
-        stage_vg.addActor(textButton);
+        stage.addActor(textButton);
         final TextButton finalTextButton = textButton;
         textButton.setPosition(getButtonX(position), getButtonY(position));
         textButton.addListener(new InputListener() {

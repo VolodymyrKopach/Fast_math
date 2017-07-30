@@ -199,16 +199,14 @@ public class GameWorld {
     }
 
 
-    public void setString_timer(float dt) {
+    public void setInt_timer(float dt) {
         float_timer -= dt;
 
         int_timer = (int)float_timer;
-
-        string_timer = int_timer + "";
     }
 
-    public String getString_timer() {
-        return string_timer;
+    public int getInt_timer() {
+        return int_timer;
     }
 
 
