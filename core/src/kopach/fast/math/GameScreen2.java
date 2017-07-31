@@ -63,12 +63,12 @@ public class GameScreen2 implements Screen{
         skin = new Skin();
         textureAtlas = new TextureAtlas("texture/TextureAtlas.atlas");
         skin.addRegions(textureAtlas);
+        variables_x_y();
         createTextButtons();
 
         gameWorld2 = new GameWorld2(this);
 
         Gdx.input.setCatchBackKey(true);
-        variables_x_y();
 
         Gdx.app.log("GameScreen2", "gw2 start game");
 
