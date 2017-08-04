@@ -37,15 +37,12 @@ public class GameScreen3 implements Screen {
 
     int trueAnswer;
 
-
-
-
     public TextureAtlas textureAtlas_vg;
     public TextureRegion tr_fon, tr_X, tr_propusk;
 
     Viewport viewport;
     public OrthographicCamera orthographicCamera;
-    public Stage stage_vg;
+    public Stage stage;
 
 
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24, btn_25, btn_26, btn_27, btn_28, btn_29, btn_30;
@@ -64,9 +61,9 @@ public class GameScreen3 implements Screen {
 
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
-        stage_vg = new Stage(viewport);
-        stage_vg.clear();
-        Gdx.input.setInputProcessor(stage_vg);
+        stage = new Stage(viewport);
+        stage.clear();
+        Gdx.input.setInputProcessor(stage);
         //TODO постав тут цифри 1-3 і запусти
         level = 3;
 
@@ -99,7 +96,7 @@ public class GameScreen3 implements Screen {
     //генеруємо нову гру
     void createGame() {
         trueAnswer = 0;
-        stage_vg.clear();
+        stage.clear();
         gameWorld3.generateValue(num_of_btn);
         valuesForCheck = new ArrayList<Integer>();
         //копіюємо масив
@@ -129,6 +126,8 @@ public class GameScreen3 implements Screen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        Gdx.input.setInputProcessor(stage);
+
         gameWorld3.timer_game(delta);
 
         if (gameWorld3.bool_timer_wait_start) {
@@ -153,8 +152,8 @@ public class GameScreen3 implements Screen {
 
         spriteBatch.end();
 
-        stage_vg.act(delta);
-        stage_vg.draw();
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
@@ -181,7 +180,7 @@ public class GameScreen3 implements Screen {
     @Override
     public void dispose() {
         textureAtlas_vg.dispose();
-        stage_vg.dispose();
+        stage.dispose();
         skin.dispose();
         text_to_button.dispose();
         text_text_score.dispose();
@@ -270,7 +269,7 @@ public class GameScreen3 implements Screen {
         style.font = text_time;
         final TextButton textButton = new TextButton("", style);
         textButton.setSize(btn_diametr, btn_diametr);
-        stage_vg.addActor(textButton);
+        stage.addActor(textButton);
         final TextButton finalTextButton = textButton;
         textButton.setPosition(getButtonX(position), getButtonY(position));
         textButton.addListener(new ClickListener() {
