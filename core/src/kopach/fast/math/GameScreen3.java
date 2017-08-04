@@ -49,7 +49,7 @@ public class GameScreen3 implements Screen {
     TextButton[] textButtons = new TextButton[]{btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24, btn_25, btn_26, btn_27, btn_28, btn_29, btn_30};
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont text_text_score, text_score, text_text_best_score, text_best_score, text_time;
+    BitmapFont text_text_score, text_score, text_best_score, text_time;
     SpriteBatch spriteBatch;
 
 
@@ -91,10 +91,12 @@ public class GameScreen3 implements Screen {
         tr_propusk = new TextureRegion(textureAtlas_vg.findRegion("znak pytanya"));
         text_to_button = new BitmapFont();
         //  myGameClass.bannerAdShow();
+        Gdx.app.log("tag", "constructor");
     }
 
     //генеруємо нову гру
     void createGame() {
+        Gdx.app.log("tag", "create game");
         trueAnswer = 0;
         stage.clear();
         gameWorld3.generateValue(num_of_btn);
@@ -146,7 +148,6 @@ public class GameScreen3 implements Screen {
         text_text_score.draw(spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         text_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
         text_time.draw(spriteBatch, gameWorld3.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
-        text_text_best_score.draw(spriteBatch, "BS:", text_text_score_x, text_text_score_y);              //Дороблю
         text_best_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);      //Дороблю
 
 
@@ -185,7 +186,6 @@ public class GameScreen3 implements Screen {
         text_to_button.dispose();
         text_text_score.dispose();
         text_score.dispose();
-        text_text_best_score.dispose();
         text_best_score.dispose();
         text_time.dispose();
         spriteBatch.dispose();
@@ -204,13 +204,11 @@ public class GameScreen3 implements Screen {
         text_text_score = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
         text_score = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
         text_time = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
-        text_text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
         text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
 
         text_text_score.getData().setScale(0.5f, 0.5f);
         text_score.getData().setScale(0.6f, 0.6f);
         text_time.getData().setScale(0.7f, 0.7f);
-        text_text_best_score.getData().setScale(0.5f, 0.5f);
         text_best_score.getData().setScale(0.6f, 0.6f);
         text_text_ne_prav_vidp_x = 20;
         text_time_x = screen_width / 2 - 6;
@@ -275,6 +273,7 @@ public class GameScreen3 implements Screen {
         textButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("tag", "");
                 return true;
             }
 
