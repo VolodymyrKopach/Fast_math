@@ -70,6 +70,9 @@ public class GameScreen2 implements Screen{
 
         Gdx.input.setCatchBackKey(true);
 
+        variables_x_y();
+        createTextButtons();
+
         Gdx.app.log("GameScreen2", "gw2 start game");
 
 

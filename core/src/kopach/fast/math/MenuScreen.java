@@ -52,10 +52,10 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
     public float btn_play_1_x, btn_play_1_y, btn_play_2_x, btn_play_2_y, btn_play_3_x, btn_play_3_y, btn_play_4_x, btn_play_4_y, btn_setting_x, btn_setting_y, btn_exit_x, btn_exit_y, tr_menu_game_1_x, tr_menu_game_1_y, tr_menu_game_2_x, tr_menu_game_2_y, tr_menu_game_3_x, tr_menu_game_3_y, tr_menu_game_4_x, tr_menu_game_4_y;//tr_level_text_x, tr_level_text_y;
     float f = 0;
 
-    boolean bool_block_game_1; //переміна, яка буде не давати tr_game_1_пересуватись в право
+    boolean bool_block_game_1 = true; //переміна, яка буде не давати tr_game_1_пересуватись в право
     boolean bool_action_swipe; // переміна, яка буде вмикатись при свайпі, і цим самим вмикати переміщення
 
-    String string_to_swipe_game = "game 1 -";
+    String string_to_swipe_game;
 
     public MenuScreen(MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
@@ -115,20 +115,22 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
 
         if (bool_action_swipe){
-            action_swipe(string_to_swipe_game, 40, delta);
+            action_swipe(string_to_swipe_game, 40, 10, 10);
             stabilization_of_variables();
            // Gdx.app.log("","render");
         }
 
 
-      /*  if (bool_block_game_1 == false){
+        if (bool_block_game_1 == true){
             if (tr_menu_game_1_x > screen_width/2 - width_tr_game_1/2){
-                variables_game(-25);
-            }else bool_block_game_1 = true;
-        }  */
+                tr_menu_game_1_x -= 20;
+                stabilization_of_variables();
+                Gdx.app.log("",""+tr_menu_game_2_x +" width " + width_tr_game_2);
+            }else bool_block_game_1 = false;
+        }
 
 
-        orthographicCamera.update();
+       // orthographicCamera.update();
         spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
         spriteBatch.begin();
@@ -201,7 +203,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         height_tr_game_4 = 700;
         height_btn_play = 200;
 
-        tr_menu_game_1_x = 150;
+        tr_menu_game_1_x = 1000;
         tr_menu_game_2_x = tr_menu_game_1_x + width_tr_game_1 + width_vidtstan;
         tr_menu_game_3_x = tr_menu_game_2_x + width_tr_game_2 + width_vidtstan;
         tr_menu_game_4_x = tr_menu_game_3_x + width_tr_game_3 + width_vidtstan;
@@ -230,19 +232,6 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             bool_action_swipe = true;
         }
 
-      /*  if (bool_block_game_1) {
-                if (tr_menu_game_1_x > screen_width / 2 - width_tr_game_1 / 2) {
-                    tr_menu_game_1_x = screen_width / 2 - width_tr_game_1 / 2;
-                    Gdx.app.log("game 1 x and y", tr_menu_game_1_x + " " + tr_menu_game_1_y);
-                }
-            }
-
-
-        if (tr_menu_game_4_x < screen_width / 2 - width_tr_game_4 / 2) {
-                tr_menu_game_4_x = screen_width / 2 - width_tr_game_4 / 2;
-                tr_menu_game_1_x = -1120;
-                Gdx.app.log("game 4 x and y", tr_menu_game_4_x + " " + tr_menu_game_4_y);
-        }  */
     }
 
     void stabilization_of_variables(){
@@ -265,26 +254,91 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         textButton();
     }
 
-    void action_swipe(String string_to_swipe_game , float velocity, float delta) {
+    void action_swipe(String string_to_swipe_game , float velocity, float width_plus, float height_plus) {
         Gdx.app.log("action swipe", "");
 
         if (string_to_swipe_game.equals("left")){
             tr_menu_game_1_x -= velocity;
-            stop_action(velocity);
+            if (tr_menu_game_1_x > 1000){
+                tr_menu_game_1_x = 1000;
+                bool_action_swipe = false;
+            }else stop_action(velocity);
+
+            if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 625){
+                width_tr_game_1 += width_plus;
+                height_tr_game_1 += height_plus;
+            }else if (tr_menu_game_2_x > 580 && tr_menu_game_2_x < 625){
+                width_tr_game_2 += width_plus;
+                height_tr_game_2 += height_plus;
+            }else if (tr_menu_game_3_x > 580 && tr_menu_game_3_x < 625){
+                width_tr_game_3 += width_plus;
+                height_tr_game_3 += height_plus;
+            }else if (tr_menu_game_4_x > 580 && tr_menu_game_4_x < 625){
+                width_tr_game_4 += width_plus;
+                height_tr_game_4 += height_plus;
+            }
+
+            if (tr_menu_game_1_x > 20 && tr_menu_game_1_x < 140){
+                width_tr_game_1 -= width_plus;
+                height_tr_game_1 -= height_plus;
+            }else if (tr_menu_game_2_x > 20 && tr_menu_game_2_x < 140){
+                width_tr_game_2 -= width_plus;
+                height_tr_game_2 -= height_plus;
+            }else if (tr_menu_game_3_x > 20 && tr_menu_game_3_x < 140){
+                width_tr_game_3 -= width_plus;
+                height_tr_game_3 -= height_plus;
+            }else if (tr_menu_game_4_x > 20 && tr_menu_game_4_x < 140){
+                width_tr_game_4 -= width_plus;
+                height_tr_game_4 -= height_plus;
+            }
         }else if (string_to_swipe_game.equals("right")){
             tr_menu_game_1_x += velocity;
-            stop_action(velocity);
+            if (tr_menu_game_1_x > 200){
+                tr_menu_game_1_x = 200;
+            bool_action_swipe = false;
+            }else stop_action(velocity);
+
+            if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 625){
+                width_tr_game_1 -= width_plus;
+                height_tr_game_1 -= height_plus;
+            }else if (tr_menu_game_2_x > 580 && tr_menu_game_2_x < 625){
+                width_tr_game_2 -= width_plus;
+                height_tr_game_2 -= height_plus;
+            }else if (tr_menu_game_3_x > 580 && tr_menu_game_3_x < 625){
+                width_tr_game_3 -= width_plus;
+                height_tr_game_3 -= height_plus;
+            }else if (tr_menu_game_4_x > 580 && tr_menu_game_4_x < 625){
+                width_tr_game_4 -= width_plus;
+                height_tr_game_4 -= height_plus;
+            }
+
+            if (tr_menu_game_1_x > 20 && tr_menu_game_1_x < 140){
+                width_tr_game_1 += width_plus;
+                height_tr_game_1 += height_plus;
+            }else if (tr_menu_game_2_x > 20 && tr_menu_game_2_x < 140){
+                width_tr_game_2 += width_plus;
+                height_tr_game_2 += height_plus;
+            }else if (tr_menu_game_3_x > 20 && tr_menu_game_3_x < 140){
+                width_tr_game_3 += width_plus;
+                height_tr_game_3 += height_plus;
+            }else if (tr_menu_game_4_x > 20 && tr_menu_game_4_x < 140){
+                width_tr_game_4 += width_plus;
+                height_tr_game_4 += height_plus;
+            }
         }
+
+
+
     }
 
     void stop_action(float delta){
         f += delta;
-        if (f > 440){
+        if (f > 400){
             f = 0;
             bool_action_swipe = false;
         }
 
-        Gdx.app.log("", tr_menu_game_2_x - tr_menu_game_1_x+" ");
+       // Gdx.app.log("", tr_menu_game_2_x - tr_menu_game_1_x+" ");
 
         Gdx.app.log("f", " "+f);
     }
