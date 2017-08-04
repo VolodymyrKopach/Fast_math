@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class GameWorld3 {
     ArrayList<Integer> values;
-    int int_min_plus, int_max_plus, int_result, true_variant, int_number_1, int_number_2;
+   // int int_min_plus, int_max_plus, int_result, true_variant, int_number_1, int_number_2;
 
     public int int_score = 0;
     public String string_to_screen = "";

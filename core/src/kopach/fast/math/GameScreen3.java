@@ -38,6 +38,8 @@ public class GameScreen3 implements Screen {
     int trueAnswer;
 
 
+
+
     public TextureAtlas textureAtlas_vg;
     public TextureRegion tr_fon, tr_X, tr_propusk;
 
