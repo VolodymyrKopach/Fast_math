@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -39,6 +40,9 @@ public class GameScreen implements Screen {
     BitmapFont text_to_button;
     BitmapFont text_to_btn, text_pryklad, text_vidp, text_score, text_best_score, text_time;
     SpriteBatch spriteBatch;
+    Texture icon, cup;
+
+    int num_of_char;
 
     //цей прапор служить для перевірки, щоб завжди було тільки одне видалення
     public boolean bool_replay;
@@ -48,8 +52,11 @@ public class GameScreen implements Screen {
     float width_X, height_X;
     float vidstan_width, vidstan_height;
     float btn_C_x, btn_C_y, btn_minus_x, btn_minus_y, btn_answer_x, btn_answer_y, tr_X_x, tr_X_y, tr_screen_x, tr_screen_y, tr_left_border_x, tr_left_border_y;
-    float text_text_best_score_x, text_text_best_score_y, text_best_score_x, text_best_score_y, text_score_x, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y;
+    float text_text_best_score_x, text_best_score_x, text_best_score_y, text_score_x, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y;
     float btn_replay_x, btn_replay_y, width_btn_replay, height_btn_replay;
+    float icon_y;
+
+    int bestScore, myScore;
 
     public GameScreen(final MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
@@ -64,7 +71,8 @@ public class GameScreen implements Screen {
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
 
-
+        icon = new Texture("icon.png");
+        cup = new Texture("cup_white.png");
         textureAtlas_vg = new TextureAtlas("texture/TextureAtlas.atlas");
 
         tr_screen = new TextureRegion(textureAtlas_vg.findRegion("screen"));
@@ -84,7 +92,7 @@ public class GameScreen implements Screen {
         text_to_button = new BitmapFont();
 
         textButton();
-
+        calculateCharCount();
         //  myGameClass.bannerAdShow();
     }
 
@@ -114,13 +122,14 @@ public class GameScreen implements Screen {
 
         spriteBatch.draw(tr_screen, tr_screen_x, tr_screen_y, tr_screen_width, tr_screen_height);
 
-
+        spriteBatch.draw(icon, screen_width - 160, icon_y);
+        spriteBatch.draw(cup, 50, icon_y);
         text_pryklad.draw(spriteBatch, gameWorld.getString_to_screen(), text_pryklad_x, text_pryklad_y);
         text_vidp.draw(spriteBatch, gameWorld.getString_input(), text_pryklad_x + 20 + getTextWidth(text_pryklad, gameWorld.getString_to_screen()), text_vidp_y);
-        text_score.draw(spriteBatch, gameWorld.getString_score(), text_score_x, text_score_y);
+        text_score.draw(spriteBatch, gameWorld.getString_score(), text_score_x, text_score_y - 20);
         text_time.draw(spriteBatch, gameWorld.getInt_timer() + "", text_time_x, text_time_y);
-        text_best_score.draw(spriteBatch, gameWorld.getString_best_score_this_level(), text_best_score_x, text_best_score_y);
         spriteBatch.draw(tr_left_border, tr_left_border_x, tr_left_border_y, tr_left_border_width, tr_left_border_height);
+        text_best_score.draw(spriteBatch, String.valueOf(gameWorld.getBestScore()), text_best_score_x, text_best_score_y);
 
         if (bool_replay) {
             spriteBatch.draw(tr_screen_replay, 0, 0, screen_width, screen_height);
@@ -191,7 +200,6 @@ public class GameScreen implements Screen {
         text_to_btn.getData().setScale(1.4f, 1.4f);
         text_pryklad.getData().setScale(1.4f, 1.4f);
         text_score.getData().setScale(0.5f, 0.5f);
-        // text_text_best_score.getData().setScale(0.5f, 0.5f);
         text_best_score.getData().setScale(0.6f, 0.6f);
         text_time.getData().setScale(1.3f, 1.3f);
 
@@ -216,13 +224,13 @@ public class GameScreen implements Screen {
         tr_left_border_x = 0;
         btn_minus_x = (screen_width - (width_btn * 3 + vidstan_width * 2)) / 2;
 
-        btn_answer_x = (screen_width - (width_btn * 3 + vidstan_width * 2)) / 2 + width_btn*2 + vidstan_width*2;
+        btn_answer_x = (screen_width - (width_btn * 3 + vidstan_width * 2)) / 2 + width_btn * 2 + vidstan_width * 2;
         btn_C_x = (screen_width - tr_screen_width) / 2 + tr_screen_width - 90;
         tr_X_x = screen_width / 2 - (width_X / 2);
         text_text_best_score_x = 20;
-        text_best_score_x = 90;
+        text_best_score_x = 124;
         text_time_x = screen_width / 2 - 27;
-        text_score_x = screen_width - 160;
+        text_score_x = screen_width - 80;
         text_pryklad_x = tr_screen_x + 20;
         text_vidp_x = btn_C_x - 200;
 
@@ -233,11 +241,10 @@ public class GameScreen implements Screen {
 
 
         btn_minus_y = tr_screen_y - height_btn - 98 - vidstan_height * 3 - height_btn * 3;
-        btn_answer_y =  tr_screen_y - height_btn - 98 - vidstan_height * 3 - height_btn * 3;
+        btn_answer_y = tr_screen_y - height_btn - 98 - vidstan_height * 3 - height_btn * 3;
         text_time_y = screen_height - 20;
         text_score_y = screen_height - 40;
-        text_text_best_score_y = screen_height - 40;
-        text_best_score_y = text_text_best_score_y + 4;
+        text_best_score_y = screen_height - 60;
         text_pryklad_y = tr_screen_y + tr_screen_height / 2 + 25;
         text_vidp_y = text_pryklad_y + 4;
 
@@ -246,7 +253,10 @@ public class GameScreen implements Screen {
         height_btn_replay = 100;
         btn_replay_x = screen_width / 2 - width_btn_replay / 2;
         btn_replay_y = 340;
+        icon_y = text_score_y - 64;
 
+        bestScore = gameWorld.getBestScore();
+        myScore = 0;
     }
 
     float getButtonX(int number) {
@@ -314,7 +324,16 @@ public class GameScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                gameWorld.btn_answer();
+                if (gameWorld.checkIsAnswerTrue()) {
+                    text_pryklad_x = tr_screen_x + 20;
+                    ++myScore;
+                    if (myScore > bestScore) {
+                        cup = new Texture("cup_yellow.png");
+                        bestScore = myScore;
+                        gameWorld.setBestScore(bestScore);
+                    }
+                }
+                calculateCharCount();
             }
         });
 
@@ -402,8 +421,10 @@ public class GameScreen implements Screen {
 
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    gameWorld.setString_input(String.valueOf(number));
-                    calcuclateButtonTouch();
+                    if (gameWorld.getString_input().length() < (String.valueOf(gameWorld.int_result).length() + 1)) {
+                        gameWorld.string_input += number;
+                        calcuclateButtonTouch();
+                    }
                 }
             });
         }
@@ -412,25 +433,9 @@ public class GameScreen implements Screen {
 
     void calcuclateButtonTouch() {
         int length = gameWorld.getString_input().length();
-        if (gameWorld.getGame().equals("easy")) {
-            if ((length == 4)) {
-                movePrykladLeft();
-                FLAG_CAN_MOVE = false;
-            }
-        } else if (gameWorld.getGame().equals("normal")) {
-            if ((length > 1) & (length < 4)) {
-                movePrykladLeft();
-            } else if (length == 4) {
-                movePrykladLeft();
-                FLAG_CAN_MOVE = false;
-            }
-        } else if (length < 5) {
+        if (length > num_of_char) {
             movePrykladLeft();
-        } else if (length == 5) {
-            movePrykladLeft();
-            FLAG_CAN_MOVE = false;
         }
-
     }
 
     void movePrykladLeft() {
@@ -468,5 +473,11 @@ public class GameScreen implements Screen {
             stage_replay.act();
             stage_replay.draw();
         }
+    }
+
+    //Вираховує скільки символів може вміститися без зсуву
+    void calculateCharCount() {
+        float size_to_answer = btn_C_x - 40 - 50 - getTextWidth(text_pryklad, gameWorld.getString_to_screen());
+        num_of_char = (int) (size_to_answer / getTextWidth(text_vidp, "8"));
     }
 }

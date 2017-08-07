@@ -5,7 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -146,7 +150,7 @@ public class GameScreen1 implements Screen {
                 } else {
                     mGC_gs1_text_vidp_wrong.draw(spriteBatch, gameWorld1.getString_input(), getTextWidth(text_pryklad_font, gameWorld1.getFirstPart()) + 60, text_vidp_y);
                 }
-                text_pryklad_font.draw(spriteBatch, gameWorld1.getSecondPart(), getTextWidth(text_pryklad_font, gameWorld1.getFirstPart())+ getTextWidth(mGC_gs1_text_vidp_wrong, gameWorld1.getSecondPart()), text_pryklad_y);
+                text_pryklad_font.draw(spriteBatch, gameWorld1.getSecondPart(), getTextWidth(text_pryklad_font, gameWorld1.getFirstPart()) + getTextWidth(mGC_gs1_text_vidp_wrong, gameWorld1.getSecondPart()), text_pryklad_y);
 
             }
         } else {
