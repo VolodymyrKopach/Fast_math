@@ -35,12 +35,13 @@ public class GameScreen implements Screen {
     public OrthographicCamera orthographicCamera;
     public Stage stage, stage_replay;
 
-    public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0, btn_answer, btn_C, btn_minus, btn_replay;
+    public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0,
+            btn_answer, btn_C, btn_minus, btn_replay;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont text_to_btn, text_pryklad, text_vidp, text_score, text_best_score, text_time;
+    BitmapFont text_pryklad, text_score, text_best_score, text_time;
     SpriteBatch spriteBatch;
-    Texture icon, cup;
+    Texture cup, icon;
 
     int num_of_char;
 
@@ -48,11 +49,11 @@ public class GameScreen implements Screen {
     public boolean bool_replay;
 
     float screen_width = 720, screen_height = 1280;
-    float width_btn, height_btn, width_btn_answer, height_btn_answer, width_btn_C, height_btn_C, tr_screen_width, tr_screen_height, tr_left_border_width, tr_left_border_height;
-    float width_X, height_X;
+    float width_btn, height_btn, width_btn_C, height_btn_C, tr_screen_width, tr_screen_height, tr_left_border_width, tr_left_border_height;
+    float width_X;
     float vidstan_width, vidstan_height;
     float btn_C_x, btn_C_y, btn_minus_x, btn_minus_y, btn_answer_x, btn_answer_y, tr_X_x, tr_X_y, tr_screen_x, tr_screen_y, tr_left_border_x, tr_left_border_y;
-    float text_text_best_score_x, text_best_score_x, text_best_score_y, text_score_x, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_vidp_y, text_time_x, text_time_y;
+    float text_text_best_score_x, text_best_score_x, text_best_score_y, text_score_x, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_time_x, text_time_y;
     float btn_replay_x, btn_replay_y, width_btn_replay, height_btn_replay;
     float icon_y;
 
@@ -71,8 +72,8 @@ public class GameScreen implements Screen {
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
 
-        icon = new Texture("icon.png");
         cup = new Texture("cup_white.png");
+        icon = new Texture("icon.png");
         textureAtlas_vg = new TextureAtlas("texture/TextureAtlas.atlas");
 
         tr_screen = new TextureRegion(textureAtlas_vg.findRegion("screen"));
@@ -122,14 +123,14 @@ public class GameScreen implements Screen {
 
         spriteBatch.draw(tr_screen, tr_screen_x, tr_screen_y, tr_screen_width, tr_screen_height);
 
-        spriteBatch.draw(icon, screen_width - 160, icon_y);
         spriteBatch.draw(cup, 50, icon_y);
+        spriteBatch.draw(icon, screen_width - 160, icon_y);
         text_pryklad.draw(spriteBatch, gameWorld.getString_to_screen(), text_pryklad_x, text_pryklad_y);
-        text_vidp.draw(spriteBatch, gameWorld.getString_input(), text_pryklad_x + 20 + getTextWidth(text_pryklad, gameWorld.getString_to_screen()), text_vidp_y);
-        text_score.draw(spriteBatch, gameWorld.getString_score(), text_score_x, text_score_y - 20);
+        text_pryklad.draw(spriteBatch, gameWorld.getString_input(), text_pryklad_x + 20 + getTextWidth(text_pryklad, gameWorld.getString_to_screen()), text_pryklad_y);
+        text_score.draw(spriteBatch, String.valueOf(myScore), text_score_x, text_score_y - 20);
         text_time.draw(spriteBatch, gameWorld.getInt_timer() + "", text_time_x, text_time_y);
         spriteBatch.draw(tr_left_border, tr_left_border_x, tr_left_border_y, tr_left_border_width, tr_left_border_height);
-        text_best_score.draw(spriteBatch, String.valueOf(gameWorld.getBestScore()), text_best_score_x, text_best_score_y);
+        text_best_score.draw(spriteBatch, String.valueOf(bestScore), text_best_score_x, text_best_score_y);
 
         if (bool_replay) {
             spriteBatch.draw(tr_screen_replay, 0, 0, screen_width, screen_height);
@@ -178,10 +179,10 @@ public class GameScreen implements Screen {
         textureAtlas_vg.dispose();
         stage.dispose();
         skin.dispose();
+        icon.dispose();
+        cup.dispose();
         text_to_button.dispose();
-        text_to_btn.dispose();
         text_pryklad.dispose();
-        text_vidp.dispose();
         text_score.dispose();
         text_best_score.dispose();
         text_time.dispose();
@@ -190,14 +191,10 @@ public class GameScreen implements Screen {
 
     public void variables() {
 
-        text_to_btn = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
-        text_vidp = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
         text_pryklad = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
         text_score = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
         text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
         text_time = new BitmapFont(Gdx.files.internal("bitmapfont/game text time.fnt"), Gdx.files.internal("bitmapfont/game text time.png"), false);
-        text_vidp.getData().setScale(1.5f, 1.5f);
-        text_to_btn.getData().setScale(1.4f, 1.4f);
         text_pryklad.getData().setScale(1.4f, 1.4f);
         text_score.getData().setScale(0.5f, 0.5f);
         text_best_score.getData().setScale(0.6f, 0.6f);
@@ -206,12 +203,9 @@ public class GameScreen implements Screen {
 
         width_btn = 185;
         height_btn = 185;
-        width_btn_answer = 235;
-        height_btn_answer = 235;
         width_btn_C = 76;
         height_btn_C = 110;
         width_X = 80;
-        height_X = 80;
         tr_screen_width = 660;
         tr_screen_height = 200;
         vidstan_width = 20;
@@ -246,8 +240,6 @@ public class GameScreen implements Screen {
         text_score_y = screen_height - 40;
         text_best_score_y = screen_height - 60;
         text_pryklad_y = tr_screen_y + tr_screen_height / 2 + 25;
-        text_vidp_y = text_pryklad_y + 4;
-
 
         width_btn_replay = 400;
         height_btn_replay = 100;
@@ -255,7 +247,7 @@ public class GameScreen implements Screen {
         btn_replay_y = 340;
         icon_y = text_score_y - 64;
 
-        bestScore = gameWorld.getBestScore();
+        bestScore = MyPreference.getBSGame1();
         myScore = 0;
     }
 
@@ -330,7 +322,7 @@ public class GameScreen implements Screen {
                     if (myScore > bestScore) {
                         cup = new Texture("cup_yellow.png");
                         bestScore = myScore;
-                        gameWorld.setBestScore(bestScore);
+                        MyPreference.setBSGame1(bestScore);
                     }
                 }
                 calculateCharCount();
@@ -408,7 +400,7 @@ public class GameScreen implements Screen {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable(drawableUp);
         style.down = skin.getDrawable(drawableDown);
-        style.font = text_to_btn;
+        style.font = text_pryklad;
         TextButton textButton = new TextButton(text_to_number, style);
         textButton.setPosition(getButtonX(number), getButtonY(number));
         stage.addActor(textButton);
@@ -462,6 +454,7 @@ public class GameScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 gameWorld.float_timer = 15;
+                gameWorld.buildGame();
                 bool_replay = false;
                 Gdx.input.setInputProcessor(stage);
             }
@@ -478,6 +471,6 @@ public class GameScreen implements Screen {
     //Вираховує скільки символів може вміститися без зсуву
     void calculateCharCount() {
         float size_to_answer = btn_C_x - 40 - 50 - getTextWidth(text_pryklad, gameWorld.getString_to_screen());
-        num_of_char = (int) (size_to_answer / getTextWidth(text_vidp, "8"));
+        num_of_char = (int) (size_to_answer / getTextWidth(text_pryklad, "8"));
     }
 }

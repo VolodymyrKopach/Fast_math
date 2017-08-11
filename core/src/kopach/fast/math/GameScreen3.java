@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -27,9 +28,9 @@ public class GameScreen3 implements Screen {
     private static final float BTN_POINT_X = 50;
     private static final float BTN_DOWN_POINT_Y = 140;
     private static final float vidstan_width = 20;
-    private static final float vidstan_height = 30;
     private static float btn_diametr;
     MyGameClass myGameClass;
+    public boolean canClick = true;
     int level;
     int num_of_btn;
     public GameWorld3 gameWorld3;
@@ -49,11 +50,15 @@ public class GameScreen3 implements Screen {
     TextButton[] textButtons = new TextButton[]{btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24, btn_25, btn_26, btn_27, btn_28, btn_29, btn_30};
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont text_text_score, text_score, text_best_score, text_time;
+    BitmapFont text_score, text_best_score, text_time;
     SpriteBatch spriteBatch;
+    int bestScore;
+    int myScore;
+    Texture cup, icon;
 
 
     float screen_width = 720, screen_height = 1280;
+    int text_best_score_x;
     float text_text_score_x, text_score_x, text_text_score_y, text_score_y, text_time_x, text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
 
     public GameScreen3(final MyGameClass myGameClass) {   // метод що запускається відразу
@@ -66,6 +71,9 @@ public class GameScreen3 implements Screen {
         Gdx.input.setInputProcessor(stage);
         //TODO постав тут цифри 1-3 і запусти
         level = 3;
+
+        cup = new Texture("cup_white.png");
+        icon = new Texture("icon.png");
 
         spriteBatch = new SpriteBatch();
 
@@ -82,7 +90,12 @@ public class GameScreen3 implements Screen {
             num_of_btn = 24;
         }
         variables();
-        gameWorld3 = new GameWorld3(this);
+        gameWorld3 = new GameWorld3(this,new Listener(){
+            @Override
+            void time_tick() {
+                createGame();
+            }
+        });
         createGame();
         Gdx.input.setCatchBackKey(true);
 
@@ -92,6 +105,7 @@ public class GameScreen3 implements Screen {
         text_to_button = new BitmapFont();
         //  myGameClass.bannerAdShow();
         Gdx.app.log("tag", "constructor");
+        text_best_score_x = 124;
     }
 
     //генеруємо нову гру
@@ -145,10 +159,12 @@ public class GameScreen3 implements Screen {
         spriteBatch.begin();
         spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
 
-        text_text_score.draw(spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
-        text_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
-        text_time.draw(spriteBatch, gameWorld3.getTimer_game(), text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y);
-        text_best_score.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);      //Дороблю
+        spriteBatch.draw(cup, 50, screen_height - 104);
+        spriteBatch.draw(icon, screen_width - 160, screen_height - 104);
+
+        text_score.draw(spriteBatch, myScore + "", text_score_x, text_score_y);
+        text_time.draw(spriteBatch, gameWorld3.getTimer_game(), screen_width / 2, text_text_ne_prav_vidp_y);
+        text_best_score.draw(spriteBatch, bestScore + "", text_best_score_x, text_score_y);
 
 
         spriteBatch.end();
@@ -184,7 +200,6 @@ public class GameScreen3 implements Screen {
         stage.dispose();
         skin.dispose();
         text_to_button.dispose();
-        text_text_score.dispose();
         text_score.dispose();
         text_best_score.dispose();
         text_time.dispose();
@@ -201,24 +216,24 @@ public class GameScreen3 implements Screen {
 
 
     public void variables() {   // налаштування значень Х і У для прорисовки
-        text_text_score = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
         text_score = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
         text_time = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
         text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
 
-        text_text_score.getData().setScale(0.5f, 0.5f);
         text_score.getData().setScale(0.6f, 0.6f);
         text_time.getData().setScale(0.7f, 0.7f);
         text_best_score.getData().setScale(0.6f, 0.6f);
         text_text_ne_prav_vidp_x = 20;
         text_time_x = screen_width / 2 - 6;
         text_text_score_x = screen_width - 200;
-        text_score_x = text_text_score_x + 130;
+        text_score_x = screen_width - 80;
 
         text_text_ne_prav_vidp_y = screen_height - 50;
         text_ne_prav_vidp_y = text_text_ne_prav_vidp_y + 4;
         text_text_score_y = text_ne_prav_vidp_y;
-        text_score_y = text_text_score_y + 4;
+        text_score_y = screen_height - 60;
+
+        bestScore = MyPreference.getBSGame4();
 
 
     }
@@ -255,7 +270,7 @@ public class GameScreen3 implements Screen {
         if (floor == 1) {
             return 1200 - BTN_DOWN_POINT_Y - btn_diametr;
         } else {
-            return 1200 - (BTN_DOWN_POINT_Y + btn_diametr * (floor) + vidstan_height * (floor - 1));
+            return 1200 - (BTN_DOWN_POINT_Y + btn_diametr * (floor) + 30 * (floor - 1));
         }
     }
 
@@ -280,9 +295,11 @@ public class GameScreen3 implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (!textButton.isDisabled()) {
-                    Gdx.app.log("tag", finalTextButton.getText().toString());
-                    checkIsTrueAnswer(finalTextButton.getText().toString(), finalTextButton);
-                    textButton.setDisabled(true);
+                    if (canClick) {
+                        Gdx.app.log("tag", finalTextButton.getText().toString());
+                        checkIsTrueAnswer(finalTextButton.getText().toString(), finalTextButton);
+                        textButton.setDisabled(true);
+                    }
                 }
             }
 
@@ -298,6 +315,7 @@ public class GameScreen3 implements Screen {
             addTrueAnswer();
         } else {
             //Неправильна відповідь
+            canClick = false;
             textButton.getStyle().up = skin.getDrawable("btn krug red");
             textButton.getStyle().down = skin.getDrawable("btn krug red");
             findTrueButton();
@@ -319,8 +337,13 @@ public class GameScreen3 implements Screen {
     public void addTrueAnswer() {
         trueAnswer += 1;
         if (trueAnswer == num_of_btn) {
-            //інець гри, всі кнопки вибрано правильно
+            //kінець гри, всі кнопки вибрано правильно
             drawAllButtonInOneColor("btn krug green");
+            ++myScore;
+            if (myScore > bestScore) {
+                bestScore = myScore;
+                MyPreference.setBSGame4(myScore);
+            }
         }
     }
 
@@ -338,6 +361,7 @@ public class GameScreen3 implements Screen {
                     e.printStackTrace();
                 }
                 createGame();
+                canClick = true;
             }
         });
         t.start();

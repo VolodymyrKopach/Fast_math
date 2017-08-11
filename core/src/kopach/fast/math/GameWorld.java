@@ -55,7 +55,7 @@ public class GameWorld {
         return preferences_game1.getInteger("best_score", 0);
     }
 
-    private void buildGame() {
+    public void buildGame() {
         int prykladrandom = (int) (Math.random() * 2);
 
         string_score = int_score + "";
