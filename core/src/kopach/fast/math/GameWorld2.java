@@ -2,6 +2,7 @@ package kopach.fast.math;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.util.Random;
 
@@ -10,20 +11,20 @@ import java.util.Random;
  */
 
 public class GameWorld2 {
-    int int_min_plus, int_max_plus, int_left_result, int_right_result, true_variant, int_left_number_1, int_left_number_2, int_right_number_1, int_right_number_2;
+    int int_min_plus, int_max_plus, int_left_result, int_right_result, true_variant, int_left_number_1, int_left_number_2, int_right_number_1, int_right_number_2, int_left_pryklad_1_position_x, int_right_pryklad_1_position_x;
 
     public int int_score = 0;
-    public String string_input = " ";
+    public String string_input = "=";
     public String string_answer;
 
     public String string_score = "0", string_timer, string_best_score_this_level;
 
-    public Preferences preferences_game_gw2, preferences_easy_gw2, preferences_normal_gw2, preferences_hard_gw2;
+    public Preferences preferences_game_gw2, preferences_game_score;
 
-    public float float_timer = 15;
+    public float float_timer = 15, float_timer_wait = 0.5f;;
     int int_timer = 2;  //любе число, головне >0
 
-    public boolean boolean_X = false, boolean_text_button = false;
+    public boolean boolean_X, boolean_text_button, bool_input, bool_timer_wait_answer_right, bool_timer_wait_answer_wrong, bool_replay;
 
     String string_left_znak = "", string_right_znak = "";
 
@@ -32,12 +33,7 @@ public class GameWorld2 {
     public GameWorld2(GameScreen2 gameScreen2) { // запускаться відразу при запуску класа
         this.gameScreen2 = gameScreen2;
         preferences_game_gw2 = Gdx.app.getPreferences("My_preferences_game");
-
-        setGame_gw2("easy"); //по стандарту буде відкриватись рівень easy
-
-        preferences_easy_gw2 = Gdx.app.getPreferences("My_preferences_score_easy");
-        preferences_normal_gw2 = Gdx.app.getPreferences("My_preferences_score_normal");
-        preferences_hard_gw2 = Gdx.app.getPreferences("My_preferences_score_hard");
+        preferences_game_score = Gdx.app.getPreferences("My_preferences_game_score");
 
         startGame();
     }
@@ -46,25 +42,17 @@ public class GameWorld2 {
         Gdx.app.log("GameWorld2", "запуск гри");
 
         boolean_text_button = false;
-        // зчитує який рівен вибраний, і після запускає гру
-        if (getGame_gw2().equals("easy")) {
-            game_easy();
-        } else if (getGame_gw2().equals("normal")) {
-            game_normal();
-        } else if (getGame_gw2().equals("hard")) {
-            game_hard();
-        }
+        game();
     }
 
 
-    public void game_easy() {
+    public void game() {
         Gdx.app.log("GameWorld2", "game level");
 
-        setString_best_score_this_level(String.valueOf(getHighScore_easy_gw2()));
+        setString_input("");
+        setString_best_score_this_level(String.valueOf(getHighScore()));
 
-        // створення приклада
-        int_min_plus = 10;
-        int_max_plus = 100;
+        setDifficulti();
 
         int prykladrandom = new Random().nextInt(2);
         int_left_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
@@ -98,90 +86,98 @@ public class GameWorld2 {
 
         setString_answer(int_left_result, int_right_result);
 
+        setSizeTextPryklad();
+
     }
 
-    public void game_normal() {
-        Gdx.app.log("GameWorld2", "game level");
+    void setDifficulti(){
+        if (int_score > 100){set_min_and_max(500, 999);
+        }else if (int_score > 9){set_min_and_max(450, 900);
+        }else if (int_score > 8){set_min_and_max(400, 800);
+        }else if (int_score > 7){set_min_and_max(350, 700);
+        }else if (int_score > 6){set_min_and_max(300, 600);
+        }else if (int_score > 5){set_min_and_max(250, 500);
+        }else if (int_score > 4){set_min_and_max(200, 400);
+        }else if (int_score > 3){set_min_and_max(150, 300);
+        }else if (int_score > 2){set_min_and_max(100, 200);
+        }else if (int_score > 1){set_min_and_max(50, 150);
+        }else if (int_score > 0 || int_score == 0){set_min_and_max(10, 100);}
 
-        setString_best_score_this_level(String.valueOf(getHighScore_normal_gw2()));
-
-        // створення приклада
-        int_min_plus = 100;
-        int_max_plus = 1000;
-
-        int prykladrandom = new Random().nextInt(2);
-        int_left_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        int_left_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        switch (prykladrandom) {
-            case 0: // додавання
-                int_left_result = int_left_number_1 + int_left_number_2;
-                string_left_znak = "+";
-                break;
-
-            case 1:  // віднімання
-                int_left_result = int_left_number_1 - int_left_number_2;
-                string_left_znak = "-";
-                break;
-        }
-
-        prykladrandom = new Random().nextInt(2);
-        int_right_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        int_right_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        switch (prykladrandom) {
-            case 0: // додавання
-                int_right_result = int_right_number_1 + int_right_number_2;
-                string_right_znak = "+";
-                break;
-
-            case 1:  // віднімання
-                int_right_result = int_right_number_1 - int_right_number_2;
-                string_right_znak = "-";
-                break;
-        }
-
-        setString_answer(int_left_result, int_right_result);
     }
 
-    public void game_hard() {
-        Gdx.app.log("GameWorld2", "game level");
+    void set_min_and_max(int min, int max){
+        int_min_plus = min;
+        int_max_plus = max;
+    }
 
-        setString_best_score_this_level(String.valueOf(getHighScore_hard_gw2()));
+    public void setSizeTextPryklad(){
+        int int_left_number_1_lenght = String.valueOf(int_left_number_1).length();
+        int int_left_number_2_lenght = String.valueOf(int_left_number_2).length();
+        int int_right_number_1_lenght = String.valueOf(int_right_number_1).length();
+        int int_right_number_2_lenght = String.valueOf(int_right_number_2).length();
+        int int_left_number_lenght = 1;
+        int int_right_number_lenght = 1;
+        int int_sizeTextPryklad = 1;
 
-        // створення приклада
-        int_min_plus = 1000;
-        int_max_plus = 10000;
-
-        int prykladrandom = new Random().nextInt(2);
-        int_left_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        int_left_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        switch (prykladrandom) {
-            case 0: // додавання
-                int_left_result = int_left_number_1 + int_left_number_2;
-                string_left_znak = "+";
-                break;
-
-            case 1:  // віднімання
-                int_left_result = int_left_number_1 - int_left_number_2;
-                string_left_znak = "-";
-                break;
+        if (int_left_number_1_lenght == int_left_number_2_lenght){
+            int_left_number_lenght = int_left_number_1_lenght;
+        }else if (int_left_number_1_lenght > int_left_number_2_lenght){
+            int_left_number_lenght = int_left_number_1_lenght;
+        }else if (int_left_number_1_lenght < int_left_number_2_lenght){
+            int_left_number_lenght = int_left_number_2_lenght;
         }
 
-        prykladrandom = new Random().nextInt(2);
-        int_right_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        int_right_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        switch (prykladrandom) {
-            case 0: // додавання
-                int_right_result = int_right_number_1 + int_right_number_2;
-                string_right_znak = "+";
-                break;
-
-            case 1:  // віднімання
-                int_right_result = int_right_number_1 - int_right_number_2;
-                string_right_znak = "-";
-                break;
+        if (int_right_number_1_lenght == int_right_number_2_lenght){
+            int_right_number_lenght = int_right_number_1_lenght;
+        }else if (int_right_number_1_lenght > int_right_number_2_lenght){
+            int_right_number_lenght = int_right_number_1_lenght;
+        }else if (int_right_number_1_lenght < int_right_number_2_lenght){
+            int_right_number_lenght = int_right_number_2_lenght;
         }
 
-        setString_answer(int_left_result, int_right_result);
+
+        if (int_left_number_lenght == int_right_number_lenght){
+            int_sizeTextPryklad = int_left_number_lenght;
+        }else if (int_left_number_lenght > int_right_number_lenght){
+            int_sizeTextPryklad = int_left_number_lenght;
+        }else if (int_left_number_lenght < int_right_number_lenght){
+            int_sizeTextPryklad = int_right_number_lenght;
+        }
+
+        if (int_sizeTextPryklad == 1){
+            int_left_pryklad_1_position_x = 140;
+            int_right_pryklad_1_position_x = 510;
+            gameScreen2.pryklad_font.getData().setScale(1.4f, 1.4f);
+            gameScreen2.input_znak_font.getData().setScale(1.6f, 1.6f);
+            // gameScreen2.idp_wrong.getData().setScale(1.5f, 1.5f);
+        }
+
+        if (int_sizeTextPryklad == 2){
+            int_left_pryklad_1_position_x = 140;
+            int_right_pryklad_1_position_x = 510;
+            gameScreen2.pryklad_font.getData().setScale(1.4f, 1.4f);
+            gameScreen2.input_znak_font.getData().setScale(1.6f, 1.6f);
+            //  gameScreen2.vidp_wrong.getData().setScale(1.5f, 1.5f);
+        }
+
+        if (int_sizeTextPryklad == 3){
+            int_left_pryklad_1_position_x = 90;
+            int_right_pryklad_1_position_x = 510;
+            gameScreen2.pryklad_font.getData().setScale(1.4f, 1.4f);
+            gameScreen2.input_znak_font.getData().setScale(1.6f, 1.6f);
+            //  gameScreen2.vidp_wrong.getData().setScale(1.3f, 1.3f);
+
+        }
+
+        if (int_sizeTextPryklad == 4) {
+            int_left_pryklad_1_position_x = 45;
+            int_right_pryklad_1_position_x = 510;
+            gameScreen2.pryklad_font.getData().setScale(1.4f, 1.4f);
+            gameScreen2.input_znak_font.getData().setScale(1.6f, 1.6f);
+            //   gameScreen2.vidp_wrong.getData().setScale(1.2f, 1.2f);
+        }
+
+        Gdx.app.log(""," size text pryklad = " + int_sizeTextPryklad);
 
     }
 
@@ -191,23 +187,33 @@ public class GameWorld2 {
         int_score++;
         setString_score(String.valueOf(int_score));
         float_timer = 15;
-        setString_input("");
+        gameScreen2.input_znak_font = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
+      //  gameScreen2.text_input_znak.getData().setScale(3.6f, 3.6f);
+        gameScreen2.text_input_znak_x = gameScreen2.screen_width/2 - gameScreen2.getTextWidth(gameScreen2.input_znak_font, getString_input())/2;
 
-        if (getGame_gw2().equals("easy")) {
-            setHighScore_easy_gw2(int_score);
-            game_easy();
-
-        } else if (getGame_gw2().equals("normal")) {
-            setHighScore_normal_gw2(int_score);
-            game_normal();
-
-        } else if (getGame_gw2().equals("hard")) {
-            setHighScore_hard_gw2(int_score);
-            game_hard();
-        }
+        bool_timer_wait_answer_right = true;
     }
 
     private void incorrectAnswer(){
+        gameScreen2.input_znak_font = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
+      //  gameScreen2.text_input_znak.getData().setScale(3.1f, 3.1f);
+        gameScreen2.text_input_znak_x = gameScreen2.screen_width/2 - gameScreen2.getTextWidth(gameScreen2.input_znak_font, getString_input())/2;
+
+        bool_timer_wait_answer_wrong = true;
+        gameScreen2.bool_draw_replay_btn = true;
+
+    }
+
+
+    public void answer(String answer) {  // метод який виконується коли вибираєш якусь відповідь
+        string_input = answer;
+        bool_input = true;
+
+        if(answer.equals(getString_answer())){
+            correctAnswer();
+        }else {
+            incorrectAnswer();
+        }
 
     }
 
@@ -222,22 +228,7 @@ public class GameWorld2 {
         }else if(int_left_result==int_right_result){
             string_answer = "=";
         }
-
     }
-
-
-    public void answer(String answer) {  // метод який виконується коли вибираєш якусь відповідь
-
-        Gdx.app.log("GameWorld2", "answer");
-
-        if(answer.equals(getString_answer())){
-            correctAnswer();
-        }else {
-            incorrectAnswer();
-        }
-
-    }
-
 
 
     public String getString_answer() {return string_answer;}
@@ -272,53 +263,17 @@ public class GameWorld2 {
 
     public String getString_right_znak() {return string_right_znak;}
 
-    public void setGame_gw2(String string_game) {  //  запам'ятовування вибраного рівня
-        preferences_game_gw2.putString("save_game", string_game);
-        preferences_game_gw2.flush();
-
-    }
-
-    public String getGame_gw2() {
-        return preferences_game_gw2.getString("save_game");
-    }
-
-
-    public void setHighScore_easy_gw2(int int_score_easy_to_save) {
-        if (int_score_easy_to_save > getHighScore_easy_gw2()) {
-            preferences_easy_gw2.putInteger("save_int_score", int_score_easy_to_save);
-            preferences_easy_gw2.flush();
+    public void setHighScore(int int_score_easy_to_save) {
+        if (int_score_easy_to_save > getHighScore()) {
+            preferences_game_score.putInteger("save_int_score", int_score_easy_to_save);
+            preferences_game_score.flush();
         }
     }
 
-    public int getHighScore_easy_gw2() {
-        return preferences_easy_gw2.getInteger("save_int_score", 0);
+    public int getHighScore() {
+        return preferences_game_score.getInteger("save_int_score", 0);
 
     }
-
-    public void setHighScore_normal_gw2(int int_score_normal_to_save) {
-        if (int_score_normal_to_save > getHighScore_normal_gw2()) {
-            preferences_normal_gw2.putInteger("save_int_score", int_score_normal_to_save);
-            preferences_normal_gw2.flush();
-        }
-    }
-
-    public int getHighScore_normal_gw2() {
-        return preferences_normal_gw2.getInteger("save_int_score", 0);
-
-    }
-
-    public void setHighScore_hard_gw2(int int_score_hard_to_save) {
-        if (int_score_hard_to_save > getHighScore_hard_gw2()) {
-            preferences_hard_gw2.putInteger("save_int_score", int_score_hard_to_save);
-            preferences_hard_gw2.flush();
-        }
-    }
-
-    public int getHighScore_hard_gw2() {
-        return preferences_hard_gw2.getInteger("save_int_score", 0);
-
-    }
-
 
     public void setString_input(String string_input) {
         this.string_input = string_input;
@@ -361,6 +316,31 @@ public class GameWorld2 {
 
     public boolean getBoolean_text_button() {
         return boolean_text_button;
+    }
+
+    public void timer_wait_answer_right(float dt) {
+        float_timer_wait -= dt;
+
+        Gdx.app.log(" ", float_timer_wait + "");
+
+        if (float_timer_wait < 0) {
+            float_timer_wait = 0.5f;
+            bool_timer_wait_answer_right = false;
+            startGame();
+        }
+    }
+
+    public void timer_wait_answer_wrong(float dt) {
+        float_timer_wait -= dt;
+
+        Gdx.app.log(" ", float_timer_wait + "");
+
+        if (float_timer_wait < 0) {
+            float_timer_wait = 0.5f;
+            bool_timer_wait_answer_wrong = false;
+            bool_replay = true;
+
+        }
     }
 
 }

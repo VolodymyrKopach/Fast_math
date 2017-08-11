@@ -19,18 +19,19 @@ public class GameWorld1 {
 
     public String string_score, string_timer_game, string_best_score_this_level;
 
-    public Preferences preferences_game_gw1, preferences_easy_gw1, preferences_normal_gw1, preferences_hard_gw1;
+    public Preferences preferences_game_gw1, preferences_game_score;
 
     public float float_timer = 15, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
+    public int int_pryklad_position_1_x;
 
-    public boolean bool_answer_right = false, bool_timer_wait_start = false;
+    public boolean bool_answer_right, bool_timer_wait_start, bool_replay;
 
     String string_znak = "", string_propusk_in_pryklad = "";
     public int int_btn_1, int_btn_2, int_btn_3, int_btn_4, int_btn_5, int_btn_6;
 
     GameScreen1 gameScreen1;
-    String firstPart;
+    String firstPart ;
 
     public String getSecondPart() {
         return secondPart;
@@ -47,44 +48,24 @@ public class GameWorld1 {
     public GameWorld1(GameScreen1 gameScreen1) { // запускаться відразу при запуску класа
         this.gameScreen1 = gameScreen1;
         preferences_game_gw1 = Gdx.app.getPreferences("My_preferences_game_gw1");
-
-        setGame("normal"); //по стандарту буде відкриватись рівень easy
-
-        preferences_easy_gw1 = Gdx.app.getPreferences("My_preferences_score_easy_gw1");
-        preferences_normal_gw1 = Gdx.app.getPreferences("My_preferences_score_normal_gw1");
-        preferences_hard_gw1 = Gdx.app.getPreferences("My_preferences_score_hard_gw1");
+        preferences_game_score = Gdx.app.getPreferences("My_preferences_game_score");
 
         startGame();
     }
 
     public void startGame() {
-        Gdx.app.log("GameWorld1", "запуск гри");
+        game();
+        int_score = 0;
 
         string_input = "";
-        // зчитує який рівен вибраний, і після запускає гру
-        if (getGame().equals("easy")) {
-            setHighScore_easy_gw1(int_score);
-            game_easy();
-        } else if (getGame().equals("normal")) {
-            setHighScore_normal_gw1(int_score);
-            game_normal();
-        } else if (getGame().equals("hard")) {
-            setHighScore_hard_gw1(int_score);
-            game_hard();
-        }
     }
 
 
-    public void game_easy() {
-        Gdx.app.log("GameWorld1", "game level");
+    public void game() {
 
-        setString_best_score_this_level(String.valueOf(getHighScore_easy_gw1()));
+        setDifficulti();
 
         int prykladrandom = new Random().nextInt(2);
-        // створення приклада
-        int_min_plus = 10;
-        int_max_plus = 100;
-
         int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
         int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
         switch (prykladrandom) {
@@ -102,73 +83,43 @@ public class GameWorld1 {
 
     }
 
-    public void game_normal() {
-        Gdx.app.log("GameWorld1", "game normal");
-
-        setString_best_score_this_level(String.valueOf(getHighScore_normal_gw1()));
-
-        int prykladrandom = (int) (Math.random() * 2);
-
-        int_min_plus = 100;
-        int_max_plus = 1000;
-        int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-
-        switch (prykladrandom) {
-            case 0:
-                int_result = int_number_1 + int_number_2;
-                string_znak = "+";
-                break;
-
-            case 1:
-                int_result = int_number_1 - int_number_2;
-                string_znak = "-";
-                break;
-        }
-        make_pryklad();
+    void setDifficulti(){
+        if (int_score > 100){set_min_and_max(500, 999);
+        }else if (int_score > 9){set_min_and_max(450, 900);
+        }else if (int_score > 8){set_min_and_max(400, 800);
+        }else if (int_score > 7){set_min_and_max(350, 700);
+        }else if (int_score > 6){set_min_and_max(300, 600);
+        }else if (int_score > 5){set_min_and_max(250, 500);
+        }else if (int_score > 4){set_min_and_max(200, 400);
+        }else if (int_score > 3){set_min_and_max(150, 300);
+        }else if (int_score > 2){set_min_and_max(100, 200);
+        }else if (int_score > 1){set_min_and_max(50, 150);
+        }else if (int_score > 0 || int_score == 0){set_min_and_max(10, 100);}
 
     }
 
-    public void game_hard() {
-        Gdx.app.log("GameWorld1", "game hard");
-
-        setString_best_score_this_level(String.valueOf(getHighScore_hard_gw1()));
-
-        int prykladrandom = new Random().nextInt(2);
-
-        int_min_plus = 1000;
-        int_max_plus = 10000;
-        int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        int_number_2 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
-        switch (prykladrandom) {
-            case 0:
-                int_result = int_number_1 + int_number_2;
-                string_znak = "+";
-                break;
-
-            case 1:
-                int_result = int_number_1 - int_number_2;
-                string_znak = "-";
-                break;
-        }
-        make_pryklad();
+    void set_min_and_max(int min, int max){
+        int_min_plus = min;
+        int_max_plus = max;
     }
-
 
     public void make_pryklad() { // метод в якому створюється приклад
+
+        setInt_pryklad_position_1_x();
+
         gameScreen1.FLAG_SHOW_QUESTION_MARK = true;
 
         Gdx.app.log("GameWorld1", "pryklad render");
 
         setString_score(String.valueOf(int_score));
 
-        int int_pryklad_random = new Random().nextInt(3) + 1;   // рандомний вибір де буде пропуск
+        int int_pryklad_random = new Random().nextInt(3) + 1;
         int int_true_value = new Random().nextInt(6) + 1;   // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
 
         switch (int_pryklad_random) {
             case 1:  // пропуск в першого числа
                 questionMarkPosition = 1;
-                setString_to_screen(string_znak + " " + int_number_2 + " = " + int_result);
+                setString_to_screen(" " + string_znak + " " + int_number_2 + " = " + int_result);
                 string_propusk_in_pryklad = "number_1";
 
                 true_variant = int_number_1;
@@ -176,8 +127,8 @@ public class GameWorld1 {
 
             case 2:
                 questionMarkPosition = 2;
-                firstPart = int_number_1 + " " + string_znak;
-                secondPart = "= " + int_number_2;
+                firstPart = int_number_1 + " " + string_znak + " ";
+                secondPart = " = " + int_result;
                 string_propusk_in_pryklad = "number_2";
 
                 true_variant = int_number_2;
@@ -185,7 +136,7 @@ public class GameWorld1 {
 
             case 3:
                 questionMarkPosition = 3;
-                setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " =");
+                setString_to_screen(int_number_1 + " " + string_znak + " " + int_number_2 + " = ");
                 string_propusk_in_pryklad = "result";
 
                 true_variant = int_result;
@@ -275,10 +226,14 @@ public class GameWorld1 {
         bool_answer_right = true;
         int_score++;
         float_timer = 15;
+
+        setHighScore_game(int_score);
     }
 
     public void answer_wrong() {
         bool_answer_right = false;
+        bool_replay = true;
+        gameScreen1.bool_draw_replay_btn = true;
     }
 
 
@@ -336,52 +291,6 @@ public class GameWorld1 {
     }
 
 
-    public void setGame(String string_game) {  //  запам'ятовування вибраного рівня
-        preferences_game_gw1.putString("save_game", string_game);
-        preferences_game_gw1.flush();
-
-    }
-
-    public String getGame() {
-        return preferences_game_gw1.getString("save_game");
-    }
-
-
-    public void setHighScore_easy_gw1(int int_score_easy_to_save) {
-        if (int_score_easy_to_save > getHighScore_easy_gw1()) {
-            preferences_easy_gw1.putInteger("save_int_score", int_score_easy_to_save);
-            preferences_easy_gw1.flush();
-        }
-    }
-
-    public int getHighScore_easy_gw1() {
-        return preferences_easy_gw1.getInteger("save_int_score", 0);
-
-    }
-
-    public void setHighScore_normal_gw1(int int_score_normal_to_save) {
-        if (int_score_normal_to_save > getHighScore_normal_gw1()) {
-            preferences_normal_gw1.putInteger("save_int_score", int_score_normal_to_save);
-            preferences_normal_gw1.flush();
-        }
-    }
-
-    public int getHighScore_normal_gw1() {
-        return preferences_normal_gw1.getInteger("save_int_score", 0);
-
-    }
-
-    public void setHighScore_hard_gw1(int int_score_hard_to_save) {
-        if (int_score_hard_to_save > getHighScore_hard_gw1()) {
-            preferences_hard_gw1.putInteger("save_int_score", int_score_hard_to_save);
-            preferences_hard_gw1.flush();
-        }
-    }
-
-    public int getHighScore_hard_gw1() {
-        return preferences_hard_gw1.getInteger("save_int_score", 0);
-    }
-
     public void setString_to_screen(String string_to_screen) {
         this.string_to_screen = string_to_screen;
     }
@@ -408,13 +317,35 @@ public class GameWorld1 {
         return string_score;
     }
 
-    public void setString_best_score_this_level(String string_best_result_this_level) {
-        this.string_best_score_this_level = string_best_result_this_level;
-    }
 
     public String getString_best_score_this_level() {
         return string_best_score_this_level;
     }
+
+    public void setHighScore_game(int int_score_to_save) {
+        if (int_score_to_save > getHighScore_game()) {
+            preferences_game_score.putInteger("save_int_score", int_score_to_save);
+            preferences_game_score.flush();
+        }
+    }
+
+    public int getHighScore_game() {return preferences_game_score.getInteger("save_int_score", 0);}
+
+
+    public void setInt_pryklad_position_1_x() {
+        int int_example_length = String.valueOf(int_number_1).length() + String.valueOf(int_number_2).length() + String.valueOf(int_result).length();
+
+        if (int_example_length == 6){int_pryklad_position_1_x = 75;   gameScreen1.text_pryklad_font.getData().setScale(1.4f, 1.4f); gameScreen1.text_vidp_right.getData().setScale(1.6f, 1.6f); gameScreen1.text_vidp_wrong.getData().setScale(1.5f, 1.5f);}
+        if (int_example_length == 7){int_pryklad_position_1_x = 65;   gameScreen1.text_pryklad_font.getData().setScale(1.4f, 1.4f); gameScreen1.text_vidp_right.getData().setScale(1.6f, 1.6f); gameScreen1.text_vidp_wrong.getData().setScale(1.5f, 1.5f);}
+        if (int_example_length == 8){int_pryklad_position_1_x = 55;   gameScreen1.text_pryklad_font.getData().setScale(1.2f, 1.2f); gameScreen1.text_vidp_right.getData().setScale(1.4f, 1.4f); gameScreen1.text_vidp_wrong.getData().setScale(1.3f, 1.3f);}
+        if (int_example_length == 9){int_pryklad_position_1_x = 45;   gameScreen1.text_pryklad_font.getData().setScale(1.1f, 1.1f); gameScreen1.text_vidp_right.getData().setScale(1.3f, 1.3f); gameScreen1.text_vidp_wrong.getData().setScale(1.2f, 1.2f);}
+        if (int_example_length == 10){int_pryklad_position_1_x = 35;   gameScreen1.text_pryklad_font.getData().setScale(1.1f, 1.1f); gameScreen1.text_vidp_right.getData().setScale(1.3f, 1.3f); gameScreen1.text_vidp_wrong.getData().setScale(1.2f, 1.2f);}
+        if (int_example_length == 11){int_pryklad_position_1_x = 25;   gameScreen1.text_pryklad_font.getData().setScale(1.1f, 1.1f); gameScreen1.text_vidp_right.getData().setScale(1.3f, 1.3f); gameScreen1.text_vidp_wrong.getData().setScale(1.2f, 1.2f);}
+        if (int_example_length == 12){int_pryklad_position_1_x = 15;   gameScreen1.text_pryklad_font.getData().setScale(1.1f, 1.1f); gameScreen1.text_vidp_right.getData().setScale(1.3f, 1.3f); gameScreen1.text_vidp_wrong.getData().setScale(1.2f, 1.2f);}
+
+    }
+
+    public int getInt_pryklad_position_1_x() {return int_pryklad_position_1_x;}
 
     public void timer_game(float dt) {
         float_timer -= dt;
@@ -447,5 +378,4 @@ public class GameWorld1 {
     public int getQuestionMarkPosition() {
         return questionMarkPosition;
     }
-    //597
 }

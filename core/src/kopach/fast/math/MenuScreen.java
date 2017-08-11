@@ -117,23 +117,23 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         }
 
 
-        if (bool_action_swipe) {
+        if (bool_action_swipe){
             action_swipe(string_to_swipe_game, 40, 10, 10);
             stabilization_of_variables();
-            // Gdx.app.log("","render");
+           // Gdx.app.log("","render");
         }
 
 
-        if (bool_block_game_1 == true) {
-            if (tr_menu_game_1_x > screen_width / 2 - width_tr_game_1 / 2) {
+        if (bool_block_game_1 == true){
+            if (tr_menu_game_1_x > screen_width/2 - width_tr_game_1/2){
                 tr_menu_game_1_x -= 20;
                 stabilization_of_variables();
-                Gdx.app.log("", "" + tr_menu_game_2_x + " width " + width_tr_game_2);
-            } else bool_block_game_1 = false;
+                Gdx.app.log("",""+tr_menu_game_2_x +" width " + width_tr_game_2);
+            }else bool_block_game_1 = false;
         }
 
 
-        // orthographicCamera.update();
+       // orthographicCamera.update();
         spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
         spriteBatch.begin();
@@ -215,10 +215,10 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_play_3_x = tr_menu_game_3_x + (width_tr_game_3 / 2) - (width_btn_play / 2);
         btn_play_4_x = tr_menu_game_4_x + (width_tr_game_4 / 2) - (width_btn_play / 2);
 
-        tr_menu_game_1_y = 360;
-        tr_menu_game_2_y = 360;
-        tr_menu_game_3_y = 360;
-        tr_menu_game_4_y = 360;
+        tr_menu_game_1_y = 300;
+        tr_menu_game_2_y = 300;
+        tr_menu_game_3_y = 300;
+        tr_menu_game_4_y = 300;
         btn_play_1_y = tr_menu_game_1_y + (height_tr_game_1 / 2) - (width_btn_play / 2) - 25;
         btn_play_2_y = tr_menu_game_2_y + (height_tr_game_2 / 2) - (width_btn_play / 2) - 25;
         btn_play_3_y = tr_menu_game_3_y + (height_tr_game_3 / 2) - (width_btn_play / 2) - 25;
@@ -227,17 +227,17 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     void variables_game(float velocityX) {
 
-        if (velocityX < 0) {
+        if (velocityX < 0){
             string_to_swipe_game = "left";
             bool_action_swipe = true;
-        } else if (velocityX > 0) {
+        }else if (velocityX > 0){
             string_to_swipe_game = "right";
             bool_action_swipe = true;
         }
 
     }
 
-    void stabilization_of_variables() {
+    void stabilization_of_variables(){
         tr_menu_game_2_x = tr_menu_game_1_x + width_tr_game_1 + width_vidtstan;
         tr_menu_game_3_x = tr_menu_game_2_x + width_tr_game_2 + width_vidtstan;
         tr_menu_game_4_x = tr_menu_game_3_x + width_tr_game_3 + width_vidtstan;
@@ -257,96 +257,99 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         textButton();
     }
 
-    void action_swipe(String string_to_swipe_game, float velocity, float width_plus, float height_plus) {
+    void action_swipe(String string_to_swipe_game , float velocity, float width_plus, float height_plus) {
         Gdx.app.log("action swipe", "");
 
-        if (string_to_swipe_game.equals("left")) {
+        if (string_to_swipe_game.equals("left")){
             tr_menu_game_1_x -= velocity;
-            if (tr_menu_game_1_x > 1000) {
+            if (tr_menu_game_1_x > 1000){
                 tr_menu_game_1_x = 1000;
                 bool_action_swipe = false;
-            } else stop_action(velocity);
+            }else stop_action(velocity);
 
-            if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 625) {
+            if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 700){
                 width_tr_game_1 += width_plus;
                 height_tr_game_1 += height_plus;
-            } else if (tr_menu_game_2_x > 580 && tr_menu_game_2_x < 625) {
+            }else if (tr_menu_game_2_x > 580 && tr_menu_game_2_x < 700){
                 width_tr_game_2 += width_plus;
                 height_tr_game_2 += height_plus;
-            } else if (tr_menu_game_3_x > 580 && tr_menu_game_3_x < 625) {
+            }else if (tr_menu_game_3_x > 580 && tr_menu_game_3_x < 700){
                 width_tr_game_3 += width_plus;
                 height_tr_game_3 += height_plus;
-            } else if (tr_menu_game_4_x > 580 && tr_menu_game_4_x < 625) {
+            }else if (tr_menu_game_4_x > 580 && tr_menu_game_4_x < 700){
                 width_tr_game_4 += width_plus;
                 height_tr_game_4 += height_plus;
             }
 
-            if (tr_menu_game_1_x > 20 && tr_menu_game_1_x < 140) {
+            if (tr_menu_game_1_x+width_tr_game_1 > 20 && tr_menu_game_1_x+width_tr_game_1 < 150){
                 width_tr_game_1 -= width_plus;
                 height_tr_game_1 -= height_plus;
-            } else if (tr_menu_game_2_x > 20 && tr_menu_game_2_x < 140) {
+            }else if (tr_menu_game_2_x+width_tr_game_2 > 20 && tr_menu_game_2_x+width_tr_game_2 < 150){
                 width_tr_game_2 -= width_plus;
                 height_tr_game_2 -= height_plus;
-            } else if (tr_menu_game_3_x > 20 && tr_menu_game_3_x < 140) {
+            }else if (tr_menu_game_3_x+width_tr_game_3 > 20 && tr_menu_game_3_x+width_tr_game_3 < 150){
                 width_tr_game_3 -= width_plus;
                 height_tr_game_3 -= height_plus;
-            } else if (tr_menu_game_4_x > 20 && tr_menu_game_4_x < 140) {
+            }else if (tr_menu_game_4_x+width_tr_game_4 > 20 && tr_menu_game_4_x+width_tr_game_4 < 150){
                 width_tr_game_4 -= width_plus;
                 height_tr_game_4 -= height_plus;
             }
-        } else if (string_to_swipe_game.equals("right")) {
+        }else if (string_to_swipe_game.equals("right")){
             tr_menu_game_1_x += velocity;
-            if (tr_menu_game_1_x > 200) {
+            if (tr_menu_game_1_x > 200){
                 tr_menu_game_1_x = 200;
-                bool_action_swipe = false;
-            } else stop_action(velocity);
+            bool_action_swipe = false;
+            }else stop_action(velocity);
 
-            if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 625) {
+            if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 700){
                 width_tr_game_1 -= width_plus;
                 height_tr_game_1 -= height_plus;
-            } else if (tr_menu_game_2_x > 580 && tr_menu_game_2_x < 625) {
+            }else if (tr_menu_game_2_x > 580 && tr_menu_game_2_x < 700){
                 width_tr_game_2 -= width_plus;
                 height_tr_game_2 -= height_plus;
-            } else if (tr_menu_game_3_x > 580 && tr_menu_game_3_x < 625) {
+            }else if (tr_menu_game_3_x > 580 && tr_menu_game_3_x < 700){
                 width_tr_game_3 -= width_plus;
                 height_tr_game_3 -= height_plus;
-            } else if (tr_menu_game_4_x > 580 && tr_menu_game_4_x < 625) {
+            }else if (tr_menu_game_4_x > 580 && tr_menu_game_4_x < 700){
                 width_tr_game_4 -= width_plus;
                 height_tr_game_4 -= height_plus;
             }
 
-            if (tr_menu_game_1_x > 20 && tr_menu_game_1_x < 140) {
+            if (tr_menu_game_1_x+width_tr_game_1 > 20 && tr_menu_game_1_x+width_tr_game_1 < 150){
                 width_tr_game_1 += width_plus;
                 height_tr_game_1 += height_plus;
-            } else if (tr_menu_game_2_x > 20 && tr_menu_game_2_x < 140) {
+            }else if (tr_menu_game_2_x+width_tr_game_2 > 20 && tr_menu_game_2_x+width_tr_game_2 < 150){
                 width_tr_game_2 += width_plus;
                 height_tr_game_2 += height_plus;
-            } else if (tr_menu_game_3_x > 20 && tr_menu_game_3_x < 140) {
+            }else if (tr_menu_game_3_x+width_tr_game_3 > 20 && tr_menu_game_3_x+width_tr_game_3 < 150){
                 width_tr_game_3 += width_plus;
                 height_tr_game_3 += height_plus;
-            } else if (tr_menu_game_4_x > 20 && tr_menu_game_4_x < 140) {
+            }else if (tr_menu_game_4_x+width_tr_game_4 > 20 && tr_menu_game_4_x+width_tr_game_4 < 150){
                 width_tr_game_4 += width_plus;
                 height_tr_game_4 += height_plus;
             }
         }
 
 
+
     }
 
-    void stop_action(float delta) {
+    void stop_action(float delta){
         f += delta;
-        if (f > 400) {
+        if (f > 470){
             f = 0;
             bool_action_swipe = false;
         }
 
-        // Gdx.app.log("", tr_menu_game_2_x - tr_menu_game_1_x+" ");
+        Gdx.app.log("2_x-1_x", tr_menu_game_2_x - tr_menu_game_1_x+" ");
+        Gdx.app.log("tr_menu_1_width", width_tr_game_1 +" ");
+        Gdx.app.log("tr_menu_3_width", width_tr_game_3 + " ");
 
-        Gdx.app.log("f", " " + f);
+        Gdx.app.log("f", " "+f);
     }
 
     public void textButton() {
-        //  Gdx.app.log("log", "text button level");
+      //  Gdx.app.log("log", "text button level");
         btn_play_style = new TextButton.TextButtonStyle();
         btn_play_style.up = skin.getDrawable("btn play");
         btn_play_style.down = skin.getDrawable("btn play press");
@@ -358,6 +361,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_play_1.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 clickSound.play();
                 Gdx.input.setInputProcessor(stage);
                 return true;
@@ -379,6 +383,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_play_2.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 clickSound.play();
                 Gdx.input.setInputProcessor(stage);
                 return true;
@@ -399,6 +404,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_play_3.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 clickSound.play();
                 Gdx.input.setInputProcessor(stage);
                 return true;
@@ -419,12 +425,14 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_play_4.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 clickSound.play();
                 Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 myGameClass.setScreen(new GameScreen3(myGameClass));
 
                 Gdx.input.setInputProcessor(inputMultiplexer);
@@ -443,7 +451,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_setting.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                clickSound.play();
+
                 Gdx.input.setInputProcessor(stage);
                 return true;
             }
@@ -466,7 +474,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_exit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                clickSound.play();
+
                 Gdx.input.setInputProcessor(stage);
                 return true;
             }
@@ -499,7 +507,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
-        // Gdx.app.log("","fling" + " velocityX:" + velocityX + " velocityY:"+ velocityY+" button:"+button);
+       // Gdx.app.log("","fling" + " velocityX:" + velocityX + " velocityY:"+ velocityY+" button:"+button);
         variables_game(velocityX);
         return true;
     }
