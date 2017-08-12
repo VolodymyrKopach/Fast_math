@@ -31,8 +31,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
     MenuWorld menuWorld;
     Sound clickSound;
 
-    public TextureAtlas textureAtlas_ms;
-    public TextureRegion tr_menu_fon, tr_menu_game_1, tr_menu_game_2, tr_menu_game_3, tr_menu_game_4;
+    public TextureAtlas textureAtlas;
+    public TextureRegion tr_menu_fon, tr_menu_game_1, tr_menu_game_2, tr_menu_game_3, tr_menu_game_4, tr_coin;
     public TextButton btn_play_1, btn_play_2, btn_play_3, btn_play_4, btn_setting, btn_exit;
     public TextButton.TextButtonStyle btn_play_style, btn_setting_style, btn_exit_style;
     Skin skin;
@@ -50,8 +50,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     float screen_width = 720, screen_height = 1280;
     public float width_vidtstan, height_vidstan;
-    public float width_tr_game_1, height_tr_game_1, width_tr_game_2, height_tr_game_2, width_tr_game_3, height_tr_game_3, width_tr_game_4, height_tr_game_4, width_btn_play, height_btn_play, width_btn_setting, height_btn_setting, width_btn_exit, height_btn_exit, width_tr_level_text, height_tr_text;
-    public float btn_play_1_x, btn_play_1_y, btn_play_2_x, btn_play_2_y, btn_play_3_x, btn_play_3_y, btn_play_4_x, btn_play_4_y, btn_setting_x, btn_setting_y, btn_exit_x, btn_exit_y, tr_menu_game_1_x, tr_menu_game_1_y, tr_menu_game_2_x, tr_menu_game_2_y, tr_menu_game_3_x, tr_menu_game_3_y, tr_menu_game_4_x, tr_menu_game_4_y;//tr_level_text_x, tr_level_text_y;
+    public float width_tr_game_1, height_tr_game_1, width_tr_game_2, height_tr_game_2, width_tr_game_3, height_tr_game_3, width_tr_game_4, height_tr_game_4, width_btn_play, height_btn_play, width_btn_setting, height_btn_setting, width_btn_exit, height_btn_exit, tr_coin_width, tr_coin_height, width_tr_level_text, height_tr_text;
+    public float btn_play_1_x, btn_play_1_y, btn_play_2_x, btn_play_2_y, btn_play_3_x, btn_play_3_y, btn_play_4_x, btn_play_4_y, btn_setting_x, btn_setting_y, btn_exit_x, btn_exit_y, tr_menu_game_1_x, tr_menu_game_1_y, tr_menu_game_2_x, tr_menu_game_2_y, tr_menu_game_3_x, tr_menu_game_3_y, tr_menu_game_4_x, tr_menu_game_4_y, tr_coin_x, tr_coin_y;
     float f = 0;
 
     boolean bool_block_game_1 = true; //переміна, яка буде не давати tr_game_1_пересуватись в право
@@ -72,13 +72,14 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
         spriteBatch = new SpriteBatch();
 
-        textureAtlas_ms = new TextureAtlas("texture/TextureAtlas.atlas");
+        textureAtlas = new TextureAtlas("texture/TextureAtlas.atlas");
 
-        tr_menu_fon = new TextureRegion(textureAtlas_ms.findRegion("menu fon"));
-        tr_menu_game_1 = new TextureRegion(textureAtlas_ms.findRegion("menu game 1"));
-        tr_menu_game_2 = new TextureRegion(textureAtlas_ms.findRegion("menu game 2"));
-        tr_menu_game_3 = new TextureRegion(textureAtlas_ms.findRegion("menu game 3"));
-        tr_menu_game_4 = new TextureRegion(textureAtlas_ms.findRegion("menu game 4"));
+        tr_menu_fon = new TextureRegion(textureAtlas.findRegion("menu fon"));
+        tr_menu_game_1 = new TextureRegion(textureAtlas.findRegion("menu game 1"));
+        tr_menu_game_2 = new TextureRegion(textureAtlas.findRegion("menu game 2"));
+        tr_menu_game_3 = new TextureRegion(textureAtlas.findRegion("menu game 3"));
+        tr_menu_game_4 = new TextureRegion(textureAtlas.findRegion("menu game 4"));
+        tr_coin = new TextureRegion(textureAtlas.findRegion("coin"));
         //  tr_level_text = new TextureRegion(textureAtlas_ss.findRegion("level text"));
 
         texture_menu_fon = new Texture("texture/menu fon hd.png");
@@ -93,7 +94,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         skin = new Skin();
-        skin.addRegions(textureAtlas_ms);
+        skin.addRegions(textureAtlas);
         text_to_button = new BitmapFont();
 
         textButton();
@@ -138,6 +139,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
         spriteBatch.begin();
         spriteBatch.draw(texture_menu_fon, 0, 0, screen_width, screen_height);
+        spriteBatch.draw(tr_coin, tr_coin_x, tr_coin_y, tr_coin_width, tr_coin_height);
         spriteBatch.draw(tr_menu_game_1, tr_menu_game_1_x, tr_menu_game_1_y, width_tr_game_1, height_tr_game_1);
         spriteBatch.draw(tr_menu_game_2, tr_menu_game_2_x, tr_menu_game_2_y, width_tr_game_2, height_tr_game_2);
         spriteBatch.draw(tr_menu_game_3, tr_menu_game_3_x, tr_menu_game_3_y, width_tr_game_3, height_tr_game_3);
@@ -171,7 +173,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     @Override
     public void dispose() {
-        textureAtlas_ms.dispose();
+        textureAtlas.dispose();
         skin.dispose();
         text_to_button.dispose();
         stage.dispose();
@@ -186,6 +188,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         height_btn_setting = 110;
         width_btn_exit = 110;
         height_btn_exit = 110;
+        tr_coin_width = 50;
+        tr_coin_height = 50;
 
         btn_setting_x = screen_width - 20 - width_btn_setting;
         btn_exit_x = 20;
@@ -214,6 +218,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_play_2_x = tr_menu_game_2_x + (width_tr_game_2 / 2) - (width_btn_play / 2);
         btn_play_3_x = tr_menu_game_3_x + (width_tr_game_3 / 2) - (width_btn_play / 2);
         btn_play_4_x = tr_menu_game_4_x + (width_tr_game_4 / 2) - (width_btn_play / 2);
+        tr_coin_x = 30;
 
         tr_menu_game_1_y = 300;
         tr_menu_game_2_y = 300;
@@ -223,6 +228,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_play_2_y = tr_menu_game_2_y + (height_tr_game_2 / 2) - (width_btn_play / 2) - 25;
         btn_play_3_y = tr_menu_game_3_y + (height_tr_game_3 / 2) - (width_btn_play / 2) - 25;
         btn_play_4_y = tr_menu_game_4_y + (height_tr_game_4 / 2) - (width_btn_play / 2) - 25;
+        tr_coin_y = 1200;
     }
 
     void variables_game(float velocityX) {
