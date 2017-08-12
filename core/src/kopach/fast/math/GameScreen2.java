@@ -281,6 +281,18 @@ public class GameScreen2 implements Screen{
         text_left_znak_y = 1000;
         text_right_znak_y = text_left_znak_y;
 
+        if (String.valueOf(gameWorld2.getHighScore()).length() == 2){
+            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld2.getHighScore()))/2) - 20;
+        }else if (String.valueOf(gameWorld2.getHighScore()).length() == 3){
+            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld2.getHighScore()))/2) - 27;
+        }
+
+        if (String.valueOf(gameWorld2.getString_score()).length() == 2){
+            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld2.getHighScore()))/2) - 20;
+        }else if (String.valueOf(gameWorld2.getString_score()).length() == 3){
+            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld2.getHighScore()))/2) - 27;
+        }
+
     }
 
 
@@ -382,6 +394,7 @@ public class GameScreen2 implements Screen{
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                myGameClass.setScreen(new MenuScreen(myGameClass));
                 // Gdx.input.setInputProcessor(stage);
             }
         });

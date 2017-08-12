@@ -94,6 +94,8 @@ public class GameScreen1 extends Stage implements Screen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        update_variables();
+
         gameWorld1.timer_game(delta);
 
         if (gameWorld1.bool_timer_wait_start) {
@@ -301,8 +303,8 @@ public class GameScreen1 extends Stage implements Screen {
         btn_replay_x = screen_width/2 - btn_replay_width/2;
         btn_function_x = btn_replay_x + btn_replay_width + 70;
         btn_back_x = btn_replay_x - 70 - btn_back_width;
-        replay_score_value_x = screen_width/2 - 35;
-        replay_best_score_value_x = screen_width/2 - 35;
+        replay_score_value_x = screen_width/2 - 30;
+        replay_best_score_value_x = screen_width/2 - 30;
 
         best_score_text_y = screen_height - 40;
         best_score_value_y = best_score_text_y + 4;
@@ -329,6 +331,21 @@ public class GameScreen1 extends Stage implements Screen {
         btn_4 = drawButton("btn krug press", 4);
         btn_5 = drawButton("btn krug press", 5);
         btn_6 = drawButton("btn krug press", 6);
+
+    }
+
+    void update_variables(){
+        if (String.valueOf(gameWorld1.getHighScore_game()).length() == 2){
+            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld1.getHighScore_game()))/2) - 20;
+        }else if (String.valueOf(gameWorld1.getHighScore_game()).length() == 3){
+            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld1.getHighScore_game()))/2) - 27;
+        }
+
+        if (String.valueOf(gameWorld1.getString_score()).length() == 2){
+            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld1.getHighScore_game()))/2) - 20;
+        }else if (String.valueOf(gameWorld1.getString_score()).length() == 3){
+            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld1.getHighScore_game()))/2) - 27;
+        }
 
     }
 
@@ -425,6 +442,7 @@ public class GameScreen1 extends Stage implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                myGameClass.setScreen(new MenuScreen(myGameClass));
                 // Gdx.input.setInputProcessor(stage);
             }
         });

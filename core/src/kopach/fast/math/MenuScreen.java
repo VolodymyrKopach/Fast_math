@@ -28,6 +28,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuScreen implements Screen, GestureDetector.GestureListener {
     MyGameClass myGameClass;
+    MenuWorld menuWorld;
     Sound clickSound;
 
     public TextureAtlas textureAtlas_ms;
@@ -60,6 +61,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     public MenuScreen(MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
+        menuWorld = new MenuWorld();
+
         variables();
 
         Gdx.input.setCatchBackKey(true);
@@ -117,7 +120,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         if (bool_action_swipe){
             action_swipe(string_to_swipe_game, 40, 10, 10);
             stabilization_of_variables();
-            // Gdx.app.log("","render");
+           // Gdx.app.log("","render");
         }
 
 
@@ -130,7 +133,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         }
 
 
-        // orthographicCamera.update();
+       // orthographicCamera.update();
         spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
         spriteBatch.begin();
@@ -259,12 +262,12 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
         if (string_to_swipe_game.equals("left")){
             tr_menu_game_1_x -= velocity;
-            if (tr_menu_game_1_x > 1000){
-                tr_menu_game_1_x = 1000;
+            if (tr_menu_game_1_x < -1280){
+                tr_menu_game_1_x = -1280;
                 bool_action_swipe = false;
             }else stop_action(velocity);
 
-            if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 700){
+           /* if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 700){
                 width_tr_game_1 += width_plus;
                 height_tr_game_1 += height_plus;
             }else if (tr_menu_game_2_x > 580 && tr_menu_game_2_x < 700){
@@ -290,15 +293,15 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             }else if (tr_menu_game_4_x+width_tr_game_4 > 20 && tr_menu_game_4_x+width_tr_game_4 < 150){
                 width_tr_game_4 -= width_plus;
                 height_tr_game_4 -= height_plus;
-            }
-        }else if (string_to_swipe_game.equals("right")){
+            }  */
+        }else if (string_to_swipe_game.equals("right")) {
             tr_menu_game_1_x += velocity;
-            if (tr_menu_game_1_x > 200){
-                tr_menu_game_1_x = 200;
+            if (tr_menu_game_1_x > 160) {
+                tr_menu_game_1_x = 160;
                 bool_action_swipe = false;
-            }else stop_action(velocity);
+            } else stop_action(velocity);
 
-            if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 700){
+          /*  if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 700){
                 width_tr_game_1 -= width_plus;
                 height_tr_game_1 -= height_plus;
             }else if (tr_menu_game_2_x > 580 && tr_menu_game_2_x < 700){
@@ -324,8 +327,10 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             }else if (tr_menu_game_4_x+width_tr_game_4 > 20 && tr_menu_game_4_x+width_tr_game_4 < 150){
                 width_tr_game_4 += width_plus;
                 height_tr_game_4 += height_plus;
-            }
+            } */
         }
+
+        Gdx.app.log("", tr_menu_game_1_x + " ");
 
 
 
@@ -346,7 +351,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
     }
 
     public void textButton() {
-        //  Gdx.app.log("log", "text button level");
+      //  Gdx.app.log("log", "text button level");
         btn_play_style = new TextButton.TextButtonStyle();
         btn_play_style.up = skin.getDrawable("btn play");
         btn_play_style.down = skin.getDrawable("btn play press");
@@ -504,7 +509,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
-        // Gdx.app.log("","fling" + " velocityX:" + velocityX + " velocityY:"+ velocityY+" button:"+button);
+       // Gdx.app.log("","fling" + " velocityX:" + velocityX + " velocityY:"+ velocityY+" button:"+button);
         variables_game(velocityX);
         return true;
     }
