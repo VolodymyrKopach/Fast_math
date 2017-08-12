@@ -28,7 +28,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuScreen implements Screen, GestureDetector.GestureListener {
     MyGameClass myGameClass;
-    MenuWorld menuWorld;
     Sound clickSound;
 
     public TextureAtlas textureAtlas_ms;
@@ -61,8 +60,6 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     public MenuScreen(MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
-        menuWorld = new MenuWorld();
-
         variables();
 
         Gdx.input.setCatchBackKey(true);
@@ -120,7 +117,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         if (bool_action_swipe){
             action_swipe(string_to_swipe_game, 40, 10, 10);
             stabilization_of_variables();
-           // Gdx.app.log("","render");
+            // Gdx.app.log("","render");
         }
 
 
@@ -133,7 +130,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         }
 
 
-       // orthographicCamera.update();
+        // orthographicCamera.update();
         spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
         spriteBatch.begin();
@@ -298,7 +295,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             tr_menu_game_1_x += velocity;
             if (tr_menu_game_1_x > 200){
                 tr_menu_game_1_x = 200;
-            bool_action_swipe = false;
+                bool_action_swipe = false;
             }else stop_action(velocity);
 
             if (tr_menu_game_1_x > 580 && tr_menu_game_1_x < 700){
@@ -349,7 +346,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
     }
 
     public void textButton() {
-      //  Gdx.app.log("log", "text button level");
+        //  Gdx.app.log("log", "text button level");
         btn_play_style = new TextButton.TextButtonStyle();
         btn_play_style.up = skin.getDrawable("btn play");
         btn_play_style.down = skin.getDrawable("btn play press");
@@ -507,7 +504,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
-       // Gdx.app.log("","fling" + " velocityX:" + velocityX + " velocityY:"+ velocityY+" button:"+button);
+        // Gdx.app.log("","fling" + " velocityX:" + velocityX + " velocityY:"+ velocityY+" button:"+button);
         variables_game(velocityX);
         return true;
     }

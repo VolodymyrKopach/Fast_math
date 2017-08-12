@@ -3,6 +3,7 @@ package kopach.fast.math;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -36,14 +38,18 @@ public class GameScreen implements Screen {
     public Stage stage, stage_replay;
 
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0,
-            btn_answer, btn_C, btn_minus, btn_replay;
+            btn_C, btn_minus, btn_replay;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont text_pryklad, text_score, text_best_score, text_time;
+    BitmapFont  text_score, text_best_score, text_time;
     SpriteBatch spriteBatch;
     Texture cup, icon;
+    final String font_chars = "абвгдежзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕ" +
+            "ЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
 
     int num_of_char;
+
+    BitmapFont mainFont,answerFont;
 
     //цей прапор служить для перевірки, щоб завжди було тільки одне видалення
     public boolean bool_replay;
@@ -85,6 +91,8 @@ public class GameScreen implements Screen {
         stage_replay = new Stage(viewport);
         stage = new Stage(viewport);
 
+        mainFont = createFont(Color.BLACK);
+        answerFont = createFont(Color.WHITE);
         Gdx.input.setInputProcessor(stage);
 
 
@@ -100,6 +108,17 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
 
+    }
+
+    public BitmapFont createFont(Color color) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("bitmapfont/font.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.characters = font_chars;
+        parameter.size = 84;
+        parameter.color = color;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+        return font;
     }
 
     @Override
@@ -125,8 +144,8 @@ public class GameScreen implements Screen {
 
         spriteBatch.draw(cup, 50, icon_y);
         spriteBatch.draw(icon, screen_width - 160, icon_y);
-        text_pryklad.draw(spriteBatch, gameWorld.getString_to_screen(), text_pryklad_x, text_pryklad_y);
-        text_pryklad.draw(spriteBatch, gameWorld.getString_input(), text_pryklad_x + 20 + getTextWidth(text_pryklad, gameWorld.getString_to_screen()), text_pryklad_y);
+        mainFont.draw(spriteBatch, gameWorld.getString_to_screen(), text_pryklad_x, text_pryklad_y);
+        mainFont.draw(spriteBatch, gameWorld.getString_input(), text_pryklad_x + 20 + Utill.getTextWidth(mainFont, gameWorld.getString_to_screen()), text_pryklad_y);
         text_score.draw(spriteBatch, String.valueOf(myScore), text_score_x, text_score_y - 20);
         text_time.draw(spriteBatch, gameWorld.getInt_timer() + "", text_time_x, text_time_y);
         spriteBatch.draw(tr_left_border, tr_left_border_x, tr_left_border_y, tr_left_border_width, tr_left_border_height);
@@ -147,10 +166,6 @@ public class GameScreen implements Screen {
         }
 
 
-    }
-
-    float getTextWidth(BitmapFont font, String text) {
-        return new GlyphLayout(font, text).width;
     }
 
     @Override
@@ -182,7 +197,7 @@ public class GameScreen implements Screen {
         icon.dispose();
         cup.dispose();
         text_to_button.dispose();
-        text_pryklad.dispose();
+        mainFont.dispose();
         text_score.dispose();
         text_best_score.dispose();
         text_time.dispose();
@@ -190,12 +205,9 @@ public class GameScreen implements Screen {
     }
 
     public void variables() {
-
-        text_pryklad = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
         text_score = new BitmapFont(Gdx.files.internal("bitmapfont/text.fnt"), Gdx.files.internal("bitmapfont/text.png"), false);
         text_best_score = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
         text_time = new BitmapFont(Gdx.files.internal("bitmapfont/game text time.fnt"), Gdx.files.internal("bitmapfont/game text time.png"), false);
-        text_pryklad.getData().setScale(1.4f, 1.4f);
         text_score.getData().setScale(0.5f, 0.5f);
         text_best_score.getData().setScale(0.6f, 0.6f);
         text_time.getData().setScale(1.3f, 1.3f);
@@ -306,7 +318,12 @@ public class GameScreen implements Screen {
 
         //остання цифра в методі CreateButton це цифра яку ми будемо додаватив текстове поле,
         // якщо -1 то не додаємо нічого
-        btn_answer = createButton("btn answer press", "btn answer", -1, " ");
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        style.up = skin.getDrawable("btn answer");
+        style.down = skin.getDrawable("btn answer press");
+        style.font = answerFont;
+        TextButton btn_answer = new TextButton(" ", style);
+        stage.addActor(btn_answer);
         btn_answer.setPosition(btn_answer_x, btn_answer_y);
         btn_answer.setSize(width_btn, height_btn);
         btn_answer.addListener(new InputListener() {
@@ -400,7 +417,7 @@ public class GameScreen implements Screen {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable(drawableUp);
         style.down = skin.getDrawable(drawableDown);
-        style.font = text_pryklad;
+        style.font = mainFont;
         TextButton textButton = new TextButton(text_to_number, style);
         textButton.setPosition(getButtonX(number), getButtonY(number));
         stage.addActor(textButton);
@@ -470,7 +487,7 @@ public class GameScreen implements Screen {
 
     //Вираховує скільки символів може вміститися без зсуву
     void calculateCharCount() {
-        float size_to_answer = btn_C_x - 40 - 50 - getTextWidth(text_pryklad, gameWorld.getString_to_screen());
-        num_of_char = (int) (size_to_answer / getTextWidth(text_pryklad, "8"));
+        float size_to_answer = btn_C_x - 40 - 50 - Utill.getTextWidth(mainFont, gameWorld.getString_to_screen());
+        num_of_char = (int) (size_to_answer / Utill.getTextWidth(mainFont, "8"));
     }
 }

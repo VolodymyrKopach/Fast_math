@@ -17,7 +17,7 @@ public class GameWorld3 {
 
     public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
 
-    public float float_timer = 20, float_timer_wait = 0.5f;
+    public float float_timer = 60, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
 
     public boolean  bool_timer_wait_start = false; // колит нажав на відповідь, і відповідь правильна, то чекає пів секунди і потім виводить новий приклад
@@ -82,8 +82,8 @@ public class GameWorld3 {
         if (int_timer == 0) {
             // що відбудеться коли закінчиться час
             listener.time_tick();
-            int_timer = 20;
-            float_timer = 20;
+            int_timer = 60;
+            float_timer = 60;
         } else {
             string_timer_game = int_timer + "";
         }

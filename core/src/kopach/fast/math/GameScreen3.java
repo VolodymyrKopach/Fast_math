@@ -90,7 +90,7 @@ public class GameScreen3 implements Screen {
             num_of_btn = 24;
         }
         variables();
-        gameWorld3 = new GameWorld3(this,new Listener(){
+        gameWorld3 = new GameWorld3(this, new Listener() {
             @Override
             void time_tick() {
                 createGame();
@@ -163,7 +163,7 @@ public class GameScreen3 implements Screen {
         spriteBatch.draw(icon, screen_width - 160, screen_height - 104);
 
         text_score.draw(spriteBatch, myScore + "", text_score_x, text_score_y);
-        text_time.draw(spriteBatch, gameWorld3.getTimer_game(), screen_width / 2, text_text_ne_prav_vidp_y);
+        text_time.draw(spriteBatch, gameWorld3.getTimer_game(), (screen_width / 2) - Utill.getTextWidth(text_time, gameWorld3.getTimer_game()) / 2, text_text_ne_prav_vidp_y);
         text_best_score.draw(spriteBatch, bestScore + "", text_best_score_x, text_score_y);
 
 
