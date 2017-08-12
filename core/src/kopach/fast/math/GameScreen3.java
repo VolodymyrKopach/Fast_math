@@ -37,6 +37,7 @@ public class GameScreen3 implements Screen {
     ArrayList<Integer> valuesForCheck;//використовуємо цей аррей для перевірки чи вибрана кнопка є правильною
 
     int trueAnswer;
+    int money;
 
     public TextureAtlas textureAtlas_vg;
     public TextureRegion tr_fon, tr_X, tr_propusk;
@@ -69,7 +70,6 @@ public class GameScreen3 implements Screen {
         stage = new Stage(viewport);
         stage.clear();
         Gdx.input.setInputProcessor(stage);
-        //TODO постав тут цифри 1-3 і запусти
         level = 3;
 
         cup = new Texture("cup_white.png");
@@ -104,8 +104,8 @@ public class GameScreen3 implements Screen {
         tr_propusk = new TextureRegion(textureAtlas_vg.findRegion("znak pytanya"));
         text_to_button = new BitmapFont();
         //  myGameClass.bannerAdShow();
-        Gdx.app.log("tag", "constructor");
         text_best_score_x = 124;
+        money = MyPreference.getMoney();
     }
 
     //генеруємо нову гру
@@ -339,7 +339,10 @@ public class GameScreen3 implements Screen {
         if (trueAnswer == num_of_btn) {
             //kінець гри, всі кнопки вибрано правильно
             drawAllButtonInOneColor("btn krug green");
+
+            //TODO якщо вибрана правильна відповідь, збільшуємо score  перевіряємо рахунок для нарахування монет
             ++myScore;
+            calculateMoney();
             if (myScore > bestScore) {
                 bestScore = myScore;
                 MyPreference.setBSGame4(myScore);
@@ -374,6 +377,25 @@ public class GameScreen3 implements Screen {
                 textButtons[i].getStyle().down = skin.getDrawable("btn krug green");
                 break;
             }
+        }
+    }
+
+    //нараховуємо кошти
+    private void calculateMoney() {
+        switch (myScore) {
+            case 5:
+                money += 5;
+                //зберігаємо к-ть монет в преференс
+                MyPreference.setMoney(money);
+                break;
+            case 10:
+                money += 15;
+                MyPreference.setMoney(money);
+                break;
+            case 20:
+                money += 30;
+                MyPreference.setMoney(money);
+                break;
         }
     }
 }

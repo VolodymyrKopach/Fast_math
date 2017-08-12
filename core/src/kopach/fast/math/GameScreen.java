@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -41,7 +40,7 @@ public class GameScreen implements Screen {
             btn_C, btn_minus, btn_replay;
     Skin skin;
     BitmapFont text_to_button;
-    BitmapFont  text_score, text_best_score, text_time;
+    BitmapFont text_score, text_best_score, text_time;
     SpriteBatch spriteBatch;
     Texture cup, icon;
     final String font_chars = "абвгдежзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕ" +
@@ -49,7 +48,7 @@ public class GameScreen implements Screen {
 
     int num_of_char;
 
-    BitmapFont mainFont,answerFont;
+    BitmapFont mainFont, answerFont;
 
     //цей прапор служить для перевірки, щоб завжди було тільки одне видалення
     public boolean bool_replay;
@@ -62,6 +61,9 @@ public class GameScreen implements Screen {
     float text_text_best_score_x, text_best_score_x, text_best_score_y, text_score_x, text_score_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_time_x, text_time_y;
     float btn_replay_x, btn_replay_y, width_btn_replay, height_btn_replay;
     float icon_y;
+
+    int money;
+
 
     int bestScore, myScore;
 
@@ -102,6 +104,8 @@ public class GameScreen implements Screen {
 
         textButton();
         calculateCharCount();
+
+        money = MyPreference.getMoney();
         //  myGameClass.bannerAdShow();
     }
 
@@ -154,17 +158,14 @@ public class GameScreen implements Screen {
         if (bool_replay) {
             spriteBatch.draw(tr_screen_replay, 0, 0, screen_width, screen_height);
         }
-
         spriteBatch.end();
 
         if (bool_replay) {
             btn_replay();
-
         } else {
             stage.act(delta);
             stage.draw();
         }
-
 
     }
 
@@ -471,6 +472,8 @@ public class GameScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 gameWorld.float_timer = 15;
+                myScore = 0;
+                cup = new Texture("cup_white.png");
                 gameWorld.buildGame();
                 bool_replay = false;
                 Gdx.input.setInputProcessor(stage);

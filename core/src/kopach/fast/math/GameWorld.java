@@ -21,8 +21,11 @@ public class GameWorld {
     public Preferences preferences_game1;
 
     public float float_timer = 15;
+    //TODO переробити
     int int_timer = 2;  //любе число, головне >0
     int bestScore;
+
+    int money;
 
     public GameWorld() {
 
@@ -30,19 +33,42 @@ public class GameWorld {
         string_input = "";
         bestScore = getBestScore();
         buildGame();
+        money = MyPreference.getMoney();
     }
 
     public boolean checkIsAnswerTrue() {
         if (string_input.equals(String.valueOf(int_result))) {
             ++int_score;
             float_timer = 15;
-
+            calculateMoney();
             buildGame();
             string_input = "";
             return true;
         } else {
             Gdx.app.log("tag", "Answer Wrong");
             return false;
+        }
+    }
+
+    private void calculateMoney() {
+        switch (int_score){
+            case 10:
+                money+=5;
+                //зберігаємо к-ть монет в преференс
+                MyPreference.setMoney(money);
+                break;
+            case 20:
+                money+=10;
+                MyPreference.setMoney(money);
+                break;
+            case 50:
+                money+=20;
+                MyPreference.setMoney(money);
+                break;
+            case 100:
+                money+=50;
+                MyPreference.setMoney(money);
+                break;
         }
     }
 
@@ -114,4 +140,3 @@ public class GameWorld {
         }
     }
 }
-//308

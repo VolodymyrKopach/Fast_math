@@ -16,7 +16,7 @@ public class MyPreference {
 
     public static int getMoney() {
         checkPref();
-        return preferences.getInteger("money");
+        return preferences.getInteger("money",0);
     }
 
     public static void setMoney(int money) {

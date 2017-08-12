@@ -9,5 +9,7 @@ public interface AdsController {
     public void showBannerAd();
     public void hideBannerAd();
 
+    public void writeEmailToFirebase(String email);
+
     public void showInterstitial(Runnable then);
 }

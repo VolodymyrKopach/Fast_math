@@ -13,6 +13,9 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import kopach.fast.math.AdsController;
 import kopach.fast.math.MyGameClass;
@@ -46,6 +49,15 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
         setContentView(relativeLayout);
     }
 
+    @Override
+    public void writeEmailToFirebase(String email) {
+        FirebaseApp.initializeApp(this);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+    }
+
     public void setupAds() {
         bannerAd = new AdView(this);
         bannerAd.setVisibility(View.INVISIBLE);
@@ -73,6 +85,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
             }
         });
     }
+
 
     @Override
     public void hideBannerAd() {

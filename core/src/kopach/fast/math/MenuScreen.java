@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -28,7 +30,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuScreen implements Screen, GestureDetector.GestureListener {
     MyGameClass myGameClass;
-    MenuWorld menuWorld;
     Sound clickSound;
 
     public TextureAtlas textureAtlas;
@@ -59,9 +60,13 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     String string_to_swipe_game;
 
+    final String font_chars = "абвгдежзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕ" +
+            "ЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
+
+    BitmapFont coinFont;
+
     public MenuScreen(MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
-        menuWorld = new MenuWorld();
 
         variables();
 
@@ -100,8 +105,21 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         textButton();
         clickSound = Gdx.audio.newSound(Gdx.files.internal("audio/clickSound.mp3"));
         //  myGameClass.bannerAdShow();
-    }
 
+        coinFont = createFont(Color.ORANGE);
+        Gdx.app.log("tag",MyPreference.getMoney()+"money");
+
+    }
+    public BitmapFont createFont(Color color) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("bitmapfont/font.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.characters = font_chars;
+        parameter.size = 48;
+        parameter.color = color;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+        return font;
+    }
 
     @Override
     public void show() {
@@ -139,6 +157,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
         spriteBatch.begin();
         spriteBatch.draw(texture_menu_fon, 0, 0, screen_width, screen_height);
+        coinFont.draw(spriteBatch,String.valueOf(MyPreference.getMoney()),100,screen_height-35);
         spriteBatch.draw(tr_coin, tr_coin_x, tr_coin_y, tr_coin_width, tr_coin_height);
         spriteBatch.draw(tr_menu_game_1, tr_menu_game_1_x, tr_menu_game_1_y, width_tr_game_1, height_tr_game_1);
         spriteBatch.draw(tr_menu_game_2, tr_menu_game_2_x, tr_menu_game_2_y, width_tr_game_2, height_tr_game_2);
