@@ -24,7 +24,7 @@ public class GameWorld2 {
     public float float_timer = 15, float_timer_wait = 0.5f;;
     int int_timer = 2;  //любе число, головне >0
 
-    public boolean boolean_X, boolean_text_button, bool_input, bool_timer_wait_answer_right, bool_timer_wait_answer_wrong, bool_replay;
+    public boolean bool_timer_game, boolean_text_button, bool_input, bool_timer_wait_answer_right, bool_timer_wait_answer_wrong, bool_replay;
 
     String string_left_znak = "", string_right_znak = "";
 
@@ -41,6 +41,7 @@ public class GameWorld2 {
     public void startGame() {
         Gdx.app.log("GameWorld2", "запуск гри");
 
+        bool_timer_game = true;
         boolean_text_button = false;
         game();
     }
@@ -182,13 +183,12 @@ public class GameWorld2 {
     }
 
     private void correctAnswer() { //викликаєтьсчя після того, як ти вибрав правильну відповідь
-        boolean_X = false;
         boolean_text_button = true;
         int_score++;
         setString_score(String.valueOf(int_score));
         float_timer = 15;
         gameScreen2.input_znak_font = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
-      //  gameScreen2.text_input_znak.getData().setScale(3.6f, 3.6f);
+        gameScreen2.input_znak_font.getData().setScale(2.2f, 2.2f);
         gameScreen2.text_input_znak_x = gameScreen2.screen_width/2 - gameScreen2.getTextWidth(gameScreen2.input_znak_font, getString_input())/2;
 
         bool_timer_wait_answer_right = true;
@@ -196,8 +196,10 @@ public class GameWorld2 {
 
     private void incorrectAnswer(){
         gameScreen2.input_znak_font = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
-      //  gameScreen2.text_input_znak.getData().setScale(3.1f, 3.1f);
+        gameScreen2.input_znak_font.getData().setScale(2f, 2f);
         gameScreen2.text_input_znak_x = gameScreen2.screen_width/2 - gameScreen2.getTextWidth(gameScreen2.input_znak_font, getString_input())/2;
+
+        bool_timer_game = false;
 
         bool_timer_wait_answer_wrong = true;
         gameScreen2.bool_draw_replay_btn = true;
@@ -301,21 +303,11 @@ public class GameWorld2 {
         float_timer -= dt;
 
         int_timer = (int) float_timer;
-
         string_timer = int_timer + "";
     }
 
     public String getString_timer() {
         return string_timer;
-    }
-
-
-    public boolean getBoolean_X() {
-        return boolean_X;
-    }
-
-    public boolean getBoolean_text_button() {
-        return boolean_text_button;
     }
 
     public void timer_wait_answer_right(float dt) {

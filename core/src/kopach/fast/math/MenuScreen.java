@@ -33,9 +33,9 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
     Sound clickSound;
 
     public TextureAtlas textureAtlas;
-    public TextureRegion tr_menu_fon, tr_menu_game_1, tr_menu_game_2, tr_menu_game_3, tr_menu_game_4, tr_coin;
-    public TextButton btn_play_1, btn_play_2, btn_play_3, btn_play_4, btn_setting, btn_exit;
-    public TextButton.TextButtonStyle btn_play_style, btn_setting_style, btn_exit_style;
+    public TextureRegion tr_menu_fon, tr_menu_blocked_game, tr_menu_game_1, tr_menu_game_2, tr_menu_game_3, tr_menu_game_4, tr_coin;
+    public TextButton btn_play_1, btn_play_2, btn_play_3, btn_play_4, btn_setting, btn_exit, btn_coin;
+    public TextButton.TextButtonStyle btn_play_style, btn_setting_style, btn_exit_style, btn_coin_style;
     Skin skin;
     BitmapFont text_to_button;
 
@@ -51,8 +51,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     float screen_width = 720, screen_height = 1280;
     public float width_vidtstan, height_vidstan;
-    public float width_tr_game_1, height_tr_game_1, width_tr_game_2, height_tr_game_2, width_tr_game_3, height_tr_game_3, width_tr_game_4, height_tr_game_4, width_btn_play, height_btn_play, width_btn_setting, height_btn_setting, width_btn_exit, height_btn_exit, tr_coin_width, tr_coin_height, width_tr_level_text, height_tr_text;
-    public float btn_play_1_x, btn_play_1_y, btn_play_2_x, btn_play_2_y, btn_play_3_x, btn_play_3_y, btn_play_4_x, btn_play_4_y, btn_setting_x, btn_setting_y, btn_exit_x, btn_exit_y, tr_menu_game_1_x, tr_menu_game_1_y, tr_menu_game_2_x, tr_menu_game_2_y, tr_menu_game_3_x, tr_menu_game_3_y, tr_menu_game_4_x, tr_menu_game_4_y, tr_coin_x, tr_coin_y;
+    public float btn_coin_width, btn_coin_height, width_tr_game_1, height_tr_game_1, width_tr_game_2, height_tr_game_2, width_tr_game_3, height_tr_game_3, width_tr_game_4, height_tr_game_4, width_btn_play, height_btn_play, width_btn_setting, height_btn_setting, width_btn_exit, height_btn_exit, tr_coin_width, tr_coin_height, width_tr_level_text, height_tr_text;
+    public float btn_coin_x, btn_coin_y, btn_play_1_x, btn_play_1_y, btn_play_2_x, btn_play_2_y, btn_play_3_x, btn_play_3_y, btn_play_4_x, btn_play_4_y, btn_setting_x, btn_setting_y, btn_exit_x, btn_exit_y, tr_menu_game_1_x, tr_menu_game_1_y, tr_menu_game_2_x, tr_menu_game_2_y, tr_menu_game_3_x, tr_menu_game_3_y, tr_menu_game_4_x, tr_menu_game_4_y, tr_coin_x, tr_coin_y;
     float f = 0;
 
     boolean bool_block_game_1 = true; //переміна, яка буде не давати tr_game_1_пересуватись в право
@@ -80,6 +80,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         textureAtlas = new TextureAtlas("texture/TextureAtlas.atlas");
 
         tr_menu_fon = new TextureRegion(textureAtlas.findRegion("menu fon"));
+        tr_menu_blocked_game = new TextureRegion(textureAtlas.findRegion("blocked game"));
         tr_menu_game_1 = new TextureRegion(textureAtlas.findRegion("menu game 1"));
         tr_menu_game_2 = new TextureRegion(textureAtlas.findRegion("menu game 2"));
         tr_menu_game_3 = new TextureRegion(textureAtlas.findRegion("menu game 3"));
@@ -163,7 +164,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         spriteBatch.draw(tr_menu_game_2, tr_menu_game_2_x, tr_menu_game_2_y, width_tr_game_2, height_tr_game_2);
         spriteBatch.draw(tr_menu_game_3, tr_menu_game_3_x, tr_menu_game_3_y, width_tr_game_3, height_tr_game_3);
         spriteBatch.draw(tr_menu_game_4, tr_menu_game_4_x, tr_menu_game_4_y, width_tr_game_4, height_tr_game_4);
-        //  myGameClass.spriteBatch.draw(tr_level_text, tr_level_text_x, tr_level_text_y, width_tr_level_text, height_tr_text);
+        spriteBatch.draw(tr_menu_blocked_game, tr_menu_game_3_x, tr_menu_game_3_y, width_tr_game_3, height_tr_game_3);
+        spriteBatch.draw(tr_menu_blocked_game, tr_menu_game_4_x, tr_menu_game_4_y, width_tr_game_4, height_tr_game_4);
         spriteBatch.end();
 
         stage.act(delta);
@@ -207,14 +209,18 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         height_btn_setting = 110;
         width_btn_exit = 110;
         height_btn_exit = 110;
+        btn_coin_width = 110;
+        btn_coin_height = 110;
         tr_coin_width = 50;
         tr_coin_height = 50;
 
         btn_setting_x = screen_width - 20 - width_btn_setting;
         btn_exit_x = 20;
+        btn_coin_x = 450;
 
         btn_setting_y = 20;
         btn_exit_y = 20;
+        btn_coin_y = 20;
 
 
         width_tr_game_1 = 400;
@@ -509,11 +515,30 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 Gdx.app.exit();
-
-                Gdx.input.setInputProcessor(inputMultiplexer);
             }
         });
         stage.addActor(btn_exit);
+
+        btn_coin_style = new TextButton.TextButtonStyle();
+        btn_coin_style.up = skin.getDrawable("btn coin");
+        btn_coin_style.down = skin.getDrawable("btn coin press");
+        btn_coin_style.font = text_to_button;
+        btn_coin = new TextButton(" ", btn_coin_style);
+        btn_coin.setSize(btn_coin_width, btn_coin_height);
+        btn_coin.setPosition(btn_coin_x, btn_coin_y);
+        btn_coin.addListener(new InputListener() {
+            @Override
+             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                Gdx.input.setInputProcessor(stage);
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+            }
+        });
+        stage.addActor(btn_coin);
     }
 
 

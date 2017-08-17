@@ -25,7 +25,7 @@ public class GameWorld1 {
     int int_timer = 2;  //любе число, головне >0
     public int int_pryklad_position_1_x;
 
-    public boolean bool_answer_right, bool_timer_wait_start, bool_replay;
+    public boolean bool_answer_right, bool_timer_game, bool_timer_wait_start, bool_replay, bool_timer_wait_answer_wrong, bool_timer_wait_answer_right;
 
     String string_znak = "", string_propusk_in_pryklad = "";
     public int int_btn_1, int_btn_2, int_btn_3, int_btn_4, int_btn_5, int_btn_6;
@@ -56,14 +56,15 @@ public class GameWorld1 {
     public void startGame() {
         game();
         int_score = 0;
-
-        string_input = "";
     }
 
 
     public void game() {
 
         setDifficulti();
+
+        bool_timer_game = true;
+        string_input = "";
 
         int prykladrandom = new Random().nextInt(2);
         int_number_1 = new Random().nextInt(int_max_plus - int_min_plus + 1) + int_min_plus;
@@ -113,7 +114,7 @@ public class GameWorld1 {
 
         setString_score(String.valueOf(int_score));
 
-        int int_pryklad_random = new Random().nextInt(3) + 1;
+        int int_pryklad_random = 2;//new Random().nextInt(3) + 1;
         int int_true_value = new Random().nextInt(6) + 1;   // рандомний вибір, якій переміній з 6 буде присвоєно правильну відповідь
 
         switch (int_pryklad_random) {
@@ -227,13 +228,16 @@ public class GameWorld1 {
         int_score++;
         float_timer = 15;
 
+        bool_timer_wait_answer_right = true;
+
         setHighScore_game(int_score);
     }
 
     public void answer_wrong() {
         bool_answer_right = false;
-        bool_replay = true;
         gameScreen1.bool_draw_replay_btn = true;
+        bool_timer_wait_answer_wrong = true;
+        bool_timer_game = false;
     }
 
 
@@ -363,15 +367,25 @@ public class GameWorld1 {
         return string_timer_game;
     }
 
-    public void timer_wait(float dt) {
+    public void timer_wait_answer_right(float dt) {
         float_timer_wait -= dt;
-
-        Gdx.app.log(" ", float_timer_wait + "");
 
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
-            bool_timer_wait_start = false;
+            bool_timer_wait_answer_right = false;
+            game();
+        }
+    }
+
+    public void timer_wait_answer_wrong(float dt) {
+        float_timer_wait -= dt;
+
+        if (float_timer_wait < 0) {
+            float_timer_wait = 0.5f;
+            bool_timer_wait_answer_wrong = false;
+            bool_replay = true;
             startGame();
+
         }
     }
 

@@ -96,7 +96,7 @@ public class GameScreen2 implements Screen{
 
         actionVariablesXY();
 
-        gameWorld2.setString_timer(delta);
+        if (gameWorld2.bool_timer_game){gameWorld2.setString_timer(delta);}
 
         if (gameWorld2.bool_timer_wait_answer_right) {gameWorld2.timer_wait_answer_right(delta);}
         if (gameWorld2.bool_timer_wait_answer_wrong) {gameWorld2.timer_wait_answer_wrong(delta);}
@@ -108,10 +108,6 @@ public class GameScreen2 implements Screen{
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {    //  спрацьовує коли нажато Back
             myGameClass.setScreen(new MenuScreen(myGameClass));
-        }
-
-        if (gameWorld2.getBoolean_X()) {
-            // myGameClass.spriteBatch.draw(tr_X, tr_X_x, tr_X_y,X_width, X_height);
         }
 
         text_score_font.draw(spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
@@ -259,7 +255,7 @@ public class GameScreen2 implements Screen{
         text_time_y = screen_height - 50;
         text_text_score_y = screen_height - 40;
         text_score_y = text_text_score_y + 4;
-        text_input_znak_y = 950;
+        text_input_znak_y = 994;
         tr_screen_replay_y = 10;
         replay_score_value_y = 600;
         replay_best_score_value_y = 760;
