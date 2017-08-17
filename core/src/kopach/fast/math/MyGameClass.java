@@ -2,7 +2,6 @@ package kopach.fast.math;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class MyGameClass extends Game {
 
@@ -21,7 +20,7 @@ public class MyGameClass extends Game {
     }
 
     public void create() {
-        this.setScreen(new MenuScreen(this));
+        this.setScreen(new GameScreen5());
     }
 
     public void render() {
