@@ -192,7 +192,7 @@ public class GameScreen6 extends Stage implements Screen {
         btn_3.setText(String.valueOf(gameWorl6.getString_btn_3()));
         btn_4.setText(String.valueOf(gameWorl6.getString_btn_4()));
         btn_5.setText(String.valueOf(gameWorl6.getString_btn_5()));
-      //  btn_6.setText(String.valueOf(gameWorld.getInt_btn_6()));
+      //  btn_6.setText(String.valueOf(gameWorld1.getInt_btn_6()));
     }
 
     void loadFont() {

@@ -139,7 +139,7 @@ public class GameWorld6 {
 
 
     public void answer(String input_pryklad) {  // метод який виконується коли вибираєш якусь відповідь
-        Gdx.app.log("GameWorld1", "answer");
+        Gdx.app.log("GameWorld2", "answer");
 
         if (input_pryklad.equals(getString_incorrect_pryklad())){
             answer_right();

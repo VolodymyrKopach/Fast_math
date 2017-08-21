@@ -132,15 +132,12 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         Gdx.gl.glClearColor(9, 9, 9, 5);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            Gdx.app.exit();
-        }
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {Gdx.app.exit();}
 
 
         if (bool_action_swipe){
             action_swipe(string_to_swipe_game, 40, 10, 10);
             stabilization_of_variables();
-           // Gdx.app.log("","render");
         }
 
 
@@ -402,7 +399,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-                myGameClass.setScreen(new GameScreen(myGameClass));
+                myGameClass.setScreen(new GameScreen1(myGameClass));
 
                 Gdx.input.setInputProcessor(inputMultiplexer);
 
@@ -424,7 +421,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-                myGameClass.setScreen(new GameScreen1(myGameClass));
+                myGameClass.setScreen(new GameScreen2(myGameClass));
 
                 Gdx.input.setInputProcessor(inputMultiplexer);
             }
@@ -445,7 +442,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-                myGameClass.setScreen(new GameScreen2(myGameClass));
+                myGameClass.setScreen(new GameScreen3(myGameClass));
 
                 Gdx.input.setInputProcessor(inputMultiplexer);
             }
@@ -466,7 +463,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-                myGameClass.setScreen(new GameScreen3(myGameClass));
+                myGameClass.setScreen(new GameScreen4(myGameClass));
 
                 Gdx.input.setInputProcessor(inputMultiplexer);
             }
