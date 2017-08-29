@@ -19,8 +19,6 @@ public class GameWorld3 {
 
     public String string_score = "0", string_timer, string_best_score_this_level;
 
-    public Preferences preferences_game_gw2, preferences_game_score;
-
     public float float_timer = 15, float_timer_wait = 0.5f;;
     int int_timer = 2;  //любе число, головне >0
 
@@ -32,8 +30,6 @@ public class GameWorld3 {
 
     public GameWorld3(GameScreen3 gameScreen3) { // запускаться відразу при запуску класа
         this.gameScreen3 = gameScreen3;
-        preferences_game_gw2 = Gdx.app.getPreferences("My_preferences_game");
-        preferences_game_score = Gdx.app.getPreferences("My_preferences_game_score");
 
         startGame();
     }
@@ -51,7 +47,6 @@ public class GameWorld3 {
         Gdx.app.log("GameWorld3", "game level");
 
         setString_input("");
-        setString_best_score_this_level(String.valueOf(getHighScore()));
 
         setDifficulti();
 
@@ -185,6 +180,7 @@ public class GameWorld3 {
     private void correctAnswer() { //викликаєтьсчя після того, як ти вибрав правильну відповідь
         boolean_text_button = true;
         int_score++;
+        setHighScore_game(int_score);
         setString_score(String.valueOf(int_score));
         float_timer = 15;
         gameScreen3.input_znak_font = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
@@ -207,11 +203,11 @@ public class GameWorld3 {
     }
 
 
-    public void answer(String answer) {  // метод який виконується коли вибираєш якусь відповідь
-        string_input = answer;
+    public void answer(String input_answer) {  // метод який виконується коли вибираєш якусь відповідь
+        string_input = input_answer;
         bool_input = true;
 
-        if(answer.equals(getString_answer())){
+        if(input_answer.equals(getString_answer())){
             correctAnswer();
         }else {
             incorrectAnswer();
@@ -248,16 +244,10 @@ public class GameWorld3 {
 
     public String getString_right_znak() {return string_right_znak;}
 
-    public void setHighScore(int int_score_easy_to_save) {
-        if (int_score_easy_to_save > getHighScore()) {
-            preferences_game_score.putInteger("save_int_score", int_score_easy_to_save);
-            preferences_game_score.flush();
+    public void setHighScore_game(int int_score_to_save) {
+        if (int_score_to_save > MyPreference.getBSGame3()) {
+            MyPreference.setBSGame3(int_score_to_save);
         }
-    }
-
-    public int getHighScore() {
-        return preferences_game_score.getInteger("save_int_score", 0);
-
     }
 
     public void setString_input(String string_input) {
@@ -287,7 +277,6 @@ public class GameWorld3 {
         int_timer = (int) float_timer;
 
         if (float_timer < 0) {
-            bool_timer_wait_answer_right = false;
             bool_timer_wait_time_out = true;
             bool_timer_game = false;
             // що відбудеться коли закінчиться час
@@ -302,7 +291,6 @@ public class GameWorld3 {
         float_timer_wait -= dt;
 
         if (float_timer_wait < 0) {
-          //  bool_timer_wait_answer_right = false;
             float_timer_wait = 0.5f;
             bool_replay = true;
             gameScreen3.bool_draw_replay_btn = true;

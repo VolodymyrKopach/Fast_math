@@ -25,16 +25,13 @@ public class MyPreference {
         preferences.flush();
     }
 
-    public static int getBSGame4() {
-        checkPref();
-        return preferences.getInteger("bs4", 0);
-    }
 
     private static void checkPref() {
         if (preferences == null) {
             preferences = Gdx.app.getPreferences("FastPref");
         }
     }
+
 
     public static void setBSGame4(int bs) {
         preferences.putInteger("bs4", bs);
@@ -49,6 +46,47 @@ public class MyPreference {
     public static int getBSGame1() {
         checkPref();
         return preferences.getInteger("bs1", 0);
+    }
+
+
+    public static void setBSGame2(int bs) {
+        preferences.putInteger("bs2", bs);
+        preferences.flush();
+    }
+
+    public static int getBSGame2() {
+        checkPref();
+        return preferences.getInteger("bs2", 0);
+    }
+
+
+    public static void setBSGame3(int bs) {
+        preferences.putInteger("bs3", bs);
+        preferences.flush();
+    }
+
+    public static int getBSGame3() {
+        checkPref();
+        return preferences.getInteger("bs3", 0);
+    }
+
+
+    public static int getBSGame4() {
+        checkPref();
+        return preferences.getInteger("bs4", 0);
+    }
+
+
+    public static int getBSGame6() {
+        checkPref();
+        return preferences.getInteger("bs6", 0);
+    }
+
+    public static void setBSGame6(int bs) {
+        if (bs > getBSGame6()) {
+            preferences.putInteger("bs6", bs);
+            preferences.flush();
+        }
     }
 
     public static int getBSGame5() {

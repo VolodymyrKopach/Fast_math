@@ -539,4 +539,24 @@ public class GameScreen4 implements Screen {
                 break;
         }
     }
+
+    void update_variables(){
+        float fl_length_string_hightScore = String.valueOf(MyPreference.getBSGame2()).length();
+        float fl_textWidth_hightScore = Utill.getTextWidth(replay_best_score_value_font, MyPreference.getBSGame2()+"");
+        float fl_length_string_score = String.valueOf(myScore).length();
+        float fl_textWidth_Score = Utill.getTextWidth(replay_score_value_font, myScore+"");
+
+        if (fl_length_string_hightScore == 2){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2) - 20;
+        }else if (fl_length_string_hightScore == 3){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2)  - 27;
+        }
+
+        if (fl_length_string_score == 2){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 20;
+        }else if (fl_length_string_score == 3){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 27;
+        }
+
+    }
 }

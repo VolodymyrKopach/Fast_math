@@ -100,7 +100,8 @@ public class GameScreen1 implements Screen {
         calculateCharCount();
 
         money = MyPreference.getMoney();
-        //  myGameClass.bannerAdShow();
+
+      //  myGameClass.bannerAdShow();
     }
 
     @Override
@@ -123,10 +124,21 @@ public class GameScreen1 implements Screen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        update_variables();
+
         Gdx.input.setInputProcessor(stage);
 
         if (gameWorld1.bool_timer_game){
-            gameWorld1.timer_game(delta);}
+            gameWorld1.timer_game(delta);
+        }
+
+        if (gameWorld1.bool_timer_wait_answer_right) {
+            gameWorld1.timer_wait_answer_right(delta);
+        }
+        if (gameWorld1.bool_timer_wait_answer_wrong) {
+            gameWorld1.timer_wait_answer_wrong(delta);
+            Gdx.app.log("", "timer wait answer wrong");
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             myGameClass.setScreen(new MenuScreen(myGameClass));
@@ -299,6 +311,26 @@ public class GameScreen1 implements Screen {
 
         bestScore = MyPreference.getBSGame1();
         myScore = 0;
+    }
+
+    void update_variables(){
+        float fl_length_string_hightScore = String.valueOf(MyPreference.getBSGame2()).length();
+        float fl_textWidth_hightScore = Utill.getTextWidth(replay_best_score_value_font, MyPreference.getBSGame2() + "");
+        float fl_length_string_score = String.valueOf(gameWorld1.getString_score()).length();
+        float fl_textWidth_Score = Utill.getTextWidth(replay_score_value_font, gameWorld1.getString_score() + "");
+
+        if (fl_length_string_hightScore == 2){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2) - 20;
+        }else if (fl_length_string_hightScore == 3){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2)  - 27;
+        }
+
+        if (fl_length_string_score == 2){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 20;
+        }else if (fl_length_string_score == 3){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 27;
+        }
+
     }
 
     float getButtonX(int number) {
@@ -570,5 +602,9 @@ public class GameScreen1 implements Screen {
     void calculateCharCount() {
         float size_to_answer = btn_C_x - 40 - 50 - Utill.getTextWidth(mainFont, gameWorld1.getString_to_screen());
         num_of_char = (int) (size_to_answer / Utill.getTextWidth(mainFont, "8"));
+    }
+
+    public void showRightAnswer(){
+
     }
 }

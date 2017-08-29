@@ -2,6 +2,7 @@ package kopach.fast.math;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import java.util.Random;
 
@@ -11,15 +12,14 @@ import java.util.Random;
 
 public class GameWorld6 {
 
-    int int_min_plus, int_max_plus, int_result, incorrect_variant, int_number_1, int_number_2;
+    int int_min_plus, int_max_plus, int_result, int_number_1, int_number_2;
 
     public int int_score = 0;
+    public int trueValue;
     public String string_to_screen = "";
     public String string_input = "";
 
     public String string_score = "0", string_timer_game;
-
-    public Preferences preferences_game_gw1, preferences_game_score;
 
     public float float_timer = 60, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
@@ -33,8 +33,6 @@ public class GameWorld6 {
 
     public GameWorld6(GameScreen6 gameScreen6) { // запускаться відразу при запуску класа
         this.gameScreen6 = gameScreen6;
-        preferences_game_gw1 = Gdx.app.getPreferences("My_preferences_game_gw1");
-        preferences_game_score = Gdx.app.getPreferences("My_preferences_game_score");
 
        // startGame();
     }
@@ -48,6 +46,8 @@ public class GameWorld6 {
     public void game() {
         bool_timer_game = true;
         string_input = "";
+        gameScreen6.enableTouchableAllBtn();
+        gameScreen6.createTextButtons();
 
         setDifficulti();
 
@@ -108,7 +108,7 @@ public class GameWorld6 {
 
     void setIncorrectPryklad() {
 
-        int trueValue = new Random().nextInt(5) + 1;
+        trueValue = new Random().nextInt(5) + 1;
 
         switch (trueValue) {  // призначення правильної відповіді, рандомно вибраній змінні
             case 1:
@@ -138,32 +138,38 @@ public class GameWorld6 {
     }
 
 
-    public void answer(String input_pryklad) {  // метод який виконується коли вибираєш якусь відповідь
+    public void answer(TextButton button) {  // метод який виконується коли вибираєш якусь відповідь
         Gdx.app.log("GameWorld2", "answer");
 
-        if (input_pryklad.equals(getString_incorrect_pryklad())){
-            answer_right();
-        }else {answer_wrong();}
+        if (String.valueOf(button.getText()).equals(getString_incorrect_pryklad())){
+            answer_right(button);
+
+        }else {answer_wrong(button);}
+
+        gameScreen6.disabledTouchableAllBtn();
     }
 
-    private void answer_right() { //викликаєтьсчя після того, як ти вибрав правильну відповідь
+    private void answer_right(TextButton button) { //викликаєтьсчя після того, як ти вибрав правильну відповідь
         bool_timer_wait_start = true;
         bool_answer_right = true;
         int_score++;
+        setHighScore_game(int_score);
         float_timer = 60;
 
+        button.getStyle().checked = gameScreen6.skin.getDrawable("btn green");
+
         bool_timer_wait_answer_right = true;
-
-        setHighScore_game(int_score);
-
         Gdx.app.log("", "answer right");
     }
 
-    public void answer_wrong() {
+    public void answer_wrong(TextButton button) {
         bool_answer_right = false;
         gameScreen6.bool_draw_replay_btn = true;
         bool_timer_wait_answer_wrong = true;
         bool_timer_game = false;
+
+        button.getStyle().checked = gameScreen6.skin.getDrawable("btn red");
+        gameScreen6.showRightBtn(trueValue);
     }
 
 
@@ -230,19 +236,15 @@ public class GameWorld6 {
     public String getString_input() {return string_input;}
 
     public void setHighScore_game(int int_score_to_save) {
-        if (int_score_to_save > getHighScore_game()) {
-            preferences_game_score.putInteger("save_int_score", int_score_to_save);
-            preferences_game_score.flush();
+        if (int_score_to_save > MyPreference.getBSGame6()) {
+            MyPreference.setBSGame6(int_score_to_save);
         }
     }
 
-    public int getHighScore_game() {return preferences_game_score.getInteger("save_int_score", 0);}
-
     public void timer_game(float dt) {
         float_timer -= dt;
-        int_timer = (int) float_timer;
 
-        if (int_timer < 0) {
+        if (float_timer < 0) {
             // що відбудеться коли закінчиться час
         } else {
             string_timer_game = int_timer + "";

@@ -17,9 +17,7 @@ public class GameWorld2 {
     public String string_to_screen = "";
     public String string_input = "";
 
-    public String string_score, string_timer_game, string_best_score_this_level;
-
-    public Preferences preferences_game_gw1, preferences_game_score;
+    public String string_score;
 
     public float float_timer = 15, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
@@ -47,15 +45,13 @@ public class GameWorld2 {
 
     public GameWorld2(GameScreen2 gameScreen2) { // запускаться відразу при запуску класа
         this.gameScreen2 = gameScreen2;
-        preferences_game_gw1 = Gdx.app.getPreferences("My_preferences_game_gw1");
-        preferences_game_score = Gdx.app.getPreferences("My_preferences_game_score");
 
         startGame();
     }
 
     public void startGame() {
-        game();
         int_score = 0;
+        game();
     }
 
 
@@ -226,11 +222,10 @@ public class GameWorld2 {
       //  bool_timer_wait_start = true;
         bool_answer_right = true;
         int_score++;
+        setHighScore_game(int_score);
         float_timer = 15;
 
         bool_timer_wait_answer_right = true;
-
-        setHighScore_game(int_score);
     }
 
     public void answer_wrong() {
@@ -321,20 +316,11 @@ public class GameWorld2 {
         return string_score;
     }
 
-
-    public String getString_best_score_this_level() {
-        return string_best_score_this_level;
-    }
-
     public void setHighScore_game(int int_score_to_save) {
-        if (int_score_to_save > getHighScore_game()) {
-            preferences_game_score.putInteger("save_int_score", int_score_to_save);
-            preferences_game_score.flush();
+        if (int_score_to_save > MyPreference.getBSGame2()) {
+            MyPreference.setBSGame2(int_score_to_save);
         }
     }
-
-    public int getHighScore_game() {return preferences_game_score.getInteger("save_int_score", 0);}
-
 
     public void setInt_pryklad_position_1_x() {
         int int_example_length = String.valueOf(int_number_1).length() + String.valueOf(int_number_2).length() + String.valueOf(int_result).length();
@@ -356,8 +342,6 @@ public class GameWorld2 {
         int_timer = (int) float_timer;
 
         if (float_timer < 0) {
-            bool_answer_right = false;
-            gameScreen2.bool_draw_replay_btn = true;
             bool_timer_wait_time_out = true;
             bool_timer_game = false;
             // що відбудеться коли закінчиться час
@@ -374,7 +358,7 @@ public class GameWorld2 {
 
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
-            bool_timer_wait_answer_wrong = false;
+            gameScreen2.bool_draw_replay_btn = true;
             bool_replay = true;
 
         }
@@ -405,4 +389,6 @@ public class GameWorld2 {
     public int getQuestionMarkPosition() {
         return questionMarkPosition;
     }
+
+
 }

@@ -95,6 +95,7 @@ public class GameScreen3 implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         actionVariablesXY();
+        update_variables();
 
         if (gameWorld3.bool_timer_game){
             gameWorld3.game_timer(delta);}
@@ -118,7 +119,7 @@ public class GameScreen3 implements Screen{
         text_score_font.draw(spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
         score_font.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
         text_best_score_font.draw(spriteBatch, "BS:", text_text_best_score_x, text_text_best_score_y);
-        best_score_font.draw(spriteBatch, String.valueOf(gameWorld3.getHighScore()), text_best_score_x, text_best_score_y);
+        best_score_font.draw(spriteBatch, MyPreference.getBSGame3() + "", text_best_score_x, text_best_score_y);
         znak_font.draw(spriteBatch, gameWorld3.getString_left_znak(), text_left_znak_x, text_left_znak_y);
         znak_font.draw(spriteBatch, gameWorld3.getString_right_znak(), text_right_znak_x, text_right_znak_y);
         pryklad_font.draw(spriteBatch, String.valueOf(gameWorld3.getInt_left_number_1()), text_left_number_1_x, text_left_number_1_y);
@@ -142,7 +143,7 @@ public class GameScreen3 implements Screen{
         if (gameWorld3.bool_replay){
             stageReplay.getBatch().draw(tr_screen_replay,tr_screen_replay_x, tr_screen_replay_y, tr_screen_replay_width, tr_screen_replay_height);
             replay_score_value_font.draw(stageReplay.getBatch(), gameWorld3.getString_score(), replay_score_value_x, replay_score_value_y);
-            replay_best_score_value_font.draw(stageReplay.getBatch(), String.valueOf(gameWorld3.getHighScore()), replay_best_score_value_x, replay_best_score_value_y);
+            replay_best_score_value_font.draw(stageReplay.getBatch(), MyPreference.getBSGame3() + "", replay_best_score_value_x, replay_best_score_value_y);
         }
         stageReplay.getBatch().end();
 
@@ -200,7 +201,7 @@ public class GameScreen3 implements Screen{
         text_best_score_font = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
         text_best_score_font.getData().setScale(0.5f, 0.5f);
 
-        best_score_font = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
+        best_score_font = new BitmapFont(Gdx.files.internal("bitmapfont/blue bold 70.fnt"), Gdx.files.internal("bitmapfont/blue bold 70.png"), false);
         best_score_font.getData().setScale(0.6f, 0.6f);
 
         time_font = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
@@ -277,21 +278,26 @@ public class GameScreen3 implements Screen{
         text_left_znak_x = text_left_number_1_x - 50;
         text_right_znak_x = text_right_number_2_x - 50;
 
+        float fl_length_string_hightScore = String.valueOf(MyPreference.getBSGame2()).length();
+        float fl_textWidth_hightScore = getTextWidth(replay_best_score_value_font, MyPreference.getBSGame2() + "");
+        float fl_length_string_score = String.valueOf(gameWorld3.getString_score()).length();
+        float fl_textWidth_Score = getTextWidth(replay_score_value_font, gameWorld3.getString_score() + "");
+
         text_left_number_1_y = 1050;  text_left_number_2_y = 930;
         text_right_number_1_y = text_left_number_1_y;  text_right_number_2_y = text_left_number_2_y;
         text_left_znak_y = 1000;
         text_right_znak_y = text_left_znak_y;
 
-        if (String.valueOf(gameWorld3.getHighScore()).length() == 2){
-            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld3.getHighScore()))/2) - 20;
-        }else if (String.valueOf(gameWorld3.getHighScore()).length() == 3){
-            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld3.getHighScore()))/2) - 27;
+        if (fl_length_string_hightScore == 2){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2) - 20;
+        }else if (fl_length_string_hightScore == 3){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2) - 27;
         }
 
-        if (String.valueOf(gameWorld3.getString_score()).length() == 2){
-            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld3.getHighScore()))/2) - 20;
-        }else if (String.valueOf(gameWorld3.getString_score()).length() == 3){
-            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld3.getHighScore()))/2) - 27;
+        if (fl_length_string_score == 2){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 20;
+        }else if (fl_length_string_score == 3){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 27;
         }
 
     }
@@ -437,7 +443,28 @@ public class GameScreen3 implements Screen{
         gameWorld3.bool_replay = false;
         btn_replay.remove();  btn_back.remove();  btn_function.remove();
         gameWorld3.float_timer = 15;
+        gameWorld3.bool_timer_wait_time_out = false;
         gameWorld3.startGame();
+
+    }
+
+    void update_variables(){
+        float fl_length_string_hightScore = String.valueOf(MyPreference.getBSGame2()).length();
+        float fl_textWidth_hightScore = getTextWidth(replay_best_score_value_font, MyPreference.getBSGame2() + "");
+        float fl_length_string_score = String.valueOf(gameWorld3.getString_score()).length();
+        float fl_textWidth_Score = getTextWidth(replay_score_value_font, gameWorld3.getString_score() + "");
+
+        if (fl_length_string_hightScore == 2){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2) - 20;
+        }else if (fl_length_string_hightScore == 3){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2)  - 27;
+        }
+
+        if (fl_length_string_score == 2){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 20;
+        }else if (fl_length_string_score == 3){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 27;
+        }
 
     }
 }

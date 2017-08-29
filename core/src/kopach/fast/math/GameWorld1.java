@@ -20,14 +20,14 @@ public class GameWorld1 {
 
     public Preferences preferences_game1;
 
-    public float float_timer = 15;
+    public float float_timer = 15, float_timer_wait;
     //TODO переробити
     int int_timer = 2;  //любе число, головне >0
     int bestScore;
 
     int money;
 
-    public boolean bool_replay, bool_timer_game;
+    public boolean bool_replay, bool_timer_game, bool_timer_wait_answer_right, bool_timer_wait_answer_wrong;
 
     public GameWorld1() {
 
@@ -43,7 +43,6 @@ public class GameWorld1 {
             answerRight();
             return true;
         } else {
-            Gdx.app.log("tag", "Answer Wrong");
             answerWrong();
             return false;
         }
@@ -53,13 +52,15 @@ public class GameWorld1 {
         ++int_score;
         float_timer = 15;
         calculateMoney();
-        buildGame();
+        bool_timer_wait_answer_right = true;
         string_input = "";
 
         setBestScore(int_score);
     }
 
     void answerWrong(){
+        bool_timer_wait_answer_right = false;
+        bool_timer_wait_answer_wrong = true;
         //Що буде якщо введено не правильну відповідь
     }
 
@@ -129,7 +130,29 @@ public class GameWorld1 {
         if (float_timer < 0) {
             bool_replay = true;
             bool_timer_game = false;
+            bool_timer_wait_answer_wrong = true;
         } else {
+        }
+    }
+
+    public void timer_wait_answer_right(float dt) {
+        float_timer_wait -= dt;
+
+        if (float_timer_wait < 0) {
+            float_timer_wait = 0.5f;
+            bool_timer_wait_answer_right = false;
+            buildGame();
+        }
+    }
+
+    public void timer_wait_answer_wrong(float dt) {
+        float_timer_wait -= dt;
+
+        if (float_timer_wait < 0) {
+            float_timer_wait = 0.5f;
+            bool_timer_wait_answer_wrong = false;
+            bool_replay = true;
+
         }
     }
 

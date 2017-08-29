@@ -117,7 +117,7 @@ public class GameScreen2 extends Stage implements Screen {
         score_text_font.draw(spriteBatch, "Score: ", score_text_x, score_text_y);
         score_value_font.draw(spriteBatch, gameWorld2.getString_score(), score_value_x, score_value_y);
         best_score_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
-        best_score_value_font.draw(spriteBatch, String.valueOf(gameWorld2.getHighScore_game()), best_score_value_x, best_score_value_y);
+        best_score_value_font.draw(spriteBatch, MyPreference.getBSGame2() + "", best_score_value_x, best_score_value_y);
         time_font.draw(spriteBatch, gameWorld2.getTimer_game() + "", text_time_x, text_time_y);
         drawPryklad(gameWorld2.getInt_pryklad_position_1_x());
         spriteBatch.end();
@@ -129,7 +129,7 @@ public class GameScreen2 extends Stage implements Screen {
         if (gameWorld2.bool_replay){
             stageReplay.getBatch().draw(tr_screen_replay,tr_screen_replay_x, tr_screen_replay_y, tr_screen_replay_width, tr_screen_replay_height);
             replay_score_value_font.draw(stageReplay.getBatch(), gameWorld2.getString_score(), replay_score_value_x, replay_score_value_y);
-            replay_best_score_value_font.draw(stageReplay.getBatch(), String.valueOf(gameWorld2.getHighScore_game()), replay_best_score_value_x, replay_best_score_value_y);
+            replay_best_score_value_font.draw(stageReplay.getBatch(), MyPreference.getBSGame2() + "", replay_best_score_value_x, replay_best_score_value_y);
         }
         stageReplay.getBatch().end();
 
@@ -336,16 +336,21 @@ public class GameScreen2 extends Stage implements Screen {
     }
 
     void update_variables(){
-        if (String.valueOf(gameWorld2.getHighScore_game()).length() == 2){
-            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld2.getHighScore_game()))/2) - 20;
-        }else if (String.valueOf(gameWorld2.getHighScore_game()).length() == 3){
-            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld2.getHighScore_game()))/2) - 27;
+        float fl_length_string_hightScore = String.valueOf(MyPreference.getBSGame2()).length();
+        float fl_textWidth_hightScore = getTextWidth(replay_best_score_value_font, MyPreference.getBSGame2() + "");
+        float fl_length_string_score = String.valueOf(gameWorld2.getString_score()).length();
+        float fl_textWidth_Score = getTextWidth(replay_score_value_font, gameWorld2.getString_score() + "");
+
+        if (fl_length_string_hightScore == 2){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2) - 20;
+        }else if (fl_length_string_hightScore == 3){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2)  - 27;
         }
 
-        if (String.valueOf(gameWorld2.getString_score()).length() == 2){
-            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld2.getHighScore_game()))/2) - 20;
-        }else if (String.valueOf(gameWorld2.getString_score()).length() == 3){
-            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld2.getHighScore_game()))/2) - 27;
+        if (fl_length_string_score == 2){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 20;
+        }else if (fl_length_string_score == 3){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 27;
         }
 
     }
@@ -485,7 +490,7 @@ public class GameScreen2 extends Stage implements Screen {
         gameWorld2.bool_replay = false;
         btn_replay.remove();  btn_back.remove();  btn_function.remove();
         gameWorld2.float_timer = 15;
-        // gameWorld2.startGame();
-
+        gameWorld2.bool_timer_wait_time_out = false;
+        gameWorld2.startGame();
     }
 }

@@ -110,6 +110,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         coinFont = createFont(Color.ORANGE);
         Gdx.app.log("tag",MyPreference.getMoney()+"money");
 
+      //  myGameClass.loadRewardedVideoAd();
+
     }
     public BitmapFont createFont(Color color) {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("bitmapfont/font.ttf"));
@@ -400,8 +402,9 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 myGameClass.setScreen(new GameScreen1(myGameClass));
-
                 Gdx.input.setInputProcessor(inputMultiplexer);
+
+                //myGameClass.showRewardedVideoAd();
 
             }
         });

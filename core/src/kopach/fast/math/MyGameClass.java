@@ -20,7 +20,7 @@ public class MyGameClass extends Game {
     }
 
     public void create() {
-        this.setScreen(new MenuScreen(this));
+        this.setScreen(new GameScreen6(this));
     }
 
     public void render() {
@@ -42,5 +42,26 @@ public class MyGameClass extends Game {
                 Gdx.app.exit();
             }
         });
+    }
+
+    public void loadRewardedVideoAd(){
+        adsController.loadRewardedVideoAd();
+    }
+
+    public void showRewardedVideoAd(){
+        adsController.showRewardedVideoAd();
+    }
+
+    public void rewardedVideoAd_pause(){
+        adsController.rewardedVideoAd_pause();
+    }
+
+    public void rewardedVideoAd_resume(){
+        adsController.rewardedVideoAd_resume();
+    }
+
+    public void rewardedVideoAd_destroy(){
+        adsController.rewardedVideoAd_destroy();
+
     }
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -127,7 +128,7 @@ public class GameScreen6 extends Stage implements Screen {
         score_text_font.draw(spriteBatch, "Score: ", score_text_x, score_text_y);
         score_value_font.draw(spriteBatch, gameWorld6.getString_score(), score_value_x, score_value_y);
         best_score_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
-        best_score_value_font.draw(spriteBatch, String.valueOf(gameWorld6.getHighScore_game()), best_score_value_x, best_score_value_y);
+        best_score_value_font.draw(spriteBatch, MyPreference.getBSGame6()+"", best_score_value_x, best_score_value_y);
         time_font.draw(spriteBatch, gameWorld6.getTimer_game(), text_time_x, text_time_y);
       //  drawPryklad(gameWorld5.getInt_pryklad_position_1_x());
         spriteBatch.end();
@@ -139,7 +140,7 @@ public class GameScreen6 extends Stage implements Screen {
         if (gameWorld6.bool_replay){
             stageReplay.getBatch().draw(tr_screen_replay,tr_screen_replay_x, tr_screen_replay_y, tr_screen_replay_width, tr_screen_replay_height);
             replay_score_value_font.draw(stageReplay.getBatch(), gameWorld6.getString_score(), replay_score_value_x, replay_score_value_y);
-            replay_best_score_value_font.draw(stageReplay.getBatch(), String.valueOf(gameWorld6.getHighScore_game()), replay_best_score_value_x, replay_best_score_value_y);
+            replay_best_score_value_font.draw(stageReplay.getBatch(), MyPreference.getBSGame6()+"", replay_best_score_value_x, replay_best_score_value_y);
         }
         stageReplay.getBatch().end();
 
@@ -147,10 +148,6 @@ public class GameScreen6 extends Stage implements Screen {
             replay_true();
         }else {Gdx.input.setInputProcessor(stage);}
 
-    }
-
-    float getTextWidth(BitmapFont font, String text) {
-        return new GlyphLayout(font, text).width;
     }
 
     @Override
@@ -275,26 +272,47 @@ public class GameScreen6 extends Stage implements Screen {
 
 
     public void createTextButtons() {   // налаштування кнопок
-        btn_1 = drawButton(1);
-        btn_2 = drawButton(2);
-        btn_3 = drawButton(3);
-        btn_4 = drawButton(4);
-        btn_5 = drawButton(5);
+        btn_1 = drawButton(1, "btn blue");
+        btn_2 = drawButton(2, "btn blue");
+        btn_3 = drawButton(3, "btn blue");
+        btn_4 = drawButton(4, "btn blue");
+        btn_5 = drawButton(5, "btn blue");
        // btn_6 = drawButton(6);
 
     }
 
+    public void enableTouchableAllBtn(){
+        btn_1.setTouchable(Touchable.enabled);
+        btn_2.setTouchable(Touchable.enabled);
+        btn_3.setTouchable(Touchable.enabled);
+        btn_4.setTouchable(Touchable.enabled);
+        btn_5.setTouchable(Touchable.enabled);
+    }
+
+    public void disabledTouchableAllBtn(){
+        btn_1.setTouchable(Touchable.disabled);
+        btn_2.setTouchable(Touchable.disabled);
+        btn_3.setTouchable(Touchable.disabled);
+        btn_4.setTouchable(Touchable.disabled);
+        btn_5.setTouchable(Touchable.disabled);
+    }
+
     void update_variables(){
-        if (String.valueOf(gameWorld6.getHighScore_game()).length() == 2){
-            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld6.getHighScore_game()))/2) - 20;
-        }else if (String.valueOf(gameWorld6.getHighScore_game()).length() == 3){
-            replay_best_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld6.getHighScore_game()))/2) - 27;
+        float fl_length_string_hightScore = String.valueOf(MyPreference.getBSGame2()).length();
+        float fl_textWidth_hightScore = Utill.getTextWidth(replay_best_score_value_font, MyPreference.getBSGame2() + "");
+        float fl_length_string_score = String.valueOf(gameWorld6.getString_score()).length();
+        float fl_textWidth_Score = Utill.getTextWidth(replay_score_value_font, gameWorld6.getString_score() + "");
+
+        if (fl_length_string_hightScore == 2){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2) - 20;
+        }else if (fl_length_string_hightScore == 3){
+            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2)  - 27;
         }
 
-        if (String.valueOf(gameWorld6.getString_score()).length() == 2){
-            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld6.getHighScore_game()))/2) - 20;
-        }else if (String.valueOf(gameWorld6.getString_score()).length() == 3){
-            replay_score_value_x = (screen_width/2 - getTextWidth(replay_best_score_value_font, String.valueOf(gameWorld6.getHighScore_game()))/2) - 27;
+        if (fl_length_string_score == 2){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 20;
+        }else if (fl_length_string_score == 3){
+            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 27;
         }
 
     }
@@ -327,10 +345,10 @@ public class GameScreen6 extends Stage implements Screen {
     }
 
     //Цей метод створює кожну кнопку по черзі
-    TextButton drawButton(int position) {
+    TextButton drawButton(int position, String drawableButtonUp) {
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.up = skin.getDrawable("btn blue");
+        style.up = skin.getDrawable(drawableButtonUp);
         style.down = skin.getDrawable("btn blue press");
         style.font = font_btn;
         TextButton textButton = new TextButton("", style);
@@ -348,10 +366,25 @@ public class GameScreen6 extends Stage implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 gameWorld6.setString_input(String.valueOf(finalTextButton.getText()));
                 FLAG_SHOW_QUESTION_MARK = false;
-                gameWorld6.answer(gameWorld6.getString_input());
+                gameWorld6.answer(finalTextButton);
             }
         });
         return textButton;
+    }
+
+    public void showRightBtn(int rightButton){
+        if (rightButton == 1){
+            btn_1.getStyle().up = skin.getDrawable("btn green");
+        }else if (rightButton == 2){
+            btn_2.getStyle().up = skin.getDrawable("btn green");
+        }else if (rightButton == 3){
+            btn_3.getStyle().up = skin.getDrawable("btn green");
+        }else if (rightButton == 4){
+            btn_4.getStyle().up = skin.getDrawable("btn green");
+        }else if (rightButton == 5){
+            btn_5.getStyle().up = skin.getDrawable("btn green");
+        }
+
     }
 
     void btnInReplay(){
