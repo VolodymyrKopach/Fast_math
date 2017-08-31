@@ -1,7 +1,6 @@
 package kopach.fast.math;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.util.Random;
@@ -19,10 +18,11 @@ public class GameWorld3 {
 
     public String string_score = "0", string_timer, string_best_score_this_level;
 
-    public float float_timer = 15, float_timer_wait = 0.5f;;
+    public float float_timer = 15, float_timer_wait = 0.5f;
+    ;
     int int_timer = 2;  //любе число, головне >0
 
-    public boolean bool_timer_game, boolean_text_button, bool_input, bool_timer_wait_answer_right, bool_timer_wait_time_out, bool_timer_wait_answer_wrong, bool_replay;
+    public boolean bool_timer_game, boolean_text_button, bool_input, bool_timer_wait_answer_right, bool_timer_wait_time_out, bool_timer_wait_answer_wrong;
 
     String string_left_znak = "", string_right_znak = "";
 
@@ -86,27 +86,39 @@ public class GameWorld3 {
 
     }
 
-    void setDifficulti(){
-        if (int_score > 100){set_min_and_max(500, 999);
-        }else if (int_score > 9){set_min_and_max(450, 900);
-        }else if (int_score > 8){set_min_and_max(400, 800);
-        }else if (int_score > 7){set_min_and_max(350, 700);
-        }else if (int_score > 6){set_min_and_max(300, 600);
-        }else if (int_score > 5){set_min_and_max(250, 500);
-        }else if (int_score > 4){set_min_and_max(200, 400);
-        }else if (int_score > 3){set_min_and_max(150, 300);
-        }else if (int_score > 2){set_min_and_max(100, 200);
-        }else if (int_score > 1){set_min_and_max(50, 150);
-        }else if (int_score > 0 || int_score == 0){set_min_and_max(10, 100);}
+    void setDifficulti() {
+        if (int_score > 100) {
+            set_min_and_max(500, 999);
+        } else if (int_score > 9) {
+            set_min_and_max(450, 900);
+        } else if (int_score > 8) {
+            set_min_and_max(400, 800);
+        } else if (int_score > 7) {
+            set_min_and_max(350, 700);
+        } else if (int_score > 6) {
+            set_min_and_max(300, 600);
+        } else if (int_score > 5) {
+            set_min_and_max(250, 500);
+        } else if (int_score > 4) {
+            set_min_and_max(200, 400);
+        } else if (int_score > 3) {
+            set_min_and_max(150, 300);
+        } else if (int_score > 2) {
+            set_min_and_max(100, 200);
+        } else if (int_score > 1) {
+            set_min_and_max(50, 150);
+        } else if (int_score > 0 || int_score == 0) {
+            set_min_and_max(10, 100);
+        }
 
     }
 
-    void set_min_and_max(int min, int max){
+    void set_min_and_max(int min, int max) {
         int_min_plus = min;
         int_max_plus = max;
     }
 
-    public void setSizeTextPryklad(){
+    public void setSizeTextPryklad() {
         int int_left_number_1_lenght = String.valueOf(int_left_number_1).length();
         int int_left_number_2_lenght = String.valueOf(int_left_number_2).length();
         int int_right_number_1_lenght = String.valueOf(int_right_number_1).length();
@@ -115,32 +127,32 @@ public class GameWorld3 {
         int int_right_number_lenght = 1;
         int int_sizeTextPryklad = 1;
 
-        if (int_left_number_1_lenght == int_left_number_2_lenght){
+        if (int_left_number_1_lenght == int_left_number_2_lenght) {
             int_left_number_lenght = int_left_number_1_lenght;
-        }else if (int_left_number_1_lenght > int_left_number_2_lenght){
+        } else if (int_left_number_1_lenght > int_left_number_2_lenght) {
             int_left_number_lenght = int_left_number_1_lenght;
-        }else if (int_left_number_1_lenght < int_left_number_2_lenght){
+        } else if (int_left_number_1_lenght < int_left_number_2_lenght) {
             int_left_number_lenght = int_left_number_2_lenght;
         }
 
-        if (int_right_number_1_lenght == int_right_number_2_lenght){
+        if (int_right_number_1_lenght == int_right_number_2_lenght) {
             int_right_number_lenght = int_right_number_1_lenght;
-        }else if (int_right_number_1_lenght > int_right_number_2_lenght){
+        } else if (int_right_number_1_lenght > int_right_number_2_lenght) {
             int_right_number_lenght = int_right_number_1_lenght;
-        }else if (int_right_number_1_lenght < int_right_number_2_lenght){
+        } else if (int_right_number_1_lenght < int_right_number_2_lenght) {
             int_right_number_lenght = int_right_number_2_lenght;
         }
 
 
-        if (int_left_number_lenght == int_right_number_lenght){
+        if (int_left_number_lenght == int_right_number_lenght) {
             int_sizeTextPryklad = int_left_number_lenght;
-        }else if (int_left_number_lenght > int_right_number_lenght){
+        } else if (int_left_number_lenght > int_right_number_lenght) {
             int_sizeTextPryklad = int_left_number_lenght;
-        }else if (int_left_number_lenght < int_right_number_lenght){
+        } else if (int_left_number_lenght < int_right_number_lenght) {
             int_sizeTextPryklad = int_right_number_lenght;
         }
 
-        if (int_sizeTextPryklad == 1){
+        if (int_sizeTextPryklad == 1) {
             int_left_pryklad_1_position_x = 140;
             int_right_pryklad_1_position_x = 510;
             gameScreen3.pryklad_font.getData().setScale(1.4f, 1.4f);
@@ -148,7 +160,7 @@ public class GameWorld3 {
             // gameScreen3.idp_wrong.getData().setScale(1.5f, 1.5f);
         }
 
-        if (int_sizeTextPryklad == 2){
+        if (int_sizeTextPryklad == 2) {
             int_left_pryklad_1_position_x = 140;
             int_right_pryklad_1_position_x = 510;
             gameScreen3.pryklad_font.getData().setScale(1.4f, 1.4f);
@@ -156,7 +168,7 @@ public class GameWorld3 {
             //  gameScreen3.vidp_wrong.getData().setScale(1.5f, 1.5f);
         }
 
-        if (int_sizeTextPryklad == 3){
+        if (int_sizeTextPryklad == 3) {
             int_left_pryklad_1_position_x = 90;
             int_right_pryklad_1_position_x = 510;
             gameScreen3.pryklad_font.getData().setScale(1.4f, 1.4f);
@@ -173,7 +185,7 @@ public class GameWorld3 {
             //   gameScreen3.vidp_wrong.getData().setScale(1.2f, 1.2f);
         }
 
-        Gdx.app.log(""," size text pryklad = " + int_sizeTextPryklad);
+        Gdx.app.log("", " size text pryklad = " + int_sizeTextPryklad);
 
     }
 
@@ -185,15 +197,15 @@ public class GameWorld3 {
         float_timer = 15;
         gameScreen3.input_znak_font = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
         gameScreen3.input_znak_font.getData().setScale(2.2f, 2.2f);
-        gameScreen3.text_input_znak_x = gameScreen3.screen_width/2 - gameScreen3.getTextWidth(gameScreen3.input_znak_font, getString_input())/2;
+        gameScreen3.text_input_znak_x = gameScreen3.screen_width / 2 - gameScreen3.getTextWidth(gameScreen3.input_znak_font, getString_input()) / 2;
 
         bool_timer_wait_answer_right = true;
     }
 
-    private void incorrectAnswer(){
+    private void incorrectAnswer() {
         gameScreen3.input_znak_font = new BitmapFont(Gdx.files.internal("bitmapfont/red bold 70.fnt"), Gdx.files.internal("bitmapfont/red bold 70.png"), false);
         gameScreen3.input_znak_font.getData().setScale(2f, 2f);
-        gameScreen3.text_input_znak_x = gameScreen3.screen_width/2 - gameScreen3.getTextWidth(gameScreen3.input_znak_font, getString_input())/2;
+        gameScreen3.text_input_znak_x = gameScreen3.screen_width / 2 - gameScreen3.getTextWidth(gameScreen3.input_znak_font, getString_input()) / 2;
 
         bool_timer_game = false;
 
@@ -207,42 +219,56 @@ public class GameWorld3 {
         string_input = input_answer;
         bool_input = true;
 
-        if(input_answer.equals(getString_answer())){
+        if (input_answer.equals(getString_answer())) {
             correctAnswer();
-        }else {
+        } else {
             incorrectAnswer();
         }
 
     }
 
 
-    public void setString_answer(int int_left_result, int int_right_result ) {
-        if(int_left_result<int_right_result){
+    public void setString_answer(int int_left_result, int int_right_result) {
+        if (int_left_result < int_right_result) {
             string_answer = "<";
 
-        }else if(int_left_result>int_right_result){
+        } else if (int_left_result > int_right_result) {
             string_answer = ">";
 
-        }else if(int_left_result==int_right_result){
+        } else if (int_left_result == int_right_result) {
             string_answer = "=";
         }
     }
 
 
-    public String getString_answer() {return string_answer;}
+    public String getString_answer() {
+        return string_answer;
+    }
 
-    public int getInt_left_number_1() {return int_left_number_1;}
+    public int getInt_left_number_1() {
+        return int_left_number_1;
+    }
 
-    public int getInt_left_number_2() {return int_left_number_2;}
+    public int getInt_left_number_2() {
+        return int_left_number_2;
+    }
 
-    public int getInt_right_number_1() {return int_right_number_1;}
+    public int getInt_right_number_1() {
+        return int_right_number_1;
+    }
 
-    public int getInt_right_number_2() {return int_right_number_2;}
+    public int getInt_right_number_2() {
+        return int_right_number_2;
+    }
 
-    public String getString_left_znak() {return string_left_znak;}
+    public String getString_left_znak() {
+        return string_left_znak;
+    }
 
 
-    public String getString_right_znak() {return string_right_znak;}
+    public String getString_right_znak() {
+        return string_right_znak;
+    }
 
     public void setHighScore_game(int int_score_to_save) {
         if (int_score_to_save > MyPreference.getBSGame3()) {
@@ -267,9 +293,13 @@ public class GameWorld3 {
         return string_score;
     }
 
-    public void setString_best_score_this_level(String string_best_result_this_level) {this.string_best_score_this_level = string_best_result_this_level;}
+    public void setString_best_score_this_level(String string_best_result_this_level) {
+        this.string_best_score_this_level = string_best_result_this_level;
+    }
 
-    public String getString_best_score_this_level() {return string_best_score_this_level;}
+    public String getString_best_score_this_level() {
+        return string_best_score_this_level;
+    }
 
 
     public void game_timer(float dt) {
@@ -285,14 +315,16 @@ public class GameWorld3 {
 
     }
 
-    public int getInt_timer() {return int_timer;}
+    public int getInt_timer() {
+        return int_timer;
+    }
 
     public void timer_wait_time_out(float dt) {
         float_timer_wait -= dt;
 
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
-            bool_replay = true;
+            gameScreen3.replay.show();
             gameScreen3.bool_draw_replay_btn = true;
         }
     }
@@ -317,7 +349,7 @@ public class GameWorld3 {
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
             bool_timer_wait_answer_wrong = false;
-            bool_replay = true;
+            gameScreen3.replay.show();
 
         }
     }

@@ -3,7 +3,6 @@ package kopach.fast.math;
 import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -43,21 +42,21 @@ public class GameWorld5 {
     public void createExamples() {
         data.clear();
         nextExample();
-        example1 = num1 + znak + num2;
+        example1 = num1 + znak + num2 + "=";
         if (znak.equals("+")) {
             solution1 = num1 + num2;
         } else {
             solution1 = num1 - num2;
         }
         nextExample();
-        example2 = num1 + znak + num2;
+        example2 = num1 + znak + num2 + "=";
         if (znak.equals("+")) {
             solution2 = num1 + num2;
         } else {
             solution2 = num1 - num2;
         }
         nextExample();
-        example3 = num1 + znak + num2;
+        example3 = num1 + znak + num2 + "=";
         if (znak.equals("+")) {
             solution3 = num1 + num2;
         } else {
@@ -65,7 +64,7 @@ public class GameWorld5 {
         }
 
         nextExample();
-        example4 = num1 + znak + num2;
+        example4 = num1 + znak + num2 + "=";
         if (znak.equals("+")) {
             solution4 = num1 + num2;
         } else {

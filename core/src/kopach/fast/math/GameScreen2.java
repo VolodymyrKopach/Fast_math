@@ -429,7 +429,7 @@ public class GameScreen2 extends Stage implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 replay_false();
-               // Gdx.input.setInputProcessor(stage);
+                // Gdx.input.setInputProcessor(stage);
             }
         });
 
@@ -476,7 +476,7 @@ public class GameScreen2 extends Stage implements Screen {
     void replay_true(){
         if (bool_draw_replay_btn){
             Gdx.input.setInputProcessor(stageReplay);
-          //  btn_1.setTouchable(Touchable.disabled);  btn_2.setTouchable(Touchable.disabled);  btn_3.setTouchable(Touchable.disabled);  btn_4.setTouchable(Touchable.disabled);  btn_5.setTouchable(Touchable.disabled);  btn_6.setTouchable(Touchable.disabled);
+            //  btn_1.setTouchable(Touchable.disabled);  btn_2.setTouchable(Touchable.disabled);  btn_3.setTouchable(Touchable.disabled);  btn_4.setTouchable(Touchable.disabled);  btn_5.setTouchable(Touchable.disabled);  btn_6.setTouchable(Touchable.disabled);
             btnInReplay();
             stageReplay.addActor(btn_replay);   stageReplay.addActor(btn_back);   stageReplay.addActor(btn_function);
             bool_draw_replay_btn = false;

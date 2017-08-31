@@ -10,6 +10,7 @@ import java.util.Random;
  */
 
 public class GameWorld1 {
+    private final GameScreen1 gameScreen1;
     int int_min_plus, int_max_plus, int_result, number_1, number_2;
 
     public int int_score = 0;
@@ -27,9 +28,10 @@ public class GameWorld1 {
 
     int money;
 
-    public boolean bool_replay, bool_timer_game, bool_timer_wait_answer_right, bool_timer_wait_answer_wrong;
+    public boolean bool_timer_game, bool_timer_wait_answer_right, bool_timer_wait_answer_wrong;
 
-    public GameWorld1() {
+    public GameWorld1(GameScreen1 gameScreen1) {
+        this.gameScreen1 = gameScreen1;
 
         preferences_game1 = Gdx.app.getPreferences("pref1");
         string_input = "";
@@ -48,7 +50,7 @@ public class GameWorld1 {
         }
     }
 
-    void answerRight(){
+    void answerRight() {
         ++int_score;
         float_timer = 15;
         calculateMoney();
@@ -58,29 +60,29 @@ public class GameWorld1 {
         setBestScore(int_score);
     }
 
-    void answerWrong(){
+    void answerWrong() {
         bool_timer_wait_answer_right = false;
         bool_timer_wait_answer_wrong = true;
         //Що буде якщо введено не правильну відповідь
     }
 
     private void calculateMoney() {
-        switch (int_score){
+        switch (int_score) {
             case 10:
-                money+=5;
+                money += 5;
                 //зберігаємо к-ть монет в преференс
                 MyPreference.setMoney(money);
                 break;
             case 20:
-                money+=10;
+                money += 10;
                 MyPreference.setMoney(money);
                 break;
             case 50:
-                money+=20;
+                money += 20;
                 MyPreference.setMoney(money);
                 break;
             case 100:
-                money+=50;
+                money += 50;
                 MyPreference.setMoney(money);
                 break;
         }
@@ -128,7 +130,8 @@ public class GameWorld1 {
         int_timer = (int) float_timer;
 
         if (float_timer < 0) {
-            bool_replay = true;
+            gameScreen1.replay.show();
+
             bool_timer_game = false;
             bool_timer_wait_answer_wrong = true;
         } else {
@@ -151,7 +154,7 @@ public class GameWorld1 {
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
             bool_timer_wait_answer_wrong = false;
-            bool_replay = true;
+            gameScreen1.replay.show();
 
         }
     }

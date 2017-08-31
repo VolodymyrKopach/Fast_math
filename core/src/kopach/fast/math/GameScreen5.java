@@ -47,14 +47,15 @@ public class GameScreen5 implements Screen {
     public TextureAtlas textureAtlas_vg;
     Rectangle touchRect;
     MyRect answer1, answer2, answer3, answer4, answer5;
-    MyRect pryklad1Rect, pryklad2Rect, pryklad3Rect, pryklad4Rect, pryklad5Rect;
+    MyRect pryklad1Rect, pryklad2Rect, pryklad3Rect, pryklad4Rect;
     MyRect selectedRect;
 
     GameWorld5 gameWorld5;
 
     MyRect[] myAnswer;
-    MyRect[] allVariants;
     MyListener inputListener;
+
+    float connectedPazlX;
 
     int answerCount = 0;
     final String font_chars = "абвгдежзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕ" +
@@ -63,9 +64,25 @@ public class GameScreen5 implements Screen {
     private float score_text_y, best_score_value_x, best_score_value_y;
     private BitmapFont score_text_font, score_value_font, best_score_value_font, best_score_text_font;
     BitmapFont btnFont;
+    private ReplayDialog replay;
 
-    public GameScreen5() {
+    public GameScreen5(final MyGameClass gameClass) {
+        long start = System.currentTimeMillis();
         spriteBatch = new SpriteBatch();
+        replay = new ReplayDialog();
+        replay.setListener(new ReplayDialog.ReplayListener() {
+            @Override
+            void onReplay() {
+                gameWorld5.myScore = 0;
+                createButtons();
+            }
+
+            @Override
+            void onBack() {
+                gameClass.setScreen(new MenuScreen(gameClass));
+
+            }
+        });
         pazlAnswerTexture = new Texture("puzl2.png");
         pazlOverlaps = new Texture("pazl2_overlaps.png");
         pazlPrykladTexture = new Texture("puzl.png");
@@ -90,6 +107,8 @@ public class GameScreen5 implements Screen {
         myAnswer = new MyRect[4];
         createButtons();
         touchRect.setSize(20, 20);
+        long end = System.currentTimeMillis();
+        Gdx.app.log("tag", "loadTime:" + (end - start));
     }
 
     private void variables() {
@@ -101,6 +120,8 @@ public class GameScreen5 implements Screen {
         best_score_value_y = best_score_text_y + 4;
         score_value_y = best_score_value_y + 4;
         score_text_y = best_score_text_y;
+
+        connectedPazlX = 10 + pazlPrykladWidth - 50;
 
     }
 
@@ -150,10 +171,7 @@ public class GameScreen5 implements Screen {
         pryklad3 = drawPrykladPazl(gameWorld5.example3, 10, screen_height - 100 - pazlVidstupY * 3 - pazlHeight * 3);
         pryklad4 = drawPrykladPazl(gameWorld5.example4, 10, screen_height - 100 - pazlVidstupY * 4 - pazlHeight * 4);
 
-        ArrayList<Integer> answers = new ArrayList<Integer>();
-        for (int i = 0; i < gameWorld5.getData().size(); i++) {
-            answers.add(gameWorld5.getData().get(i));
-        }
+        ArrayList<Integer> answers = new ArrayList<Integer>(gameWorld5.getData());
         Collections.shuffle(answers);
         answerBtn1 = makeBtn(String.valueOf(answers.get(0)));
         answerBtn2 = makeBtn(String.valueOf(answers.get(1)));
@@ -161,25 +179,26 @@ public class GameScreen5 implements Screen {
         answerBtn4 = makeBtn(String.valueOf(answers.get(3)));
         answerBtn5 = makeBtn(String.valueOf(answers.get(4)));
 
-        answer1 = new MyRect(screen_width - pazlAnswerWidth - 10, screen_height - 100 - pazlVidstupY - pazlHeight, pazlAnswerWidth, pazlHeight);
-        answer1.setAnswer(Integer.parseInt(answerBtn1.getText().toString()));
-        answer2 = new MyRect(screen_width - pazlAnswerWidth - 10, screen_height - 100 - pazlVidstupY * 2 - pazlHeight * 2, pazlAnswerWidth, pazlHeight);
-        answer2.setAnswer(Integer.parseInt(answerBtn2.getText().toString()));
-        answer3 = new MyRect(screen_width - pazlAnswerWidth - 10, screen_height - 100 - pazlVidstupY * 3 - pazlHeight * 3, pazlAnswerWidth, pazlHeight);
-        answer3.setAnswer(Integer.parseInt(answerBtn3.getText().toString()));
-        answer4 = new MyRect(screen_width - pazlAnswerWidth - 10, screen_height - 100 - pazlVidstupY * 4 - pazlHeight * 4, pazlAnswerWidth, pazlHeight);
-        answer4.setAnswer(Integer.parseInt(answerBtn4.getText().toString()));
-        answer5 = new MyRect(screen_width - pazlAnswerWidth - 10, screen_height - 100 - pazlVidstupY * 5 - pazlHeight * 5, pazlAnswerWidth, pazlHeight);
-        answer5.setAnswer(Integer.parseInt(answerBtn5.getText().toString()));
+        float answerBtnX = screen_width - pazlAnswerWidth - 10;
 
-        allVariants = new MyRect[]{answer1, answer2, answer3, answer4, answer5};
+        answer1 = new MyRect(answerBtnX, screen_height - 100 - pazlVidstupY - pazlHeight, pazlAnswerWidth, pazlHeight);
+        answer1.setAnswer(Integer.parseInt(answerBtn1.getText().toString()));
+        answer2 = new MyRect(answerBtnX, screen_height - 100 - pazlVidstupY * 2 - pazlHeight * 2, pazlAnswerWidth, pazlHeight);
+        answer2.setAnswer(Integer.parseInt(answerBtn2.getText().toString()));
+        answer3 = new MyRect(answerBtnX, screen_height - 100 - pazlVidstupY * 3 - pazlHeight * 3, pazlAnswerWidth, pazlHeight);
+        answer3.setAnswer(Integer.parseInt(answerBtn3.getText().toString()));
+        answer4 = new MyRect(answerBtnX, screen_height - 100 - pazlVidstupY * 4 - pazlHeight * 4, pazlAnswerWidth, pazlHeight);
+        answer4.setAnswer(Integer.parseInt(answerBtn4.getText().toString()));
+        answer5 = new MyRect(answerBtnX, screen_height - 100 - pazlVidstupY * 5 - pazlHeight * 5, pazlAnswerWidth, pazlHeight);
+        answer5.setAnswer(Integer.parseInt(answerBtn5.getText().toString()));
 
         updateButtonPosition();
 
-        pryklad1Rect = new MyRect(pryklad1.getX(), pryklad1.getY(), pryklad1.getWidth(), pryklad1.getHeight());
-        pryklad2Rect = new MyRect(pryklad2.getX(), pryklad2.getY(), pryklad2.getWidth(), pryklad2.getHeight());
-        pryklad3Rect = new MyRect(pryklad3.getX(), pryklad3.getY(), pryklad3.getWidth(), pryklad3.getHeight());
-        pryklad4Rect = new MyRect(pryklad4.getX(), pryklad4.getY(), pryklad4.getWidth(), pryklad4.getHeight());
+        float prykladX = pryklad1.getX();
+        pryklad1Rect = new MyRect(prykladX, pryklad1.getY(), pryklad1.getWidth(), pryklad1.getHeight());
+        pryklad2Rect = new MyRect(prykladX, pryklad2.getY(), pryklad2.getWidth(), pryklad2.getHeight());
+        pryklad3Rect = new MyRect(prykladX, pryklad3.getY(), pryklad3.getWidth(), pryklad3.getHeight());
+        pryklad4Rect = new MyRect(prykladX, pryklad4.getY(), pryklad4.getWidth(), pryklad4.getHeight());
         for (int i = 0; i < myAnswer.length; i++) {
             myAnswer[i] = null;
         }
@@ -207,10 +226,14 @@ public class GameScreen5 implements Screen {
         score_value_font.draw(spriteBatch, String.valueOf(gameWorld5.myScore), score_value_x, score_value_y);
         best_score_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
         best_score_value_font.draw(spriteBatch, String.valueOf(gameWorld5.bestScore), best_score_value_x, best_score_value_y);
+        if (replay.isShow()) {
+            replay.render(spriteBatch, 1, 1);
+        } else {
+            Gdx.input.setInputProcessor(stage);
+            stage.act(delta);
+            stage.draw();
+        }
         spriteBatch.end();
-        Gdx.input.setInputProcessor(stage);
-        stage.act(delta);
-        stage.draw();
     }
 
     @Override
@@ -255,7 +278,6 @@ public class GameScreen5 implements Screen {
         float startDrugY;
         float deltaY;
         float deltaX;
-        int magnet = 15;
 
         TextButton selectedBtn;
 
@@ -281,6 +303,19 @@ public class GameScreen5 implements Screen {
                 selectedBtn = answerBtn5;
             } else {
                 selectedRect = null;
+            }
+            if (selectedRect != null) {
+                if (selectedRect.getX() == connectedPazlX) {
+                    if (selectedRect.overlaps(pryklad1Rect)) {
+                        myAnswer[0] = null;
+                    } else if (selectedRect.overlaps(pryklad2Rect)) {
+                        myAnswer[1] = null;
+                    } else if (selectedRect.overlaps(pryklad3Rect)) {
+                        myAnswer[2] = null;
+                    } else if (selectedRect.overlaps(pryklad4Rect)) {
+                        myAnswer[3] = null;
+                    }
+                }
             }
 
             return super.touchDown(event, x, y, pointer, button);
@@ -314,44 +349,42 @@ public class GameScreen5 implements Screen {
 
         private void checkIsAnswerTrue() {
             int trueAnswers = 0;
-            Gdx.app.log("tag", "checkIsAnswerTrue");
             for (int i = 0; i < 4; i++) {
                 Gdx.app.log("tag", "myAnswer" + i + " .getAnswer()" + "=" + myAnswer[i].getAnswer());
                 Gdx.app.log("tag", "data.get" + i + "=" + gameWorld5.getData().get(i));
                 if (myAnswer[i].getAnswer() == gameWorld5.getData().get(i)) {
                     trueAnswers++;
                 }
-
             }
-
             //TODO тут потрібно викликати ре-плей, якщо trueAnswers==4, то всі приклади вирішено правильно
             Gdx.app.log("tag", "checkIsAnswerTrue" + trueAnswers);
             if (trueAnswers >= 4) {
                 gameWorld5.increaseScore();
                 createButtons();
+            } else {
+                replay.show();
             }
         }
 
         @Override
         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
             if (selectedRect != null) {
-                // від значення змінної #magnet залежить максимальна відстань на якій два пазли можуть з'єднуватися
-                if (selectedRect.x < pazlPrykladWidth + magnet) {
-                    float centerPazlY = selectedRect.y + selectedRect.height / 2;
+                if (selectedRect.overlaps(pryklad1Rect)) {
+                    selectedRect.setPosition(connectedPazlX, pryklad1.getY());
                     checkIsUnique(selectedRect);
-                    if (centerPazlY > pryklad1.getY()) {
-                        myAnswer[0] = selectedRect;
-                        selectedRect.setPosition(pryklad1.getX() + pryklad1.getWidth() - 50, pryklad1.getY());
-                    } else if (centerPazlY > pryklad2.getY()) {
-                        myAnswer[1] = selectedRect;
-                        selectedRect.setPosition(pryklad2.getX() + pryklad2.getWidth() - 50, pryklad2.getY());
-                    } else if (centerPazlY > pryklad3.getY()) {
-                        myAnswer[2] = selectedRect;
-                        selectedRect.setPosition(pryklad3.getX() + pryklad3.getWidth() - 50, pryklad3.getY());
-                    } else if (centerPazlY > pryklad4.getY()) {
-                        myAnswer[3] = selectedRect;
-                        selectedRect.setPosition(pryklad4.getX() + pryklad4.getWidth() - 50, pryklad4.getY());
-                    }
+                    myAnswer[0] = selectedRect;
+                } else if (selectedRect.overlaps(pryklad2Rect)) {
+                    selectedRect.setPosition(connectedPazlX, pryklad2.getY());
+                    checkIsUnique(selectedRect);
+                    myAnswer[1] = selectedRect;
+                } else if (selectedRect.overlaps(pryklad3Rect)) {
+                    selectedRect.setPosition(connectedPazlX, pryklad3.getY());
+                    checkIsUnique(selectedRect);
+                    myAnswer[2] = selectedRect;
+                } else if (selectedRect.overlaps(pryklad4Rect)) {
+                    selectedRect.setPosition(connectedPazlX, pryklad4.getY());
+                    checkIsUnique(selectedRect);
+                    myAnswer[3] = selectedRect;
                 } else {
                     selectedRect.setPosition(selectedRect.getDefaultX(), selectedRect.getDefaultY());
                 }
@@ -377,8 +410,12 @@ public class GameScreen5 implements Screen {
         private void checkIsUnique(MyRect selectedRect) {
             for (int i = 0; i < 4; i++) {
                 if (myAnswer[i] != null) {
-                    if (myAnswer[i].getY() == selectedRect.getY() & (myAnswer[i].getX() == selectedRect.getX())) {
-                        myAnswer[i] = null;
+                    MyRect rect = myAnswer[i];
+                    if (rect.defaultY != selectedRect.defaultY) {
+                        if ((rect.getY() == selectedRect.getY()) & (rect.getX() == selectedRect.getX())) {
+                            rect.setPosition(rect.getDefaultX(), rect.getDefaultY());
+                            myAnswer[i] = null;
+                        }
                     }
                 }
             }

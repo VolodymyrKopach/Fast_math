@@ -20,7 +20,7 @@ public class MyGameClass extends Game {
     }
 
     public void create() {
-        this.setScreen(new GameScreen6(this));
+        this.setScreen(new MenuScreen(this));
     }
 
     public void render() {
@@ -44,23 +44,23 @@ public class MyGameClass extends Game {
         });
     }
 
-    public void loadRewardedVideoAd(){
+    public void loadRewardedVideoAd() {
         adsController.loadRewardedVideoAd();
     }
 
-    public void showRewardedVideoAd(){
+    public void showRewardedVideoAd() {
         adsController.showRewardedVideoAd();
     }
 
-    public void rewardedVideoAd_pause(){
+    public void rewardedVideoAd_pause() {
         adsController.rewardedVideoAd_pause();
     }
 
-    public void rewardedVideoAd_resume(){
+    public void rewardedVideoAd_resume() {
         adsController.rewardedVideoAd_resume();
     }
 
-    public void rewardedVideoAd_destroy(){
+    public void rewardedVideoAd_destroy() {
         adsController.rewardedVideoAd_destroy();
 
     }

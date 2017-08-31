@@ -4,20 +4,25 @@ package kopach.fast.math;
  * Created by vova on 09.06.17.
  */
 
-public interface AdsController{
+public interface AdsController {
 
-    public void showBannerAd();
-    public void hideBannerAd();
+    void showBannerAd();
 
-    public void writeEmailToFirebase(String email);
+    void hideBannerAd();
 
-    public void showInterstitial(Runnable then);
+    void writeEmailToFirebase(String email);
 
-    public void loadRewardedVideoAd();
-    public void showRewardedVideoAd();
-    public boolean hasVideoReward();
+    void showInterstitial(Runnable then);
 
-    public void rewardedVideoAd_pause();
-    public void rewardedVideoAd_resume();
-    public void rewardedVideoAd_destroy();
+    void loadRewardedVideoAd();
+
+    void showRewardedVideoAd();
+
+    boolean hasVideoReward();
+
+    void rewardedVideoAd_pause();
+
+    void rewardedVideoAd_resume();
+
+    void rewardedVideoAd_destroy();
 }
