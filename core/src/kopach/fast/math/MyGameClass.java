@@ -20,7 +20,7 @@ public class MyGameClass extends Game {
     }
 
     public void create() {
-        this.setScreen(new MenuScreen(this));
+        this.setScreen(new GameScreen6(this));
     }
 
     public void render() {

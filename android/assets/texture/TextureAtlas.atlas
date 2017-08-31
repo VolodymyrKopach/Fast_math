@@ -101,21 +101,49 @@ znak pytanya
   orig: 156, 256
   offset: 0, 0
   index: -1
+progress bar line
+  rotate: false
+  xy: 804, 1613
+  size: 420, 80
+  orig: 420, 80
+  offset: 0, 0
+  index: -1
+progress bar border
+  rotate: false
+  xy: 804, 1531
+  size: 420, 80
+  orig: 420, 80
+  offset: 0, 0
+  index: -1
 btn coin
   rotate: false
-  xy: 1220, 1633
+  xy: 824, 1273
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 btn setting
   rotate: false
-  xy: 1478, 1633
+  xy: 824, 1015
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 btn blue press
+  rotate: false
+  xy: 1082, 1273
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+btn menjshe press
+  rotate: false
+  xy: 1082, 1015
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+btn dorivnjue
   rotate: false
   xy: 560, 497
   size: 256, 256
@@ -124,33 +152,26 @@ btn blue press
   index: -1
 btn restart press
   rotate: false
-  xy: 804, 1565
+  xy: 1220, 1761
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
   index: -1
-btn menjshe press
-  rotate: false
-  xy: 824, 1307
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-btn dorivnjue
-  rotate: false
-  xy: 824, 1049
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
 btn dorivnjue press
+  rotate: false
+  xy: 1478, 1633
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+btn krug green
   rotate: false
   xy: 237, 253
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-btn krug green
+btn biljshe
   rotate: false
   xy: 495, 239
   size: 256, 256
@@ -164,149 +185,135 @@ btn restart
   orig: 256, 128
   offset: 0, 0
   index: -1
-btn biljshe
+btn back press
   rotate: false
   xy: 1757, 1763
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-btn back press
+btn krug red
   rotate: false
   xy: 1736, 1505
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-btn krug red
+btn krug
   rotate: false
   xy: 753, 239
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-btn krug
-  rotate: false
-  xy: 1082, 1375
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
 btn back
-  rotate: false
-  xy: 1082, 1117
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-btn replay
   rotate: false
   xy: 1340, 1375
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-btn exit
+btn replay
   rotate: false
   xy: 1340, 1117
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-btn exit press
+btn exit
   rotate: false
   xy: 1598, 1247
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-btn biljshe press
+btn exit press
   rotate: false
   xy: 1598, 989
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-btn menjshe
-  rotate: false
-  xy: 1082, 859
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-btn replay press
+btn biljshe press
   rotate: false
   xy: 1340, 859
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-btn function press
-  rotate: false
-  xy: 824, 791
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-btn 1
-  rotate: false
-  xy: 818, 533
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-btn setting press
+btn menjshe
   rotate: false
   xy: 1598, 731
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
+btn replay press
+  rotate: false
+  xy: 818, 755
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+btn function press
+  rotate: false
+  xy: 818, 497
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+btn 1
+  rotate: false
+  xy: 1076, 757
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+btn setting press
+  rotate: false
+  xy: 1076, 499
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 btn green
   rotate: false
-  xy: 1082, 601
+  xy: 1334, 601
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 btn krug press
   rotate: false
-  xy: 1340, 601
+  xy: 1592, 473
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 coin
   rotate: false
-  xy: 1598, 473
+  xy: 1334, 343
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 btn function
   rotate: false
-  xy: 1076, 343
+  xy: 1076, 241
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 btn themes
   rotate: false
-  xy: 1334, 343
+  xy: 1592, 215
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 btn coin press
   rotate: false
-  xy: 1592, 215
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-btn play
-  rotate: false
-  xy: 1011, 85
+  xy: 1334, 85
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
@@ -320,7 +327,7 @@ btn answer press
   index: -1
 fon
   rotate: false
-  xy: 1269, 213
+  xy: 1592, 85
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -334,28 +341,28 @@ btn press
   index: -1
 screen
   rotate: false
-  xy: 1399, 213
+  xy: 1856, 1115
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 btn answer
   rotate: false
-  xy: 1856, 1115
+  xy: 1856, 985
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 btn
   rotate: false
-  xy: 1856, 985
+  xy: 1856, 855
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 x
   rotate: false
-  xy: 1856, 855
+  xy: 1722, 85
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -376,7 +383,7 @@ btn C press
   index: -1
 score fon
   rotate: false
-  xy: 495, 197
+  xy: 1220, 1719
   size: 160, 40
   orig: 160, 40
   offset: 0, 0
@@ -393,5 +400,17 @@ menu fon
   xy: 2015, 2011
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+
+TextureAtlas2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+btn play
+  rotate: false
+  xy: 1, 1
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1

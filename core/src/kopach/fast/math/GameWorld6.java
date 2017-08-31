@@ -21,7 +21,7 @@ public class GameWorld6 {
     public String string_score = "0", string_timer_game;
 
     public float float_timer = 60, float_timer_wait = 0.5f;
-    int int_timer = 2;  //любе число, головне >0
+    int int_timer;
 
     public boolean bool_answer_right, bool_timer_game, bool_timer_wait_start, bool_timer_wait_answer_wrong, bool_timer_wait_answer_right;
 
@@ -285,6 +285,7 @@ public class GameWorld6 {
 
     public void timer_game(float dt) {
         float_timer -= dt;
+        int_timer = (int) float_timer;
 
         if (float_timer < 0) {
             // що відбудеться коли закінчиться час

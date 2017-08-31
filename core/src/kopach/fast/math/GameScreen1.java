@@ -77,7 +77,7 @@ public class GameScreen1 implements Screen {
                 myGameClass.setScreen(new MenuScreen(myGameClass));
             }
         });
-        Gdx.input.setCatchBackKey(true);
+       // Gdx.input.setCatchBackKey(true);
 
         variables();
 
