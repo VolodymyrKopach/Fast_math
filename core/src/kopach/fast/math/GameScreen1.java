@@ -64,7 +64,9 @@ public class GameScreen1 implements Screen {
     public GameScreen1(final MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
         gameWorld1 = new GameWorld1(this);
+        //створюємо ре-плей
         replay = new ReplayDialog();
+        //ставимо слухач, якщо користувач натискає на кнопку ре-плей,викликається метод OnReplay, так само onBack
         replay.setListener(new ReplayDialog.ReplayListener() {
             @Override
             void onReplay() {
@@ -167,13 +169,18 @@ public class GameScreen1 implements Screen {
         best_score_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
         best_score_value_font.draw(spriteBatch, bestScore + "", best_score_value_x, best_score_value_y);
         spriteBatch.draw(tr_left_border, tr_left_border_x, tr_left_border_y, tr_left_border_width, tr_left_border_height);
+        //перевіряємо, якщо потрібно показувати реплей,то показуємо
         if (replay.isShow()) {
             replay.render(spriteBatch, myScore, bestScore);
         } else {
+            //якщо ні оновлюємо stage з грою
             stage.act(delta);
             stage.draw();
             Gdx.input.setInputProcessor(stage);
         }
+
+        //для того, щоб показати реплей викликаємо метод
+        //replay.show();
         spriteBatch.end();
 
 
@@ -463,9 +470,5 @@ public class GameScreen1 implements Screen {
     void calculateCharCount() {
         float size_to_answer = btn_C_x - 40 - 50 - Utill.getTextWidth(mainFont, gameWorld1.getString_to_screen());
         num_of_char = (int) (size_to_answer / Utill.getTextWidth(mainFont, "8"));
-    }
-
-    public void showRightAnswer() {
-
     }
 }

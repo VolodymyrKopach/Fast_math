@@ -9,18 +9,10 @@ public class MyGameClass extends Game {
 
     public MyGameClass(AdsController adsController) {
         this.adsController = adsController;
-
-
-       /* if (adsController != null) {
-            this.adsController = adsController;
-        } else{
-            this.adsController = adsController;  // new DummyAdsController();
-        }    */
-
     }
 
     public void create() {
-        this.setScreen(new MenuScreen(this));
+        this.setScreen(new GameScreen2(this));
     }
 
     public void render() {
