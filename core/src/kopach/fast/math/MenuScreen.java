@@ -91,9 +91,9 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         texture_menu_fon = new Texture("texture/menu fon hd.png");
 
         stage = new Stage(viewport);
+        gestureDetector = new GestureDetector(this);
 
         inputMultiplexer = new InputMultiplexer();
-        gestureDetector = new GestureDetector(this);
         inputMultiplexer.addProcessor(gestureDetector);
         inputMultiplexer.addProcessor(stage);
 
@@ -126,6 +126,13 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     @Override
     public void show() {
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(gestureDetector);
+        inputMultiplexer.addProcessor(stage);
+
+        Gdx.input.setInputProcessor(inputMultiplexer);
+
+        Gdx.app.log("", "show");
 
     }
 
@@ -133,6 +140,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
     public void render(float delta) {
         Gdx.gl.glClearColor(9, 9, 9, 5);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        Gdx.input.setInputProcessor(inputMultiplexer);
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {Gdx.app.exit();}
 
@@ -151,8 +160,6 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             }else bool_block_game_1 = false;
         }
 
-
-       // orthographicCamera.update();
         spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 
         spriteBatch.begin();
@@ -178,12 +185,13 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     @Override
     public void pause() {
-        Gdx.input.setInputProcessor(stage);
+        Gdx.app.log("", "pause");
     }
 
     @Override
     public void resume() {
-        Gdx.input.setInputProcessor(inputMultiplexer);
+
+        Gdx.app.log("", "resume");
     }
 
     @Override
@@ -198,6 +206,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         text_to_button.dispose();
         stage.dispose();
         spriteBatch.dispose();
+
     }
 
     public void variables() {
@@ -395,14 +404,14 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 clickSound.play();
-                Gdx.input.setInputProcessor(stage);
+               // Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 myGameClass.setScreen(new GameScreen1(myGameClass));
-                Gdx.input.setInputProcessor(inputMultiplexer);
+              //  Gdx.input.setInputProcessor(inputMultiplexer);
 
                 //myGameClass.showRewardedVideoAd();
 
@@ -418,7 +427,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 clickSound.play();
-                Gdx.input.setInputProcessor(stage);
+               // Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
@@ -426,7 +435,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
                 myGameClass.setScreen(new GameScreen2(myGameClass));
 
-                Gdx.input.setInputProcessor(inputMultiplexer);
+             //   Gdx.input.setInputProcessor(inputMultiplexer);
             }
         });
         stage.addActor(btn_play_2);
@@ -439,7 +448,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 clickSound.play();
-                Gdx.input.setInputProcessor(stage);
+               // Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
@@ -447,7 +456,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
                 myGameClass.setScreen(new GameScreen3(myGameClass));
 
-                Gdx.input.setInputProcessor(inputMultiplexer);
+              //  Gdx.input.setInputProcessor(inputMultiplexer);
             }
         });
         stage.addActor(btn_play_3);
@@ -460,7 +469,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 clickSound.play();
-                Gdx.input.setInputProcessor(stage);
+              //  Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
@@ -468,7 +477,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
                 myGameClass.setScreen(new GameScreen4(myGameClass));
 
-                Gdx.input.setInputProcessor(inputMultiplexer);
+              //  Gdx.input.setInputProcessor(inputMultiplexer);
             }
         });
         stage.addActor(btn_play_4);
@@ -485,13 +494,13 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                Gdx.input.setInputProcessor(stage);
+              //  Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-                Gdx.input.setInputProcessor(inputMultiplexer);
+              //  Gdx.input.setInputProcessor(inputMultiplexer);
             }
         });
         stage.addActor(btn_setting);
@@ -508,7 +517,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                Gdx.input.setInputProcessor(stage);
+              //  Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
@@ -530,7 +539,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
             @Override
              public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                Gdx.input.setInputProcessor(stage);
+               //  Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
