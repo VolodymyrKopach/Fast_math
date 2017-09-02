@@ -97,6 +97,8 @@ public class GameScreen3 implements Screen {
         tr_propusk = new TextureRegion(textureAtlas.findRegion("znak pytanya"));
         tr_screen_replay = new TextureRegion(textureAtlas.findRegion("screen replay"));
         //  myGameClass.bannerAdShow();
+
+        MyPreference.setActiveGameAtTheMoment("game 3");
     }
 
     public void show() {

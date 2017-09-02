@@ -2,6 +2,7 @@ package kopach.fast.math;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -81,7 +82,7 @@ public class GameScreen1 implements Screen {
 
         variables();
 
-        spriteBatch = new SpriteBatch(); //myGameClass.spriteBatch;
+        spriteBatch = new SpriteBatch();
 
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
@@ -109,6 +110,8 @@ public class GameScreen1 implements Screen {
         calculateCharCount();
 
         money = MyPreference.getMoney();
+
+        MyPreference.setActiveGameAtTheMoment("game 1");
 
         //  myGameClass.bannerAdShow();
     }
@@ -175,7 +178,6 @@ public class GameScreen1 implements Screen {
             Gdx.input.setInputProcessor(stage);
         }
         spriteBatch.end();
-
 
     }
 
@@ -342,7 +344,6 @@ public class GameScreen1 implements Screen {
                     text_pryklad_x = tr_screen_x + 20;
                     ++myScore;
                     if (myScore > bestScore) {
-                        //  tr_cup = new Texture("tr_cup_yellow.png");
                         bestScore = myScore;
                         MyPreference.setBSGame1(bestScore);
                     }

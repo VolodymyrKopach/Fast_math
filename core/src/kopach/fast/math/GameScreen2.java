@@ -31,6 +31,7 @@ public class GameScreen2 extends Stage implements Screen {
     private static final float btn_height = 173;
     MyGameClass myGameClass;
     public GameWorld2 gameWorld2;
+    ReplayDialog replayDialog;
 
     boolean FLAG_SHOW_QUESTION_MARK = true;
 
@@ -54,12 +55,13 @@ public class GameScreen2 extends Stage implements Screen {
 
     public GameScreen2(final MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
+        replayDialog = new ReplayDialog();
         loadFont();
 
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
         stage = new Stage(viewport);
-        stageReplay = new Stage(viewport);
+      //  stageReplay = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         spriteBatch = new SpriteBatch();
 
@@ -81,6 +83,8 @@ public class GameScreen2 extends Stage implements Screen {
         tr_propusk = new TextureRegion(textureAtlas.findRegion("znak pytanya"));
         tr_screen_replay = new TextureRegion(textureAtlas.findRegion("screen replay"));
         //  myGameClass.bannerAdShow()
+
+        MyPreference.setActiveGameAtTheMoment("game 2");
     }
 
 
@@ -122,20 +126,30 @@ public class GameScreen2 extends Stage implements Screen {
         drawPryklad(gameWorld2.getInt_pryklad_position_1_x());
         spriteBatch.end();
 
+
+        if (replayDialog.isShow()){
+            replayDialog.render(spriteBatch, gameWorld2.int_score, MyPreference.getBSGame2());
+        } else {
+            stage.act(delta);
+            stage.draw();
+            Gdx.input.setInputProcessor(stage);
+        }
+
         stage.act(delta);
         stage.draw();
 
-        stageReplay.getBatch().begin();
-        if (gameWorld2.bool_replay){
-            stageReplay.getBatch().draw(tr_screen_replay,tr_screen_replay_x, tr_screen_replay_y, tr_screen_replay_width, tr_screen_replay_height);
-            replay_score_value_font.draw(stageReplay.getBatch(), gameWorld2.getString_score(), replay_score_value_x, replay_score_value_y);
-            replay_best_score_value_font.draw(stageReplay.getBatch(), MyPreference.getBSGame2() + "", replay_best_score_value_x, replay_best_score_value_y);
-        }
-        stageReplay.getBatch().end();
+      //  stageReplay.getBatch().begin();
+      //  if (gameWorld2.bool_replay){
+           //// replay_true();
+           // stageReplay.getBatch().draw(tr_screen_replay,tr_screen_replay_x, tr_screen_replay_y, tr_screen_replay_width, tr_screen_replay_height);
+           // replay_score_value_font.draw(stageReplay.getBatch(), gameWorld2.getString_score(), replay_score_value_x, replay_score_value_y);
+           // replay_best_score_value_font.draw(stageReplay.getBatch(), MyPreference.getBSGame2() + "", replay_best_score_value_x, replay_best_score_value_y);
+       // }
+      //  stageReplay.getBatch().end();
 
-        if (gameWorld2.bool_replay){
-            replay_true();
-        }else {Gdx.input.setInputProcessor(stage);}
+      //  if (gameWorld2.bool_replay){
+      //      replay_true();
+     //   }else {Gdx.input.setInputProcessor(stage);}
 
     }
 
@@ -428,7 +442,7 @@ public class GameScreen2 extends Stage implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                replay_false();
+               // replay_false();
                 // Gdx.input.setInputProcessor(stage);
             }
         });
@@ -473,7 +487,7 @@ public class GameScreen2 extends Stage implements Screen {
         });
     }
 
-    void replay_true(){
+  /*  void replay_true(){
         if (bool_draw_replay_btn){
             Gdx.input.setInputProcessor(stageReplay);
             //  btn_1.setTouchable(Touchable.disabled);  btn_2.setTouchable(Touchable.disabled);  btn_3.setTouchable(Touchable.disabled);  btn_4.setTouchable(Touchable.disabled);  btn_5.setTouchable(Touchable.disabled);  btn_6.setTouchable(Touchable.disabled);
@@ -492,5 +506,5 @@ public class GameScreen2 extends Stage implements Screen {
         gameWorld2.float_timer = 15;
         gameWorld2.bool_timer_wait_time_out = false;
         gameWorld2.startGame();
-    }
+    }  */
 }

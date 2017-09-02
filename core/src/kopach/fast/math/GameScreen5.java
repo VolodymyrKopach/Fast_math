@@ -109,6 +109,8 @@ public class GameScreen5 implements Screen {
         touchRect.setSize(20, 20);
         long end = System.currentTimeMillis();
         Gdx.app.log("tag", "loadTime:" + (end - start));
+
+        MyPreference.setActiveGameAtTheMoment("game 5");
     }
 
     private void variables() {

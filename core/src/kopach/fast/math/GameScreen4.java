@@ -185,6 +185,8 @@ public class GameScreen4 implements Screen {
             Gdx.input.setInputProcessor(stage);
         }
         spriteBatch.end();
+
+        MyPreference.setActiveGameAtTheMoment("game 4");
     }
 
     @Override

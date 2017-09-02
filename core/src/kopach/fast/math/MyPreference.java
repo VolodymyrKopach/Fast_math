@@ -15,6 +15,17 @@ public class MyPreference {
         preferences = Gdx.app.getPreferences("FastPref");
     }
 
+    public static void setActiveGameAtTheMoment(String activeGame) {
+        preferences.putString("active game at the moment", activeGame);
+        preferences.flush();
+    }
+
+    public static String getActiveGameAtTheMoment() {
+        checkPref();
+        return preferences.getString("active game at the moment", "");
+    }
+
+
     public static int getMoney() {
         checkPref();
         return preferences.getInteger("money", 0);

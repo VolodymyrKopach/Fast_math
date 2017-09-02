@@ -10,16 +10,15 @@ import java.util.Random;
  */
 
 public class GameWorld3 {
-    int int_min_plus, int_max_plus, int_left_result, int_right_result, true_variant, int_left_number_1, int_left_number_2, int_right_number_1, int_right_number_2, int_left_pryklad_1_position_x, int_right_pryklad_1_position_x;
+    int int_min_plus, int_max_plus, int_left_result, int_right_result, int_left_number_1, int_left_number_2, int_right_number_1, int_right_number_2, int_left_pryklad_1_position_x, int_right_pryklad_1_position_x;
 
     public int int_score = 0;
     public String string_input = "=";
     public String string_answer;
 
-    public String string_score = "0", string_timer, string_best_score_this_level;
+    public String string_score = "0", string_best_score_this_level;
 
     public float float_timer = 15, float_timer_wait = 0.5f;
-    ;
     int int_timer = 2;  //любе число, головне >0
 
     public boolean bool_timer_game, boolean_text_button, bool_input, bool_timer_wait_answer_right, bool_timer_wait_time_out, bool_timer_wait_answer_wrong;

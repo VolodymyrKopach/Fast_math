@@ -99,6 +99,8 @@ public class GameScreen6 extends Stage implements Screen {
         //  myGameClass.bannerAdShow()
 
         gameWorld6.startGame();
+
+        MyPreference.setActiveGameAtTheMoment("game 6");
     }
 
     @Override
@@ -136,6 +138,8 @@ public class GameScreen6 extends Stage implements Screen {
         best_score_value_font.draw(spriteBatch, MyPreference.getBSGame6() + "", best_score_value_x, best_score_value_y);
         time_font.draw(spriteBatch, gameWorld6.getTimer_game(), text_time_x, text_time_y);
         //  drawPryklad(gameWorld5.getInt_pryklad_position_1_x());
+
+        Gdx.app.log("text time x", text_time_x+"");
 
         if (replay.isShow()) {
             replay.render(spriteBatch, gameWorld6.int_score, MyPreference.getBSGame6());
