@@ -85,7 +85,7 @@ public class GameScreen4 implements Screen {
             num_of_btn = 24;
         }
         variables();
-        gameWorld4 = new GameWorld4(this, new Listener() {
+        gameWorld4 = new GameWorld4(this, new GameWorld4.TimeListener() {
             @Override
             void time_tick() {
                 createGame();
@@ -102,6 +102,8 @@ public class GameScreen4 implements Screen {
         //  myGameClass.bannerAdShow();
         text_best_score_x = 124;
         money = MyPreference.getMoney();
+
+
         replay = new ReplayDialog();
         replay.setListener(new ReplayDialog.ReplayListener() {
             @Override

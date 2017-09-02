@@ -18,12 +18,12 @@ public class GameWorld4 {
     public float float_timer = 60, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
 
-    public boolean  bool_timer_wait_start; // колит нажав на відповідь, і відповідь правильна, то чекає пів секунди і потім виводить новий приклад
+    public boolean bool_timer_wait_start; // колит нажав на відповідь, і відповідь правильна, то чекає пів секунди і потім виводить новий приклад
     GameScreen4 gameScreen4;
-    Listener listener;
+    TimeListener listener;
 
 
-    public GameWorld4(GameScreen4 gameScreen4, Listener listener) { // запускаться відразу при запуску класа
+    public GameWorld4(GameScreen4 gameScreen4, TimeListener listener) { // запускаться відразу при запуску класа
         this.gameScreen4 = gameScreen4;
         values = new ArrayList<Integer>();
         preferences_game = Gdx.app.getPreferences("My_preferences_game");
@@ -83,7 +83,8 @@ public class GameWorld4 {
             listener.time_tick();
             int_timer = 60;
             float_timer = 60;
-        } else {;
+        } else {
+            ;
         }
     }
 
@@ -100,5 +101,9 @@ public class GameWorld4 {
             float_timer_wait = 0.5f;
             bool_timer_wait_start = false;
         }
+    }
+
+    static abstract class TimeListener {
+        abstract void time_tick();
     }
 }
