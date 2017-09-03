@@ -9,7 +9,6 @@ import com.badlogic.gdx.Preferences;
 
 public class MyPreference {
     static Preferences preferences;
-    private static int BSGame5;
 
     public MyPreference() {
         preferences = Gdx.app.getPreferences("FastPref");

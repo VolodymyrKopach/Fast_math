@@ -173,13 +173,18 @@ public class GameScreen1 implements Screen {
         best_score_value_font.draw(spriteBatch, bestScore + "", best_score_value_x, best_score_value_y);
         spriteBatch.draw(tr_left_border, tr_left_border_x, tr_left_border_y, tr_left_border_width, tr_left_border_height);
         //перевіряємо, якщо потрібно показувати реплей,то показуємо
+
+        stage.act(delta);
+        stage.draw();
+        Gdx.input.setInputProcessor(stage);
+
         if (replay.isShow()) {
             replay.render(spriteBatch, myScore, bestScore);
         } else {
             //якщо ні оновлюємо stage з грою
-            stage.act(delta);
-            stage.draw();
-            Gdx.input.setInputProcessor(stage);
+           // stage.act(delta);
+           // stage.draw();
+           // Gdx.input.setInputProcessor(stage);
         }
 
         //для того, щоб показати реплей викликаємо метод

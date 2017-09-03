@@ -18,7 +18,7 @@ public class GameWorld3 {
 
     public String string_score = "0", string_best_score_this_level;
 
-    public float float_timer = 15, float_timer_wait = 0.5f;
+    public float float_timer = 15.5f, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
 
     public boolean bool_timer_game, boolean_text_button, bool_input, bool_timer_wait_answer_right, bool_timer_wait_time_out, bool_timer_wait_answer_wrong;
@@ -34,16 +34,15 @@ public class GameWorld3 {
     }
 
     public void startGame() {
-        Gdx.app.log("GameWorld3", "запуск гри");
-
-        bool_timer_game = true;
         boolean_text_button = false;
         game();
     }
 
 
     public void game() {
-        Gdx.app.log("GameWorld3", "game level");
+        bool_input = false;
+        bool_timer_game = true;
+        float_timer = 15.5f;
 
         setString_input("");
 
@@ -207,25 +206,8 @@ public class GameWorld3 {
         gameScreen3.text_input_znak_x = gameScreen3.screen_width / 2 - gameScreen3.getTextWidth(gameScreen3.input_znak_font, getString_input()) / 2;
 
         bool_timer_game = false;
-
         bool_timer_wait_answer_wrong = true;
-        gameScreen3.bool_draw_replay_btn = true;
-
     }
-
-
-    public void answer(String input_answer) {  // метод який виконується коли вибираєш якусь відповідь
-        string_input = input_answer;
-        bool_input = true;
-
-        if (input_answer.equals(getString_answer())) {
-            correctAnswer();
-        } else {
-            incorrectAnswer();
-        }
-
-    }
-
 
     public void setString_answer(int int_left_result, int int_right_result) {
         if (int_left_result < int_right_result) {
@@ -236,6 +218,17 @@ public class GameWorld3 {
 
         } else if (int_left_result == int_right_result) {
             string_answer = "=";
+        }
+    }
+
+    public void answer(String input_answer) {  // метод який виконується коли вибираєш якусь відповідь
+        string_input = input_answer;
+        bool_input = true;
+
+        if (input_answer.equals(getString_answer())) {
+            correctAnswer();
+        } else {
+            incorrectAnswer();
         }
     }
 
@@ -292,15 +285,6 @@ public class GameWorld3 {
         return string_score;
     }
 
-    public void setString_best_score_this_level(String string_best_result_this_level) {
-        this.string_best_score_this_level = string_best_result_this_level;
-    }
-
-    public String getString_best_score_this_level() {
-        return string_best_score_this_level;
-    }
-
-
     public void game_timer(float dt) {
         float_timer -= dt;
         int_timer = (int) float_timer;
@@ -309,7 +293,6 @@ public class GameWorld3 {
             bool_timer_wait_time_out = true;
             bool_timer_game = false;
             // що відбудеться коли закінчиться час
-        } else {
         }
 
     }
@@ -324,7 +307,7 @@ public class GameWorld3 {
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
             gameScreen3.replay.show();
-            gameScreen3.bool_draw_replay_btn = true;
+          //  gameScreen3.bool_draw_replay_btn = true;
         }
     }
 

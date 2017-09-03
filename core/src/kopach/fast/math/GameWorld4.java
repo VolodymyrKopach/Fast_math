@@ -15,7 +15,7 @@ public class GameWorld4 {
 
     public Preferences preferences_game, preferences_easy, preferences_normal, preferences_hard;
 
-    public float float_timer = 60, float_timer_wait = 0.5f;
+    public float float_timer = 60f, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
 
     public boolean bool_timer_wait_start; // колит нажав на відповідь, і відповідь правильна, то чекає пів секунди і потім виводить новий приклад

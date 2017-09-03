@@ -19,11 +19,11 @@ public class GameWorld2 {
 
     public String string_score;
 
-    public float float_timer = 15, float_timer_wait = 0.5f;
+    public float float_timer = 15.5f, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
     public int int_pryklad_position_1_x;
 
-    public boolean bool_answer_right, bool_timer_game, bool_replay, bool_timer_wait_answer_wrong, bool_timer_wait_answer_right, bool_timer_wait_time_out;
+    public boolean bool_answer_right, bool_timer_game, bool_timer_wait_answer_wrong, bool_timer_wait_answer_right, bool_timer_wait_time_out;
 
     String string_znak = "", string_propusk_in_pryklad = "";
     public int int_btn_1, int_btn_2, int_btn_3, int_btn_4, int_btn_5, int_btn_6;
@@ -60,6 +60,7 @@ public class GameWorld2 {
         setDifficulti();
 
         bool_timer_game = true;
+        float_timer = 15.5f;
         string_input = "";
 
         int prykladrandom = new Random().nextInt(2);
@@ -143,9 +144,6 @@ public class GameWorld2 {
         setRandomValues();
         setTrueValue(int_true_value);
         gameScreen2.updateButtonText(this);
-
-        Gdx.app.log("GameWorld2", "updateButtonText");
-
     }
 
 
@@ -193,8 +191,6 @@ public class GameWorld2 {
 
 
     public void answer() {  // метод який виконується коли вибираєш якусь відповідь
-        Gdx.app.log("GameWorld2", "answer");
-
         if (string_propusk_in_pryklad.equals("number_1")) {  //  зчитка де немає числа
             if (string_input.equals(String.valueOf(int_number_1))) {
                 answer_right();
@@ -223,14 +219,13 @@ public class GameWorld2 {
         bool_answer_right = true;
         int_score++;
         setHighScore_game(int_score);
-        float_timer = 15;
 
         bool_timer_wait_answer_right = true;
     }
 
     public void answer_wrong() {
         bool_answer_right = false;
-        gameScreen2.bool_draw_replay_btn = true;
+      //  gameScreen2.bool_draw_replay_btn = true;
         bool_timer_wait_answer_wrong = true;
         bool_timer_game = false;
     }
@@ -358,8 +353,10 @@ public class GameWorld2 {
 
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
-            gameScreen2.bool_draw_replay_btn = true;
-            bool_replay = true;
+            gameScreen2.replay.show();
+            bool_timer_wait_time_out = false;
+          //  gameScreen2.bool_draw_replay_btn = true;
+           // bool_replay = true;
 
         }
     }
@@ -371,6 +368,9 @@ public class GameWorld2 {
             float_timer_wait = 0.5f;
             bool_timer_wait_answer_right = false;
             game();
+
+            Gdx.app.log("", "(game) timer wait answer right");
+
         }
     }
 
@@ -380,8 +380,9 @@ public class GameWorld2 {
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
             bool_timer_wait_time_out = false;
-            bool_replay = true;
-            startGame();
+            gameScreen2.replay.show();
+          //  bool_replay = true;
+          //  startGame();
 
         }
     }

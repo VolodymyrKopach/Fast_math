@@ -228,12 +228,13 @@ public class GameScreen5 implements Screen {
         score_value_font.draw(spriteBatch, String.valueOf(gameWorld5.myScore), score_value_x, score_value_y);
         best_score_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
         best_score_value_font.draw(spriteBatch, String.valueOf(gameWorld5.bestScore), best_score_value_x, best_score_value_y);
+
+        Gdx.input.setInputProcessor(stage);
+        stage.act(delta);
+        stage.draw();
+
         if (replay.isShow()) {
             replay.render(spriteBatch, 1, 1);
-        } else {
-            Gdx.input.setInputProcessor(stage);
-            stage.act(delta);
-            stage.draw();
         }
         spriteBatch.end();
     }

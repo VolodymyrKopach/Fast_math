@@ -51,13 +51,15 @@ public class GameScreen3 implements Screen{
 
     public boolean bool_draw_replay_btn;
 
+    ReplayDialog replay;
+
     public GameScreen3(final MyGameClass myGameClass) {   // метод що запускається відразу
         this.myGameClass = myGameClass;
 
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
         stage = new Stage(viewport);
-        stageReplay = new Stage(viewport);
+       // stageReplay = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
         spriteBatch = new SpriteBatch();
@@ -86,6 +88,20 @@ public class GameScreen3 implements Screen{
         //  myGameClass.bannerAdShow();
 
         MyPreference.setActiveGameAtTheMoment("game 3");
+
+        replay = new ReplayDialog();
+        replay.setListener(new ReplayDialog.ReplayListener() {
+            @Override
+            void onReplay() {
+                gameWorld3.int_score = 0;
+                gameWorld3.game();
+            }
+
+            @Override
+            void onBack() {
+                myGameClass.setScreen(new MenuScreen(myGameClass));
+            }
+        });
     }
 
     public void show() {
@@ -97,7 +113,7 @@ public class GameScreen3 implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         actionVariablesXY();
-        update_variables();
+      //  update_variables();
 
         if (gameWorld3.bool_timer_game){
             gameWorld3.game_timer(delta);}
@@ -141,7 +157,15 @@ public class GameScreen3 implements Screen{
         stage.act(delta);
         stage.draw();
 
-        stageReplay.getBatch().begin();
+        if (replay.isShow()) {
+            replay.render(spriteBatch, gameWorld3.int_score, MyPreference.getBSGame3());
+        } else {
+            stage.act(delta);
+            stage.draw();
+            Gdx.input.setInputProcessor(stage);
+        }
+
+      /*  stageReplay.getBatch().begin();
         if (gameWorld3.bool_replay){
             stageReplay.getBatch().draw(tr_screen_replay,tr_screen_replay_x, tr_screen_replay_y, tr_screen_replay_width, tr_screen_replay_height);
             replay_score_value_font.draw(stageReplay.getBatch(), gameWorld3.getString_score(), replay_score_value_x, replay_score_value_y);
@@ -151,7 +175,7 @@ public class GameScreen3 implements Screen{
 
         if (gameWorld3.bool_replay){
             replay_true();
-        }else {Gdx.input.setInputProcessor(stage);}
+        }else {Gdx.input.setInputProcessor(stage);} */
     }
 
     @Override
@@ -383,7 +407,7 @@ public class GameScreen3 implements Screen{
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                replay_false();
+              //  replay_false();
                 // Gdx.input.setInputProcessor(stage);
             }
         });
@@ -428,7 +452,7 @@ public class GameScreen3 implements Screen{
         });
     }
 
-    void replay_true(){
+   /* void replay_true(){
         if (bool_draw_replay_btn){
             Gdx.input.setInputProcessor(stageReplay);
             //  btn_1.setTouchable(Touchable.disabled);  btn_2.setTouchable(Touchable.disabled);  btn_3.setTouchable(Touchable.disabled);  btn_4.setTouchable(Touchable.disabled);  btn_5.setTouchable(Touchable.disabled);  btn_6.setTouchable(Touchable.disabled);
@@ -468,5 +492,5 @@ public class GameScreen3 implements Screen{
             replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 27;
         }
 
-    }
+    }  */
 }

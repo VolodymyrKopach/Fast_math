@@ -31,7 +31,6 @@ public class GameScreen2 extends Stage implements Screen {
     private static final float btn_height = 173;
     MyGameClass myGameClass;
     public GameWorld2 gameWorld2;
-    ReplayDialog replayDialog;
 
     boolean FLAG_SHOW_QUESTION_MARK = true;
 
@@ -40,9 +39,9 @@ public class GameScreen2 extends Stage implements Screen {
 
     Viewport viewport;
     public OrthographicCamera orthographicCamera;
-    public Stage stage, stageReplay;
+    public Stage stage;
 
-    public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_replay, btn_back, btn_function;
+    public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6;
     Skin skin;
     BitmapFont replay_score_value_font, replay_best_score_value_font, score_text_font, score_value_font, font_btn, best_score_text_font, best_score_value_font, text_pryklad_font, text_vidp_right, text_vidp_wrong, time_font;
     SpriteBatch spriteBatch;
@@ -51,11 +50,10 @@ public class GameScreen2 extends Stage implements Screen {
     float btn_replay_width, btn_replay_height, btn_function_width, btn_function_height, btn_back_width, btn_back_height, tr_propusk_width, tr_propusk_height, tr_screen_replay_width, tr_screen_replay_height;
     float btn_replay_x, btn_replay_y, replay_score_value_x, replay_score_value_y, replay_best_score_value_x, replay_best_score_value_y, btn_function_x, btn_function_y, btn_back_x, btn_back_y, best_score_text_x, best_score_text_y, best_score_value_x, best_score_value_y, tr_propusk_y, score_text_x, score_text_y, score_value_x, score_value_y, text_pryklad_y, text_vidp_y, text_time_x, text_time_y, tr_screen_replay_x, tr_screen_replay_y;
 
-    public boolean bool_draw_replay_btn;
+    ReplayDialog replay;
 
     public GameScreen2(final MyGameClass myGameClass) {
         this.myGameClass = myGameClass;
-        replayDialog = new ReplayDialog();
         loadFont();
 
         orthographicCamera = new OrthographicCamera();
@@ -85,6 +83,20 @@ public class GameScreen2 extends Stage implements Screen {
         //  myGameClass.bannerAdShow()
 
         MyPreference.setActiveGameAtTheMoment("game 2");
+
+        replay = new ReplayDialog();
+        replay.setListener(new ReplayDialog.ReplayListener() {
+            @Override
+            void onReplay() {
+                gameWorld2.int_score = 0;
+                gameWorld2.game();
+            }
+
+            @Override
+            void onBack() {
+                myGameClass.setScreen(new MenuScreen(myGameClass));
+            }
+        });
     }
 
 
@@ -97,7 +109,7 @@ public class GameScreen2 extends Stage implements Screen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        update_variables();
+        // update_variables();
 
         if (gameWorld2.bool_timer_game){
             gameWorld2.timer_game(delta);}
@@ -126,17 +138,13 @@ public class GameScreen2 extends Stage implements Screen {
         drawPryklad(gameWorld2.getInt_pryklad_position_1_x());
         spriteBatch.end();
 
-
-        if (replayDialog.isShow()){
-            replayDialog.render(spriteBatch, gameWorld2.int_score, MyPreference.getBSGame2());
-        } else {
-            stage.act(delta);
-            stage.draw();
-            Gdx.input.setInputProcessor(stage);
-        }
-
         stage.act(delta);
         stage.draw();
+        Gdx.input.setInputProcessor(stage);
+
+        if (replay.isShow()){
+            replay.render(spriteBatch, gameWorld2.int_score, MyPreference.getBSGame2());
+        }
 
       //  stageReplay.getBatch().begin();
       //  if (gameWorld2.bool_replay){
@@ -339,7 +347,6 @@ public class GameScreen2 extends Stage implements Screen {
 
 
     public void createTextButtons() {   // налаштування кнопок
-        Gdx.app.log("GameScreen2", "text button");
         btn_1 = drawButton("btn krug press", 1);
         btn_2 = drawButton("btn krug press", 2);
         btn_3 = drawButton("btn krug press", 3);
@@ -349,7 +356,7 @@ public class GameScreen2 extends Stage implements Screen {
 
     }
 
-    void update_variables(){
+   /* void update_variables(){
         float fl_length_string_hightScore = String.valueOf(MyPreference.getBSGame2()).length();
         float fl_textWidth_hightScore = getTextWidth(replay_best_score_value_font, MyPreference.getBSGame2() + "");
         float fl_length_string_score = String.valueOf(gameWorld2.getString_score()).length();
@@ -367,7 +374,7 @@ public class GameScreen2 extends Stage implements Screen {
             replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 27;
         }
 
-    }
+    }  */
 
     private float getButtonX(int position) {
         switch (position) {
@@ -426,7 +433,7 @@ public class GameScreen2 extends Stage implements Screen {
         return textButton;
     }
 
-    void btnInReplay(){
+   /* void btnInReplay(){
         TextButton.TextButtonStyle btn_replay_style = new TextButton.TextButtonStyle();
         btn_replay_style.up = skin.getDrawable("btn replay");
         btn_replay_style.down = skin.getDrawable("btn replay press");

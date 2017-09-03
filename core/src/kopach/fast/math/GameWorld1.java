@@ -21,7 +21,7 @@ public class GameWorld1 {
 
     public Preferences preferences_game1;
 
-    public float float_timer = 15, float_timer_wait;
+    public float float_timer = 15.5f, float_timer_wait;
     //TODO переробити
     int int_timer = 2;  //любе число, головне >0
     int bestScore;
@@ -52,7 +52,7 @@ public class GameWorld1 {
 
     void answerRight() {
         ++int_score;
-        float_timer = 15;
+        float_timer = 15.5f;
         calculateMoney();
         bool_timer_wait_answer_right = true;
         string_input = "";

@@ -179,13 +179,15 @@ public class GameScreen4 implements Screen {
         score_value_font.draw(spriteBatch, myScore + "", score_value_x, score_value_y);
         best_score_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
         best_score_value_font.draw(spriteBatch, bestScore + "", best_score_value_x, best_score_value_y);
+
+        stage.act(delta);
+        stage.draw();
+        Gdx.input.setInputProcessor(stage);
+
         if (replay.isShow()) {
             replay.render(spriteBatch, myScore, bestScore);
-        } else {
-            stage.act(delta);
-            stage.draw();
-            Gdx.input.setInputProcessor(stage);
         }
+
         spriteBatch.end();
 
         MyPreference.setActiveGameAtTheMoment("game 4");

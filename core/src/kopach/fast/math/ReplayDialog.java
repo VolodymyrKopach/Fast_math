@@ -135,7 +135,6 @@ public class ReplayDialog {
         btn_replay = new TextButton(" ", btn_replay_style);
         btn_replay.setSize(btn_replay_size, btn_replay_size);
         btn_replay.setPosition(btn_replay_x, btn_replay_y);
-        Gdx.app.log("", btn_replay_x + "");
         btn_replay.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -331,7 +330,7 @@ public class ReplayDialog {
             } else f_scorePoint = pointsInGame.INT_game5FifthScorePoint;
 
 
-        }if (MyPreference.getActiveGameAtTheMoment().equals("game 3")) {
+        }if (MyPreference.getActiveGameAtTheMoment().equals("game 6")) {
             if (bestScore > pointsInGame.INT_game6FourthScorePoint) {
                 f_scorePoint = pointsInGame.INT_game6FifthScorePoint;
 
