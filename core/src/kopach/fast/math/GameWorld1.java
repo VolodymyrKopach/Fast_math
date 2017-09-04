@@ -132,6 +132,8 @@ public class GameWorld1 {
         if (float_timer < 0) {
             gameScreen1.replay.show();
 
+            string_input = int_result+""; //Доробити, бо саме так не працює
+
             bool_timer_game = false;
             bool_timer_wait_answer_wrong = true;
         } else {

@@ -59,7 +59,7 @@ public class GameScreen2 extends Stage implements Screen {
         orthographicCamera = new OrthographicCamera();
         viewport = new StretchViewport(screen_width, screen_height, orthographicCamera);
         stage = new Stage(viewport);
-      //  stageReplay = new Stage(viewport);
+        //  stageReplay = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         spriteBatch = new SpriteBatch();
 
@@ -111,15 +111,19 @@ public class GameScreen2 extends Stage implements Screen {
 
         // update_variables();
 
-        if (gameWorld2.bool_timer_game){
-            gameWorld2.timer_game(delta);}
+        if (gameWorld2.bool_timer_game) {
+            gameWorld2.timer_game(delta);
+        }
 
-        if (gameWorld2.bool_timer_wait_time_out){
-            gameWorld2.timer_wait_time_out(delta);}
+        if (gameWorld2.bool_timer_wait_time_out) {
+            gameWorld2.timer_wait_time_out(delta);
+        }
         if (gameWorld2.bool_timer_wait_answer_right) {
-            gameWorld2.timer_wait_answer_right(delta);}
+            gameWorld2.timer_wait_answer_right(delta);
+        }
         if (gameWorld2.bool_timer_wait_answer_wrong) {
-            gameWorld2.timer_wait_answer_wrong(delta);}
+            gameWorld2.timer_wait_answer_wrong(delta);
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {    //  спрацьовує коли нажато Back
             myGameClass.setScreen(new MenuScreen(myGameClass));
@@ -142,23 +146,9 @@ public class GameScreen2 extends Stage implements Screen {
         stage.draw();
         Gdx.input.setInputProcessor(stage);
 
-        if (replay.isShow()){
+        if (replay.isShow()) {
             replay.render(spriteBatch, gameWorld2.int_score, MyPreference.getBSGame2());
         }
-
-      //  stageReplay.getBatch().begin();
-      //  if (gameWorld2.bool_replay){
-           //// replay_true();
-           // stageReplay.getBatch().draw(tr_screen_replay,tr_screen_replay_x, tr_screen_replay_y, tr_screen_replay_width, tr_screen_replay_height);
-           // replay_score_value_font.draw(stageReplay.getBatch(), gameWorld2.getString_score(), replay_score_value_x, replay_score_value_y);
-           // replay_best_score_value_font.draw(stageReplay.getBatch(), MyPreference.getBSGame2() + "", replay_best_score_value_x, replay_best_score_value_y);
-       // }
-      //  stageReplay.getBatch().end();
-
-      //  if (gameWorld2.bool_replay){
-      //      replay_true();
-     //   }else {Gdx.input.setInputProcessor(stage);}
-
     }
 
     private void drawPryklad(int position_x) {
@@ -322,12 +312,12 @@ public class GameScreen2 extends Stage implements Screen {
         text_time_x = screen_width / 2 - 27;
         score_text_x = screen_width - 180;
         score_value_x = score_text_x + 126;
-        tr_screen_replay_x = screen_width/2 - tr_screen_replay_width/2;
-        btn_replay_x = screen_width/2 - btn_replay_width/2;
+        tr_screen_replay_x = screen_width / 2 - tr_screen_replay_width / 2;
+        btn_replay_x = screen_width / 2 - btn_replay_width / 2;
         btn_function_x = btn_replay_x + btn_replay_width + 70;
         btn_back_x = btn_replay_x - 70 - btn_back_width;
-        replay_score_value_x = screen_width/2 - 30;
-        replay_best_score_value_x = screen_width/2 - 30;
+        replay_score_value_x = screen_width / 2 - 30;
+        replay_best_score_value_x = screen_width / 2 - 30;
 
         best_score_text_y = screen_height - 40;
         best_score_value_y = best_score_text_y + 4;
@@ -355,26 +345,6 @@ public class GameScreen2 extends Stage implements Screen {
         btn_6 = drawButton("btn krug press", 6);
 
     }
-
-   /* void update_variables(){
-        float fl_length_string_hightScore = String.valueOf(MyPreference.getBSGame2()).length();
-        float fl_textWidth_hightScore = getTextWidth(replay_best_score_value_font, MyPreference.getBSGame2() + "");
-        float fl_length_string_score = String.valueOf(gameWorld2.getString_score()).length();
-        float fl_textWidth_Score = getTextWidth(replay_score_value_font, gameWorld2.getString_score() + "");
-
-        if (fl_length_string_hightScore == 2){
-            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2) - 20;
-        }else if (fl_length_string_hightScore == 3){
-            replay_best_score_value_x = (screen_width/2 - fl_textWidth_hightScore/2)  - 27;
-        }
-
-        if (fl_length_string_score == 2){
-            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 20;
-        }else if (fl_length_string_score == 3){
-            replay_score_value_x = (screen_width/2 - fl_textWidth_Score/2) - 27;
-        }
-
-    }  */
 
     private float getButtonX(int position) {
         switch (position) {
@@ -433,85 +403,4 @@ public class GameScreen2 extends Stage implements Screen {
         return textButton;
     }
 
-   /* void btnInReplay(){
-        TextButton.TextButtonStyle btn_replay_style = new TextButton.TextButtonStyle();
-        btn_replay_style.up = skin.getDrawable("btn replay");
-        btn_replay_style.down = skin.getDrawable("btn replay press");
-        btn_replay_style.font = font_btn;
-
-        btn_replay = new TextButton(" ", btn_replay_style);
-        btn_replay.setSize(btn_replay_width, btn_replay_height);
-        btn_replay.setPosition(btn_replay_x, btn_replay_y);
-        btn_replay.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-               // replay_false();
-                // Gdx.input.setInputProcessor(stage);
-            }
-        });
-
-        TextButton.TextButtonStyle btn_back_style = new TextButton.TextButtonStyle();
-        btn_back_style.up = skin.getDrawable("btn back");
-        btn_back_style.down = skin.getDrawable("btn back press");
-        btn_back_style.font = font_btn;
-
-        btn_back = new TextButton(" ", btn_back_style);
-        btn_back.setSize(btn_back_width, btn_back_height);
-        btn_back.setPosition(btn_back_x, btn_back_y);
-        btn_back.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                myGameClass.setScreen(new MenuScreen(myGameClass));
-                // Gdx.input.setInputProcessor(stage);
-            }
-        });
-
-        TextButton.TextButtonStyle btn_function_style = new TextButton.TextButtonStyle();
-        btn_function_style.up = skin.getDrawable("btn function");
-        btn_function_style.down = skin.getDrawable("btn function press");
-        btn_function_style.font = font_btn;
-
-        btn_function = new TextButton(" ", btn_function_style);
-        btn_function.setSize(btn_function_width, btn_function_height);
-        btn_function.setPosition(btn_function_x, btn_function_y);
-        btn_function.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Gdx.input.setInputProcessor(stage);
-            }
-        });
-    }
-
-  /*  void replay_true(){
-        if (bool_draw_replay_btn){
-            Gdx.input.setInputProcessor(stageReplay);
-            //  btn_1.setTouchable(Touchable.disabled);  btn_2.setTouchable(Touchable.disabled);  btn_3.setTouchable(Touchable.disabled);  btn_4.setTouchable(Touchable.disabled);  btn_5.setTouchable(Touchable.disabled);  btn_6.setTouchable(Touchable.disabled);
-            btnInReplay();
-            stageReplay.addActor(btn_replay);   stageReplay.addActor(btn_back);   stageReplay.addActor(btn_function);
-            bool_draw_replay_btn = false;
-        }
-
-        stageReplay.act();
-        stageReplay.draw();
-    }
-
-    void replay_false(){
-        gameWorld2.bool_replay = false;
-        btn_replay.remove();  btn_back.remove();  btn_function.remove();
-        gameWorld2.float_timer = 15;
-        gameWorld2.bool_timer_wait_time_out = false;
-        gameWorld2.startGame();
-    }  */
 }

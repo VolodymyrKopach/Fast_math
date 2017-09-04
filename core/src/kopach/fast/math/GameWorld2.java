@@ -59,6 +59,7 @@ public class GameWorld2 {
 
         setDifficulti();
 
+        bool_timer_wait_answer_wrong = false;
         bool_timer_game = true;
         float_timer = 15.5f;
         string_input = "";
@@ -350,6 +351,7 @@ public class GameWorld2 {
 
     public void timer_wait_time_out(float dt) {
         float_timer_wait -= dt;
+        Gdx.app.log("", "timer wait time out");
 
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
@@ -383,6 +385,8 @@ public class GameWorld2 {
             gameScreen2.replay.show();
           //  bool_replay = true;
           //  startGame();
+
+            Gdx.app.log("", "timer wait answer wrong");
 
         }
     }

@@ -39,21 +39,21 @@ public class GameScreen1 implements Screen {
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0,
             btn_C, btn_minus;
     Skin skin;
-    BitmapFont font_btn, text_score, text_best_score, text_time;
+    BitmapFont font_btn, text_score, text_best_score;
     SpriteBatch spriteBatch;
     final String font_chars = "абвгдежзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕ" +
             "ЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
 
     int num_of_char;
 
-    BitmapFont mainFont, answerFont, score_text_font, score_value_font, best_score_text_font, best_score_value_font;
+    BitmapFont time_font, mainFont, answerFont, score_text_font, score_value_font, best_score_text_font, best_score_value_font;
 
     float screen_width = 720, screen_height = 1280;
     float width_btn, height_btn, width_btn_C, height_btn_C, tr_screen_width, tr_screen_height, tr_left_border_width, tr_left_border_height;
     float width_X;
     float vidstan_width, vidstan_height;
     float btn_C_x, btn_C_y, btn_minus_x, btn_minus_y, btn_answer_x, btn_answer_y, tr_X_x, tr_X_y, tr_screen_x, tr_screen_y, tr_left_border_x, tr_left_border_y;
-    float best_score_text_x, best_score_text_y, best_score_value_x, best_score_value_y, score_text_x, score_text_y, score_value_x, score_value_y, text_pryklad_x, text_pryklad_y, text_vidp_x, text_time_x, text_time_y;
+    float best_score_text_x, best_score_text_y, best_score_value_x, best_score_value_y, score_text_x, score_text_y, score_value_x, score_value_y, text_pryklad_x, text_pryklad_y, text_vidp_x, time_font_x, time_font_y;
     float icon_y;
 
     int money;
@@ -166,7 +166,7 @@ public class GameScreen1 implements Screen {
 
         mainFont.draw(spriteBatch, gameWorld1.getString_to_screen(), text_pryklad_x, text_pryklad_y);
         mainFont.draw(spriteBatch, gameWorld1.getString_input(), text_pryklad_x + 20 + Utill.getTextWidth(mainFont, gameWorld1.getString_to_screen()), text_pryklad_y);
-        text_time.draw(spriteBatch, String.valueOf(gameWorld1.int_timer), text_time_x, text_time_y);
+        time_font.draw(spriteBatch, String.valueOf(gameWorld1.int_timer), time_font_x, time_font_y);
         score_text_font.draw(spriteBatch, "Score: ", score_text_x, score_text_y);
         score_value_font.draw(spriteBatch, gameWorld1.getString_score(), score_value_x, score_value_y);
         best_score_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
@@ -223,7 +223,7 @@ public class GameScreen1 implements Screen {
         mainFont.dispose();
         text_score.dispose();
         text_best_score.dispose();
-        text_time.dispose();
+        time_font.dispose();
         spriteBatch.dispose();
     }
 
@@ -240,8 +240,8 @@ public class GameScreen1 implements Screen {
         best_score_value_font = new BitmapFont(Gdx.files.internal("bitmapfont/blue bold 70.fnt"), Gdx.files.internal("bitmapfont/blue bold 70.png"), false);
         best_score_value_font.getData().setScale(0.6f, 0.6f);
 
-        text_time = new BitmapFont(Gdx.files.internal("bitmapfont/game text time.fnt"), Gdx.files.internal("bitmapfont/game text time.png"), false);
-        text_time.getData().setScale(1.3f, 1.3f);
+        time_font = new BitmapFont(Gdx.files.internal("bitmapfont/black bold 70.fnt"), Gdx.files.internal("bitmapfont/black bold 70.png"), false);
+        time_font.getData().setScale(0.7f, 0.7f);
 
         width_btn = 185;
         height_btn = 185;
@@ -266,7 +266,7 @@ public class GameScreen1 implements Screen {
         best_score_value_x = 90;
         score_text_x = screen_width - 180;
         score_value_x = score_text_x + 126;
-        text_time_x = screen_width / 2 - 27;
+        time_font_x = screen_width / 2 - 27;
         text_pryklad_x = tr_screen_x + 20;
         text_vidp_x = btn_C_x - 200;
 
@@ -277,7 +277,7 @@ public class GameScreen1 implements Screen {
 
         btn_minus_y = tr_screen_y - height_btn - 98 - vidstan_height * 3 - height_btn * 3;
         btn_answer_y = tr_screen_y - height_btn - 98 - vidstan_height * 3 - height_btn * 3;
-        text_time_y = screen_height - 20;
+        time_font_y = screen_height - 20;
         score_text_y = screen_height - 40;
         score_value_y = score_text_y + 4;
         best_score_text_y = screen_height - 40;
