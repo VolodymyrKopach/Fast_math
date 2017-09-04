@@ -2,11 +2,11 @@ package kopach.fast.math;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -80,7 +80,7 @@ public class GameScreen1 implements Screen {
                 myGameClass.setScreen(new MenuScreen(myGameClass));
             }
         });
-       // Gdx.input.setCatchBackKey(true);
+        // Gdx.input.setCatchBackKey(true);
 
         variables();
 
@@ -182,9 +182,9 @@ public class GameScreen1 implements Screen {
             replay.render(spriteBatch, myScore, bestScore);
         } else {
             //якщо ні оновлюємо stage з грою
-           // stage.act(delta);
-           // stage.draw();
-           // Gdx.input.setInputProcessor(stage);
+            // stage.act(delta);
+            // stage.draw();
+            // Gdx.input.setInputProcessor(stage);
         }
 
         //для того, щоб показати реплей викликаємо метод
