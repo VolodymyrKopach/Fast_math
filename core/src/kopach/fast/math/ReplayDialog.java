@@ -1,6 +1,7 @@
 package kopach.fast.math;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,6 +25,7 @@ public class ReplayDialog {
     private TextureRegion tr_screen_replay;
     private TextureRegion tr_progressBarLine, tr_progressBarBorder;
     private TextureRegion tr_coin;
+    private int i_addCoin;
     private float tr_progressBarLine_width, tr_progressBarLine_height;
     private float tr_progressBarBorder_width, tr_progressBarBorder_height;
     private float tr_coin_width, tr_coin_height;
@@ -37,11 +39,17 @@ public class ReplayDialog {
     private float f_scorePoint;
     private BitmapFont replay_best_score_value_font;
     private BitmapFont replay_score_value_font;
+    private BitmapFont font_scorePoint;
+    private BitmapFont font_scoreToPoint;
+    private BitmapFont font_coin;
     private float tr_screen_replay_x;
     private float tr_screen_replay_y;
     private int replay_best_score_value_y;
     private int replay_score_value_y;
     private int score_value_x;
+    private float font_scoreToPoint_x, font_scoreToPoint_y;
+    private float font_scorePoint_x, font_scorePoint_y;
+    private float font_coin_x, font_coin_y;
     private OrthographicCamera orthographicCamera;
     private Viewport viewport;
     private float btn_replay_x;
@@ -98,12 +106,18 @@ public class ReplayDialog {
                 tr_progressBarLine_x = screen_width/2 - tr_progressBarLine_width/2;
                 tr_progressBarBorder_x = screen_width/2 - tr_progressBarBorder_width/2;
                 tr_coin_x = screen_width/2 - tr_coin_width/2;
+                font_coin_x = tr_coin_x + tr_coin_width + 10;
 
                 replay_score_value_font = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
                 replay_score_value_font.getData().setScale(0.8f, 0.8f);
 
                 replay_best_score_value_font = new BitmapFont(Gdx.files.internal("bitmapfont/blue bold 70.fnt"), Gdx.files.internal("bitmapfont/blue bold 70.png"), false);
                 replay_best_score_value_font.getData().setScale(0.9f, 0.9f);
+
+                font_scoreToPoint = Utill.createNormalFont(40, Color.BLACK);
+                font_scorePoint = Utill.createBoldFont(40, Color.BLACK);
+                font_coin = Utill.createBoldFont(33, Color.WHITE);
+
 
                 tr_screen_replay_x = screen_width / 2 - screen_width / 2;
                 tr_screen_replay_y = 10;
@@ -115,7 +129,14 @@ public class ReplayDialog {
 
                 tr_progressBarLine_y = 940;
                 tr_progressBarBorder_y = 940;
-                tr_coin_y = 950;
+                tr_coin_y = 955;
+                font_coin_y = 988;
+
+                font_scoreToPoint_x =  screen_width/2 - Utill.getTextWidth(font_scorePoint, "50/90")/2;;
+                font_scoreToPoint_y = 1070;
+                font_scorePoint_x = font_scoreToPoint_x+Utill.getTextWidth(font_scorePoint, "50");
+                font_scorePoint_y = 1070;
+
             }
         };
         Gdx.app.postRunnable(r);
@@ -194,7 +215,7 @@ public class ReplayDialog {
         });
     }
 
-    public void render(SpriteBatch spriteBatch, int myScore, int bestScore) {
+    public void render(int myScore, int bestScore) {
         getInfoActiveGameAtTheMoment(myScore, bestScore);
         updateInRender(bestScore);
 
@@ -206,6 +227,9 @@ public class ReplayDialog {
             stageReplay.getBatch().draw(tr_coin, tr_coin_x, tr_coin_y, tr_coin_width, tr_coin_height);
             replay_score_value_font.draw(stageReplay.getBatch(), myScore + "", score_value_x, replay_score_value_y);
             replay_best_score_value_font.draw(stageReplay.getBatch(), bestScore + "", score_value_x, replay_best_score_value_y);
+            font_scoreToPoint.draw(stageReplay.getBatch(), bestScore + "", font_scoreToPoint_x, font_scoreToPoint_y);
+            font_scorePoint.draw(stageReplay.getBatch(), "/" + (int)f_scorePoint, font_scorePoint_x, font_scorePoint_y);
+            font_coin.draw(stageReplay.getBatch(), i_addCoin + "", font_coin_x, font_coin_y);
 
             stageReplay.getBatch().end();
 
@@ -241,112 +265,139 @@ public class ReplayDialog {
         if (MyPreference.getActiveGameAtTheMoment().equals("game 1")){
             if (bestScore > pointsInGame.INT_game1FourthScorePoint){
                 f_scorePoint = pointsInGame.INT_game1FifthScorePoint;
+                i_addCoin = pointsInGame.INT_game1FifthAddCoin;
 
             }if (bestScore > pointsInGame.INT_game1ThirdScorePoint){
                 f_scorePoint = pointsInGame.INT_game1FourthScorePoint;
+                i_addCoin = pointsInGame.INT_game1FourthAddCoin;
 
             }if (bestScore > pointsInGame.INT_game1SecondScorePoint){
                 f_scorePoint = pointsInGame.INT_game1ThirdScorePoint;
+                i_addCoin = pointsInGame.INT_game1ThirdAddCoin;
 
             }if (bestScore > pointsInGame.INT_game1FirstScorePoint){
                 f_scorePoint = pointsInGame.INT_game1SecondScorePoint;
+                i_addCoin = pointsInGame.INT_game1SecondAddCoin;
 
-            }else f_scorePoint = pointsInGame.INT_game1FifthScorePoint;
+            }if (bestScore > 0){
+                f_scorePoint = pointsInGame.INT_game1FirstScorePoint;
+                i_addCoin = pointsInGame.INT_game1FirstAddCoin;
+            }
 
 
         } if (MyPreference.getActiveGameAtTheMoment().equals("game 2")) {
-            if (bestScore > pointsInGame.INT_game2FourthScorePoint) {
+            if (bestScore > pointsInGame.INT_game2FourthScorePoint){
                 f_scorePoint = pointsInGame.INT_game2FifthScorePoint;
+                i_addCoin = pointsInGame.INT_game2FifthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game2ThirdScorePoint) {
+            }if (bestScore > pointsInGame.INT_game2ThirdScorePoint){
                 f_scorePoint = pointsInGame.INT_game2FourthScorePoint;
+                i_addCoin = pointsInGame.INT_game2FourthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game2SecondScorePoint) {
+            }if (bestScore > pointsInGame.INT_game2SecondScorePoint){
                 f_scorePoint = pointsInGame.INT_game2ThirdScorePoint;
+                i_addCoin = pointsInGame.INT_game2ThirdAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game2FirstScorePoint) {
+            }if (bestScore > pointsInGame.INT_game2FirstScorePoint){
                 f_scorePoint = pointsInGame.INT_game2SecondScorePoint;
+                i_addCoin = pointsInGame.INT_game2SecondAddCoin;
 
-            } else f_scorePoint = pointsInGame.INT_game2FifthScorePoint;
+            }if (bestScore > 0){
+                f_scorePoint = pointsInGame.INT_game2FirstScorePoint;
+                i_addCoin = pointsInGame.INT_game2FirstAddCoin;
+            }
 
 
         }if (MyPreference.getActiveGameAtTheMoment().equals("game 3")) {
-            if (bestScore > pointsInGame.INT_game3FourthScorePoint) {
+            if (bestScore > pointsInGame.INT_game3FourthScorePoint){
                 f_scorePoint = pointsInGame.INT_game3FifthScorePoint;
+                i_addCoin = pointsInGame.INT_game3FifthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game3ThirdScorePoint) {
+            }if (bestScore > pointsInGame.INT_game3ThirdScorePoint){
                 f_scorePoint = pointsInGame.INT_game3FourthScorePoint;
+                i_addCoin = pointsInGame.INT_game3FourthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game3SecondScorePoint) {
+            }if (bestScore > pointsInGame.INT_game3SecondScorePoint){
                 f_scorePoint = pointsInGame.INT_game3ThirdScorePoint;
+                i_addCoin = pointsInGame.INT_game3ThirdAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game3FirstScorePoint) {
+            }if (bestScore > pointsInGame.INT_game3FirstScorePoint){
                 f_scorePoint = pointsInGame.INT_game3SecondScorePoint;
+                i_addCoin = pointsInGame.INT_game3SecondAddCoin;
 
-            } else f_scorePoint = pointsInGame.INT_game3FifthScorePoint;
+            }if (bestScore > 0){
+                f_scorePoint = pointsInGame.INT_game3FirstScorePoint;
+                i_addCoin = pointsInGame.INT_game3FirstAddCoin;
+            }
 
 
         }if (MyPreference.getActiveGameAtTheMoment().equals("game 4")) {
-            if (bestScore > pointsInGame.INT_game4FourthScorePoint) {
+            if (bestScore > pointsInGame.INT_game4FourthScorePoint){
                 f_scorePoint = pointsInGame.INT_game4FifthScorePoint;
+                i_addCoin = pointsInGame.INT_game4FifthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game4ThirdScorePoint) {
+            }if (bestScore > pointsInGame.INT_game4ThirdScorePoint){
                 f_scorePoint = pointsInGame.INT_game4FourthScorePoint;
+                i_addCoin = pointsInGame.INT_game4FourthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game4SecondScorePoint) {
+            }if (bestScore > pointsInGame.INT_game4SecondScorePoint){
                 f_scorePoint = pointsInGame.INT_game4ThirdScorePoint;
+                i_addCoin = pointsInGame.INT_game4ThirdAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game4FirstScorePoint) {
+            }if (bestScore > pointsInGame.INT_game4FirstScorePoint){
                 f_scorePoint = pointsInGame.INT_game4SecondScorePoint;
+                i_addCoin = pointsInGame.INT_game4SecondAddCoin;
 
-            } else f_scorePoint = pointsInGame.INT_game4FifthScorePoint;
+            }if (bestScore > 0){
+                f_scorePoint = pointsInGame.INT_game4FirstScorePoint;
+                i_addCoin = pointsInGame.INT_game4FirstAddCoin;
+            }
 
 
         }if (MyPreference.getActiveGameAtTheMoment().equals("game 5")) {
-            if (bestScore > pointsInGame.INT_game5FourthScorePoint) {
+            if (bestScore > pointsInGame.INT_game5FourthScorePoint){
                 f_scorePoint = pointsInGame.INT_game5FifthScorePoint;
+                i_addCoin = pointsInGame.INT_game5FifthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game5ThirdScorePoint) {
+            }if (bestScore > pointsInGame.INT_game5ThirdScorePoint){
                 f_scorePoint = pointsInGame.INT_game5FourthScorePoint;
+                i_addCoin = pointsInGame.INT_game5FourthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game5SecondScorePoint) {
+            }if (bestScore > pointsInGame.INT_game5SecondScorePoint){
                 f_scorePoint = pointsInGame.INT_game5ThirdScorePoint;
+                i_addCoin = pointsInGame.INT_game5ThirdAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game5FirstScorePoint) {
+            }if (bestScore > pointsInGame.INT_game5FirstScorePoint){
                 f_scorePoint = pointsInGame.INT_game5SecondScorePoint;
+                i_addCoin = pointsInGame.INT_game5SecondAddCoin;
 
-            } else f_scorePoint = pointsInGame.INT_game5FifthScorePoint;
+            }if (bestScore > 0){
+                f_scorePoint = pointsInGame.INT_game5FirstScorePoint;
+                i_addCoin = pointsInGame.INT_game5FirstAddCoin;
+            }
 
 
         }if (MyPreference.getActiveGameAtTheMoment().equals("game 6")) {
-            if (bestScore > pointsInGame.INT_game6FourthScorePoint) {
+            if (bestScore > pointsInGame.INT_game6FourthScorePoint){
                 f_scorePoint = pointsInGame.INT_game6FifthScorePoint;
+                i_addCoin = pointsInGame.INT_game6FifthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game6ThirdScorePoint) {
+            }if (bestScore > pointsInGame.INT_game6ThirdScorePoint){
                 f_scorePoint = pointsInGame.INT_game6FourthScorePoint;
+                i_addCoin = pointsInGame.INT_game6FourthAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game6SecondScorePoint) {
+            }if (bestScore > pointsInGame.INT_game6SecondScorePoint){
                 f_scorePoint = pointsInGame.INT_game6ThirdScorePoint;
+                i_addCoin = pointsInGame.INT_game6ThirdAddCoin;
 
-            }
-            if (bestScore > pointsInGame.INT_game6FirstScorePoint) {
+            }if (bestScore > pointsInGame.INT_game6FirstScorePoint){
                 f_scorePoint = pointsInGame.INT_game6SecondScorePoint;
+                i_addCoin = pointsInGame.INT_game6SecondAddCoin;
 
-            } else f_scorePoint = pointsInGame.INT_game6FifthScorePoint;
+            }if (bestScore > 0){
+                f_scorePoint = pointsInGame.INT_game6FirstScorePoint;
+                i_addCoin = pointsInGame.INT_game6FirstAddCoin;
+            }
         }
     }
 

@@ -147,7 +147,7 @@ public class GameScreen2 extends Stage implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         if (replay.isShow()) {
-            replay.render(spriteBatch, gameWorld2.int_score, MyPreference.getBSGame2());
+            replay.render(gameWorld2.int_score, MyPreference.getBSGame2());
         }
     }
 

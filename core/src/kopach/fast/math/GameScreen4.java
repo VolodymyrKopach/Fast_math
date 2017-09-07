@@ -59,7 +59,7 @@ public class GameScreen4 implements Screen {
 
     float screen_width = 720, screen_height = 1280;
     int text_best_score_x;
-    float best_score_text_x, best_score_text_y, best_score_value_x, best_score_value_y, score_text_x, score_text_y, score_value_x, score_value_y, text_time_x, text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
+    float best_score_text_x, best_score_text_y, best_score_value_x, best_score_value_y, score_text_x, score_text_y, score_value_x, score_value_y, text_time_x, text_time_y, text_text_ne_prav_vidp_x, text_text_ne_prav_vidp_y, text_ne_prav_vidp_y;
 
     public GameScreen4(final MyGameClass myGameClass) {   // метод що запускається відразу
         this.myGameClass = myGameClass;
@@ -174,21 +174,21 @@ public class GameScreen4 implements Screen {
         spriteBatch.begin();
         spriteBatch.draw(tr_fon, 0, 0, screen_width, screen_height);
 
-        text_time.draw(spriteBatch, gameWorld4.getTimer_game(), (screen_width / 2) - Utill.getTextWidth(text_time, gameWorld4.getTimer_game()) / 2, text_text_ne_prav_vidp_y);
+        text_time.draw(spriteBatch, gameWorld4.getTimer_game(), (screen_width / 2) - Utill.getTextWidth(text_time, gameWorld4.getTimer_game()) / 2, text_time_y);
         score_text_font.draw(spriteBatch, "Score: ", score_text_x, score_text_y);
         score_value_font.draw(spriteBatch, myScore + "", score_value_x, score_value_y);
         best_score_text_font.draw(spriteBatch, "BS: ", best_score_text_x, best_score_text_y);
         best_score_value_font.draw(spriteBatch, bestScore + "", best_score_value_x, best_score_value_y);
 
+        spriteBatch.end();
+
+        Gdx.input.setInputProcessor(stage);
         stage.act(delta);
         stage.draw();
-        Gdx.input.setInputProcessor(stage);
 
         if (replay.isShow()) {
-            replay.render(spriteBatch, myScore, bestScore);
+            replay.render(myScore, bestScore);
         }
-
-        spriteBatch.end();
 
         MyPreference.setActiveGameAtTheMoment("game 4");
     }
@@ -264,6 +264,7 @@ public class GameScreen4 implements Screen {
         score_value_y = score_text_y + 4;
         best_score_text_y = screen_height - 40;
         best_score_value_y = best_score_text_y + 4;
+        text_time_y = screen_height - 30;
 
         bestScore = MyPreference.getBSGame4();
 
@@ -377,6 +378,7 @@ public class GameScreen4 implements Screen {
 
             //TODO якщо вибрана правильна відповідь, збільшуємо score  перевіряємо рахунок для нарахування монет
             ++myScore;
+            gameWorld4.i_boundaryOfGenerationNumbers += 5; // При кожному проходжені рівня межа генерації чисел збільшується на 5
             calculateMoney();
             if (myScore > bestScore) {
                 bestScore = myScore;
@@ -394,7 +396,7 @@ public class GameScreen4 implements Screen {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

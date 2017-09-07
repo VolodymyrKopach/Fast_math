@@ -27,7 +27,7 @@ public class MenuItem extends Actor {
     public MenuItem(Texture icon, String text) {
         this.text = text;
         tex = new TextureRegion(icon, 0, 0, icon.getWidth(), icon.getHeight());
-        font = Utill.createFont(Color.BLACK);
+        font = Utill.createNormalFont(22, Color.BLACK);
         fon = new Texture("white.png");
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle(new TextureRegionDrawable(new TextureRegion(icon)), new TextureRegionDrawable(new TextureRegion(icon)), new TextureRegionDrawable(new TextureRegion(icon)), new BitmapFont());
         button = new TextButton("", style);

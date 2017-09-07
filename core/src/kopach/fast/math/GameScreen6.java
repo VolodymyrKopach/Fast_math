@@ -144,7 +144,7 @@ public class GameScreen6 extends Stage implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         if (replay.isShow()) {
-            replay.render(spriteBatch, gameWorld6.int_score, MyPreference.getBSGame6());
+            replay.render(gameWorld6.int_score, MyPreference.getBSGame6());
         }
 
 

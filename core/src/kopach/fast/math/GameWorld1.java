@@ -21,7 +21,7 @@ public class GameWorld1 {
 
     public Preferences preferences_game1;
 
-    public float float_timer = 15.5f, float_timer_wait;
+    public float float_timer = 15.5f, float_timer_wait = 0.8f;
     //TODO переробити
     int int_timer = 2;  //любе число, головне >0
     int bestScore;
@@ -130,13 +130,15 @@ public class GameWorld1 {
         int_timer = (int) float_timer;
 
         if (float_timer < 0) {
-            gameScreen1.replay.show();
+           // gameScreen1.replay.show();
 
-            string_input = int_result+""; //Доробити, бо саме так не працює
+
+            setString_input(int_result + ""); //Доробити, бо саме так не працює
+
+            Gdx.app.log("", getString_input());
 
             bool_timer_game = false;
             bool_timer_wait_answer_wrong = true;
-        } else {
         }
     }
 
@@ -144,7 +146,7 @@ public class GameWorld1 {
         float_timer_wait -= dt;
 
         if (float_timer_wait < 0) {
-            float_timer_wait = 0.5f;
+            float_timer_wait = 0.8f;
             bool_timer_wait_answer_right = false;
             buildGame();
         }
@@ -154,7 +156,7 @@ public class GameWorld1 {
         float_timer_wait -= dt;
 
         if (float_timer_wait < 0) {
-            float_timer_wait = 0.5f;
+            float_timer_wait = 0.8f;
             bool_timer_wait_answer_wrong = false;
             gameScreen1.replay.show();
 
@@ -178,6 +180,8 @@ public class GameWorld1 {
         if (string_input.length() < String.valueOf(int_result).length()) {
             string_input = string_input + number;
         }
+
+        Gdx.app.log("", "setString_input");
     }
 
     public void prees_C() {

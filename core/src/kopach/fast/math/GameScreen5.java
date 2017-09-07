@@ -234,7 +234,7 @@ public class GameScreen5 implements Screen {
         stage.draw();
 
         if (replay.isShow()) {
-            replay.render(spriteBatch, 1, 1);
+            replay.render(gameWorld5.myScore, gameWorld5.bestScore);
         }
         spriteBatch.end();
     }

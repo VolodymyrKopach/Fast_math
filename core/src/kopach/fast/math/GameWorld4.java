@@ -17,6 +17,7 @@ public class GameWorld4 {
 
     public float float_timer = 60f, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
+    int i_boundaryOfGenerationNumbers = 24;
 
     public boolean bool_timer_wait_start; // колит нажав на відповідь, і відповідь правильна, то чекає пів секунди і потім виводить новий приклад
     GameScreen4 gameScreen4;
@@ -40,7 +41,7 @@ public class GameWorld4 {
         // заповнюємо масив числами
         values.clear();
         for (int i = 0; i < num_of_btn; i++) {
-            values.add(new Random().nextInt(100));
+            values.add(new Random().nextInt(i_boundaryOfGenerationNumbers));
         }
         checkIsUnique();
     }
@@ -50,7 +51,7 @@ public class GameWorld4 {
             for (int j = 1 + i; j < values.size(); j++) {
                 if (values.get(i) == values.get(j)) {
                     Gdx.app.log("GameScreen2", "Знайдено однакові значення " + i);
-                    values.set(i, new Random().nextInt(100));
+                    values.set(i, new Random().nextInt(i_boundaryOfGenerationNumbers));
                     checkIsUnique();
                 }
             }

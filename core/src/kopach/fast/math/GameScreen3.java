@@ -135,7 +135,7 @@ public class GameScreen3 implements Screen{
         }
 
         text_score_font.draw(spriteBatch, "Score: ", text_text_score_x, text_text_score_y);
-        score_font.draw(spriteBatch, gameWorld3.getString_score(), text_score_x, text_score_y);
+        score_font.draw(spriteBatch, gameWorld3.getInt_score() + "", text_score_x, text_score_y);
         text_best_score_font.draw(spriteBatch, "BS:", text_text_best_score_x, text_text_best_score_y);
         best_score_font.draw(spriteBatch, MyPreference.getBSGame3() + "", text_best_score_x, text_best_score_y);
         znak_font.draw(spriteBatch, gameWorld3.getString_left_znak(), text_left_znak_x, text_left_znak_y);
@@ -158,7 +158,7 @@ public class GameScreen3 implements Screen{
         stage.draw();
 
         if (replay.isShow()) {
-            replay.render(spriteBatch, gameWorld3.int_score, MyPreference.getBSGame3());
+            replay.render(gameWorld3.int_score, MyPreference.getBSGame3());
         } else {
             stage.act(delta);
             stage.draw();
@@ -306,8 +306,8 @@ public class GameScreen3 implements Screen{
 
         float fl_length_string_hightScore = String.valueOf(MyPreference.getBSGame2()).length();
         float fl_textWidth_hightScore = getTextWidth(replay_best_score_value_font, MyPreference.getBSGame2() + "");
-        float fl_length_string_score = String.valueOf(gameWorld3.getString_score()).length();
-        float fl_textWidth_Score = getTextWidth(replay_score_value_font, gameWorld3.getString_score() + "");
+        float fl_length_string_score = String.valueOf(String.valueOf(gameWorld3.getInt_score())).length();
+        float fl_textWidth_Score = getTextWidth(replay_score_value_font, gameWorld3.getInt_score() + "");
 
         text_left_number_1_y = 1050;  text_left_number_2_y = 930;
         text_right_number_1_y = text_left_number_1_y;  text_right_number_2_y = text_left_number_2_y;

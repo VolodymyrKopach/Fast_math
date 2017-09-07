@@ -12,11 +12,11 @@ import java.util.Random;
 public class GameWorld3 {
     int int_min_plus, int_max_plus, int_left_result, int_right_result, int_left_number_1, int_left_number_2, int_right_number_1, int_right_number_2, int_left_pryklad_1_position_x, int_right_pryklad_1_position_x;
 
-    public int int_score = 0;
+    public int int_score;
     public String string_input = "=";
     public String string_answer;
 
-    public String string_score = "0", string_best_score_this_level;
+    public String string_score = "0";
 
     public float float_timer = 15.5f, float_timer_wait = 0.5f;
     int int_timer = 2;  //любе число, головне >0
@@ -34,6 +34,7 @@ public class GameWorld3 {
     }
 
     public void startGame() {
+        int_score = 0;
         boolean_text_button = false;
         game();
     }
@@ -191,7 +192,6 @@ public class GameWorld3 {
         boolean_text_button = true;
         int_score++;
         setHighScore_game(int_score);
-        setString_score(String.valueOf(int_score));
         float_timer = 15;
         gameScreen3.input_znak_font = new BitmapFont(Gdx.files.internal("bitmapfont/green bold 70.fnt"), Gdx.files.internal("bitmapfont/green bold 70.png"), false);
         gameScreen3.input_znak_font.getData().setScale(2.2f, 2.2f);
@@ -276,13 +276,8 @@ public class GameWorld3 {
         return string_input;
     }
 
-
-    public void setString_score(String string_score) {
-        this.string_score = string_score;
-    }
-
-    public String getString_score() {
-        return string_score;
+    public int getInt_score() {
+        return int_score;
     }
 
     public void game_timer(float dt) {
@@ -319,7 +314,7 @@ public class GameWorld3 {
         if (float_timer_wait < 0) {
             float_timer_wait = 0.5f;
             bool_timer_wait_answer_right = false;
-            startGame();
+            game();
         }
     }
 

@@ -149,7 +149,6 @@ public class GameScreen1 implements Screen {
         }
         if (gameWorld1.bool_timer_wait_answer_wrong) {
             gameWorld1.timer_wait_answer_wrong(delta);
-            Gdx.app.log("", "timer wait answer wrong");
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
@@ -179,17 +178,12 @@ public class GameScreen1 implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         if (replay.isShow()) {
-            replay.render(spriteBatch, myScore, bestScore);
-        } else {
-            //якщо ні оновлюємо stage з грою
-            // stage.act(delta);
-            // stage.draw();
-            // Gdx.input.setInputProcessor(stage);
+            replay.render(myScore, bestScore);
         }
 
-        //для того, щоб показати реплей викликаємо метод
-        //replay.show();
         spriteBatch.end();
+
+        Gdx.app.log("getStringInput", gameWorld1.getString_input());
 
     }
 
