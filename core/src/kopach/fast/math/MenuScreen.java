@@ -29,17 +29,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 public class MenuScreen implements Screen, GestureDetector.GestureListener {
-    Texture texture1;
-    Texture texture2;
-    Texture texture3;
-    Texture texture4;
     MyGameClass myGameClass;
     Sound clickSound;
 
     public TextureAtlas textureAtlas;
-    public TextureRegion tr_menu_fon, tr_menu_blocked_game, tr_coin;
-    Texture tr_menu_game_1, tr_menu_game_2, tr_menu_game_3, tr_menu_game_4;
-    public TextButton btn_play_1, btn_play_2, btn_play_3, btn_play_4, btn_setting, btn_exit, btn_coin;
+    public TextureRegion tr_menu_fon, tr_coin;
+    Texture tr_menu_item_fon;
+    public TextButton btn_play_1, btn_play_2, btn_play_3, btn_play_4,btn_play_5,btn_play_6, btn_setting, btn_exit, btn_coin;
     public TextButton.TextButtonStyle btn_play_style, btn_setting_style, btn_exit_style, btn_coin_style;
     Skin skin;
     BitmapFont text_to_button;
@@ -57,16 +53,13 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
     float screen_width = 720, screen_height = 1280;
     public float width_vidtstan, height_vidstan;
     public float btn_coin_size, width_menu_item, height_menu_item, width_btn_play, height_btn_play, width_btn_setting, height_btn_setting, width_btn_exit, height_btn_exit, tr_coin_width, tr_coin_height;
-    public float btn_coin_x, btn_coin_y, btn_play_1_x, btn_play_y, btn_play_2_x, btn_play_3_x, btn_play_4_x, btn_setting_x, btn_setting_y, btn_exit_x, btn_exit_y, tr_menu_game_1_x, tr_menu_game_y, tr_menu_game_2_x, tr_menu_game_3_x, tr_menu_game_4_x, tr_coin_x, tr_coin_y;
+    public float btn_coin_x, btn_coin_y, btn_play_1_x, btn_play_y, btn_setting_x, btn_setting_y, btn_exit_x, btn_exit_y, tr_menu_game_1_x, tr_menu_game_y, tr_menu_game_2_x, tr_menu_game_3_x, tr_menu_game_4_x, tr_menu_game_5_x, tr_menu_game_6_x, tr_coin_x, tr_coin_y;
     float f = 0;
 
     boolean bool_block_game_1 = true; //переміна, яка буде не давати tr_game_1_пересуватись в право
     boolean bool_action_swipe; // переміна, яка буде вмикатись при свайпі, і цим самим вмикати переміщення
 
     String string_to_swipe_game;
-
-    final String font_chars = "абвгдежзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕ" +
-            "ЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
 
     BitmapFont coinFont;
     BitmapFont bitmapFont;
@@ -86,13 +79,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         textureAtlas = new TextureAtlas("texture/TextureAtlas.atlas");
 
         tr_menu_fon = new TextureRegion(textureAtlas.findRegion("menu fon"));
-//        tr_menu_blocked_game = new TextureRegion(textureAtlas.findRegion("blocked game"));
-        tr_menu_game_1 = new Texture("white.png");
-        tr_menu_game_2 = new Texture("white.png");
-        tr_menu_game_3 = new Texture("white.png");
-        tr_menu_game_4 = new Texture("white.png");
+        tr_menu_item_fon = new Texture("fon.png");
         tr_coin = new TextureRegion(textureAtlas.findRegion("coin"));
-        //  tr_level_text = new TextureRegion(textureAtlas_ss.findRegion("level text"));
 
         texture_menu_fon = new Texture("texture/menu fon hd.png");
 
@@ -108,17 +96,11 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         skin = new Skin();
         skin.addRegions(textureAtlas);
         text_to_button = new BitmapFont();
-
-        texture1 = new Texture("texture1.png");
-        texture2 = new Texture("texture2.png");
-        texture3 = new Texture("texture3.png");
-        texture4 = new Texture("texture4.png");
         textButton();
         clickSound = Gdx.audio.newSound(Gdx.files.internal("audio/clickSound.mp3"));
         //  myGameClass.bannerAdShow();
 
         coinFont = Utill.createFont(Color.ORANGE);
-        Gdx.app.log("tag", MyPreference.getMoney() + "money");
         bitmapFont = Utill.createFont(Color.BLACK);
 
         //  myGameClass.loadRewardedVideoAd();
@@ -164,15 +146,19 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         spriteBatch.draw(texture_menu_fon, 0, 0, screen_width, screen_height);
         coinFont.draw(spriteBatch, String.valueOf(MyPreference.getMoney()), 100, screen_height - 35);
         spriteBatch.draw(tr_coin, tr_coin_x, tr_coin_y, tr_coin_width, tr_coin_height);
-        spriteBatch.draw(tr_menu_game_1, tr_menu_game_1_x, tr_menu_game_y, width_menu_item, height_menu_item);
-        spriteBatch.draw(tr_menu_game_2, tr_menu_game_2_x, tr_menu_game_y, width_menu_item, height_menu_item);
-        spriteBatch.draw(tr_menu_game_3, tr_menu_game_3_x, tr_menu_game_y, width_menu_item, height_menu_item);
-        spriteBatch.draw(tr_menu_game_4, tr_menu_game_4_x, tr_menu_game_y, width_menu_item, height_menu_item);
+        spriteBatch.draw(tr_menu_item_fon, tr_menu_game_1_x, tr_menu_game_y, width_menu_item, height_menu_item);
+        spriteBatch.draw(tr_menu_item_fon, tr_menu_game_2_x, tr_menu_game_y, width_menu_item, height_menu_item);
+        spriteBatch.draw(tr_menu_item_fon, tr_menu_game_3_x, tr_menu_game_y, width_menu_item, height_menu_item);
+        spriteBatch.draw(tr_menu_item_fon, tr_menu_game_4_x, tr_menu_game_y, width_menu_item, height_menu_item);
+        spriteBatch.draw(tr_menu_item_fon, tr_menu_game_5_x, tr_menu_game_y, width_menu_item, height_menu_item);
+        spriteBatch.draw(tr_menu_item_fon, tr_menu_game_6_x, tr_menu_game_y, width_menu_item, height_menu_item);
 
         bitmapFont.draw(spriteBatch, "Game1", tr_menu_game_1_x + width_menu_item / 2 - Utill.getTextWidth(bitmapFont, "Game1") / 2, tr_menu_game_y + height_menu_item - 50);
         bitmapFont.draw(spriteBatch, "Game2", tr_menu_game_2_x + width_menu_item / 2 - Utill.getTextWidth(bitmapFont, "Game1") / 2, tr_menu_game_y + height_menu_item - 50);
         bitmapFont.draw(spriteBatch, "Game3", tr_menu_game_3_x + width_menu_item / 2 - Utill.getTextWidth(bitmapFont, "Game1") / 2, tr_menu_game_y + height_menu_item - 50);
         bitmapFont.draw(spriteBatch, "Game4", tr_menu_game_4_x + width_menu_item / 2 - Utill.getTextWidth(bitmapFont, "Game1") / 2, tr_menu_game_y + height_menu_item - 50);
+        bitmapFont.draw(spriteBatch, "Game5", tr_menu_game_5_x + width_menu_item / 2 - Utill.getTextWidth(bitmapFont, "Game1") / 2, tr_menu_game_y + height_menu_item - 50);
+        bitmapFont.draw(spriteBatch, "Game6", tr_menu_game_6_x + width_menu_item / 2 - Utill.getTextWidth(bitmapFont, "Game1") / 2, tr_menu_game_y + height_menu_item - 50);
         spriteBatch.end();
 
         stage.act(delta);
@@ -234,13 +220,7 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         height_btn_play = 500;
 
         tr_menu_game_1_x = 1000;
-        tr_menu_game_2_x = tr_menu_game_1_x + width_menu_item + width_vidtstan;
-        tr_menu_game_3_x = tr_menu_game_2_x + width_menu_item + width_vidtstan;
-        tr_menu_game_4_x = tr_menu_game_3_x + width_menu_item + width_vidtstan;
-        btn_play_1_x = tr_menu_game_1_x + (width_menu_item / 2) - (width_btn_play / 2);
-        btn_play_2_x = tr_menu_game_2_x + (width_menu_item / 2) - (width_btn_play / 2);
-        btn_play_3_x = tr_menu_game_3_x + (width_menu_item / 2) - (width_btn_play / 2);
-        btn_play_4_x = tr_menu_game_4_x + (width_menu_item / 2) - (width_btn_play / 2);
+        updateMenuPosition();
         tr_coin_x = 30;
 
         tr_menu_game_y = 300;
@@ -248,8 +228,25 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         tr_coin_y = 1200;
     }
 
-    void variables_game(float velocityX) {
+    float getBtnPlayX(int position) {
+        switch (position) {
+            case 1:
+                return tr_menu_game_1_x + (width_menu_item / 2) - (width_btn_play / 2);
+            case 2:
+                return tr_menu_game_2_x + (width_menu_item / 2) - (width_btn_play / 2);
+            case 3:
+                return tr_menu_game_3_x + (width_menu_item / 2) - (width_btn_play / 2);
+            case 4:
+                return tr_menu_game_4_x + (width_menu_item / 2) - (width_btn_play / 2);
+            case 5:
+                return tr_menu_game_5_x + (width_menu_item / 2) - (width_btn_play / 2);
+            case 6:
+                return tr_menu_game_6_x + (width_menu_item / 2) - (width_btn_play / 2);
+        }
+        return 0;
+    }
 
+    void variables_game(float velocityX) {
         if (velocityX < 0) {
             string_to_swipe_game = "left";
             bool_action_swipe = true;
@@ -260,52 +257,67 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
 
     }
 
+    void updateMenuPosition() {
+        tr_menu_game_2_x = tr_menu_game_1_x + width_menu_item + width_vidtstan;
+        tr_menu_game_3_x = tr_menu_game_2_x + width_menu_item + width_vidtstan;
+        tr_menu_game_4_x = tr_menu_game_3_x + width_menu_item + width_vidtstan;
+        tr_menu_game_5_x = tr_menu_game_4_x + width_menu_item + width_vidtstan;
+        tr_menu_game_6_x = tr_menu_game_5_x + width_menu_item + width_vidtstan;
+        Gdx.app.log("tag", "updateMenuPosition");
+
+    }
+
     void updateBtnPosition() {
-        stage.clear();
-        btn_play_1.setPosition(btn_play_1_x, btn_play_y);
-        btn_play_2.setPosition(btn_play_2_x, btn_play_y);
-        btn_play_3.setPosition(btn_play_3_x, btn_play_y);
-        btn_play_4.setPosition(btn_play_4_x, btn_play_y);
+        btn_play_1.setPosition(getBtnPlayX(1), btn_play_y);
+        btn_play_2.setPosition(getBtnPlayX(2), btn_play_y);
+        btn_play_3.setPosition(getBtnPlayX(3), btn_play_y);
+        btn_play_4.setPosition(getBtnPlayX(4), btn_play_y);
+        btn_play_5.setPosition(getBtnPlayX(5), btn_play_y);
+        btn_play_6.setPosition(getBtnPlayX(6), btn_play_y);
+
+        Gdx.app.log("tag", "updateBtnPosition");
 
         stage.addActor(btn_play_1);
         stage.addActor(btn_play_2);
         stage.addActor(btn_play_3);
         stage.addActor(btn_play_4);
+        stage.addActor(btn_play_5);
+        stage.addActor(btn_play_6);
     }
 
     void stabilization_of_variables() {
-        tr_menu_game_2_x = tr_menu_game_1_x + width_menu_item + width_vidtstan;
-        tr_menu_game_3_x = tr_menu_game_2_x + width_menu_item + width_vidtstan;
-        tr_menu_game_4_x = tr_menu_game_3_x + width_menu_item + width_vidtstan;
+        updateMenuPosition();
+
+        Gdx.app.log("tag", "stabilization_of_variables");
 
         btn_play_1_x = tr_menu_game_1_x + (width_menu_item / 2) - (width_btn_play / 2);
-        btn_play_2_x = tr_menu_game_2_x + (width_menu_item / 2) - (width_btn_play / 2);
-        btn_play_3_x = tr_menu_game_3_x + (width_menu_item / 2) - (width_btn_play / 2);
-        btn_play_4_x = tr_menu_game_4_x + (width_menu_item / 2) - (width_btn_play / 2);
-
         stage.clear();
         updateBtnPosition();
     }
 
     void action_swipe(String string_to_swipe_game, float velocity) {
-
+        Gdx.app.log("tag", "actionSwipe , swipe:" + string_to_swipe_game);
         if (string_to_swipe_game.equals("left")) {
             tr_menu_game_1_x -= velocity;
-            if (tr_menu_game_1_x < -1280) {
-                tr_menu_game_1_x = -1280;
+            if (tr_menu_game_1_x < -2220) {
+                Gdx.app.log("tag", "menu1x: " + tr_menu_game_1_x);
+                tr_menu_game_1_x = -2220;
                 bool_action_swipe = false;
+                f = 0;
             } else stop_action(velocity);
         } else if (string_to_swipe_game.equals("right")) {
             tr_menu_game_1_x += velocity;
             if (tr_menu_game_1_x > 160) {
                 tr_menu_game_1_x = 160;
                 bool_action_swipe = false;
+                f = 0;
             } else stop_action(velocity);
 
         }
     }
 
     void stop_action(float delta) {
+        Gdx.app.log("tag", "stop action " + f);
         f += delta;
         if (f > 470) {
             f = 0;
@@ -313,95 +325,101 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         }
     }
 
-    TextButton createutton(Texture texture) {
+    TextButton createutton(final int position) {
+        Texture texture = new Texture("texture" + position + ".png");
         btn_play_style = new TextButton.TextButtonStyle();
         btn_play_style.up = new TextureRegionDrawable(new TextureRegion(texture));
         btn_play_style.font = text_to_button;
 
         TextButton button = new TextButton(" ", btn_play_style);
         button.setSize(width_btn_play, height_btn_play);
+        button.setPosition(getBtnPlayX(position), btn_play_y);
+        stage.addActor(button);
         return button;
     }
 
     public void textButton() {
+        btn_play_1 = createutton(1);
 
-        btn_play_1 = createutton(texture1);
-        btn_play_1.setPosition(btn_play_1_x, btn_play_y);
+        btn_play_2 = createutton(2);
         btn_play_1.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
                 clickSound.play();
                 return true;
             }
 
+            @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 myGameClass.setScreen(new GameScreen1(myGameClass));
-
             }
         });
-        stage.addActor(btn_play_1);
-
-        btn_play_2 = createutton(texture2);
-        btn_play_2.setPosition(btn_play_2_x, btn_play_y);
         btn_play_2.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
                 clickSound.play();
-                // Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
+            @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
                 myGameClass.setScreen(new GameScreen2(myGameClass));
-
-                //   Gdx.input.setInputProcessor(inputMultiplexer);
             }
         });
-        stage.addActor(btn_play_2);
 
-        btn_play_3 = createutton(texture3);
-        btn_play_3.setPosition(btn_play_3_x, btn_play_y);
+        btn_play_3 = createutton(3);
         btn_play_3.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
                 clickSound.play();
-                // Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
+            @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
                 myGameClass.setScreen(new GameScreen3(myGameClass));
-
-                //  Gdx.input.setInputProcessor(inputMultiplexer);
             }
         });
-        stage.addActor(btn_play_3);
 
-        btn_play_4 = createutton(texture4);
-        btn_play_4.setPosition(btn_play_4_x, btn_play_y);
+        btn_play_4 = createutton(4);
         btn_play_4.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
                 clickSound.play();
-                //  Gdx.input.setInputProcessor(stage);
                 return true;
             }
 
+            @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
                 myGameClass.setScreen(new GameScreen4(myGameClass));
-
-                //  Gdx.input.setInputProcessor(inputMultiplexer);
             }
         });
-        stage.addActor(btn_play_4);
+        btn_play_5 = createutton(5);
+        btn_play_5.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                clickSound.play();
+                return true;
+            }
 
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                myGameClass.setScreen(new GameScreen5(myGameClass));
+            }
+        });
+        btn_play_6 = createutton(6);
+        btn_play_6.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                clickSound.play();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                myGameClass.setScreen(new GameScreen6(myGameClass));
+            }
+        });
 
         btn_setting_style = new TextButton.TextButtonStyle();
         btn_setting_style.up = skin.getDrawable("btn setting");
@@ -410,17 +428,6 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_setting = new TextButton(" ", btn_setting_style);
         btn_setting.setSize(width_btn_setting, height_btn_setting);
         btn_setting.setPosition(btn_setting_x, btn_setting_y);
-        btn_setting.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-                //  Gdx.input.setInputProcessor(stage);
-                return true;
-            }
-
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-            }
-        });
         stage.addActor(btn_setting);
 
 
@@ -431,17 +438,6 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_exit = new TextButton(" ", btn_exit_style);
         btn_exit.setSize(width_btn_exit, height_btn_exit);
         btn_exit.setPosition(btn_exit_x, btn_exit_y);
-        btn_exit.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
-                Gdx.app.exit();
-            }
-        });
         stage.addActor(btn_exit);
 
         btn_coin_style = new TextButton.TextButtonStyle();
@@ -451,16 +447,6 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         btn_coin = new TextButton(" ", btn_coin_style);
         btn_coin.setSize(btn_coin_size, btn_coin_size);
         btn_coin.setPosition(btn_coin_x, btn_coin_y);
-        btn_coin.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
-            }
-        });
         stage.addActor(btn_coin);
     }
 
