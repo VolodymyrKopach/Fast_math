@@ -45,7 +45,6 @@ public class GameScreen4 implements Screen {
     public OrthographicCamera orthographicCamera;
     public Stage stage;
 
-
     public TextButton btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24, btn_25, btn_26, btn_27, btn_28, btn_29, btn_30, btn_replay, btn_back, btn_function;
     TextButton[] textButtons = new TextButton[]{btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_10, btn_11, btn_12, btn_13, btn_14, btn_15, btn_16, btn_17, btn_18, btn_19, btn_20, btn_21, btn_22, btn_23, btn_24, btn_25, btn_26, btn_27, btn_28, btn_29, btn_30};
     Skin skin;
@@ -124,6 +123,7 @@ public class GameScreen4 implements Screen {
     //генеруємо нову гру
     void createGame() {
         Gdx.app.log("tag", "create game");
+
         trueAnswer = 0;
         stage.clear();
         gameWorld4.generateValue(num_of_btn);

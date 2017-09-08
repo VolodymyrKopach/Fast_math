@@ -100,8 +100,8 @@ public class MenuScreen implements Screen, GestureDetector.GestureListener {
         clickSound = Gdx.audio.newSound(Gdx.files.internal("audio/clickSound.mp3"));
         //  myGameClass.bannerAdShow();
 
-        coinFont = Utill.createFont(Color.ORANGE);
-        bitmapFont = Utill.createFont(Color.BLACK);
+        coinFont = Utill.createNormalFont(22 ,Color.ORANGE);
+        bitmapFont = Utill.createNormalFont(22, Color.BLACK);
 
         //  myGameClass.loadRewardedVideoAd();
     }
